@@ -1,0 +1,117 @@
+<template>
+    <aside
+        class="sidebar w-64 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in">
+        <Menu 
+            :model="items"
+            :ptOptions="{ mergeProps: true, mergeSections: true }" 
+            :pt="{ root: 'flex flex-col h-full rounded-none dark:ring-surface-600', menu: 'flex-grow' }"
+            class="w-full md:w-[17rem]"
+        >
+           <template #start>
+                <span class="inline-flex items-center justify-center gap-1 px-2 py-2 w-full sm:w-[15rem]">
+                    <img 
+                        v-if="settings.darkMode"
+                        src="../../assets/logo-dark.svg" 
+                        class="h-24" 
+                        alt="Logo"
+                    />
+                    <img 
+                        v-if="!settings.darkMode"
+                        src="../../assets/logo.svg" 
+                        class="h-24" 
+                        alt="Logo"
+                    />
+                    <span class="font-medium text-xl">PRIME<span
+                            class="text-primary-500 dark:text-primary-400">APP</span></span>
+                </span>
+            </template>
+
+            <template #submenuheader="{ item }">
+                <span class="text-primary-500 dark:text-primary-400 font-bold leading-none">{{ item.label }}</span>
+            </template> -->
+
+            <!-- <template #item="{ item, props }">
+                <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+                    <a :href="href" v-bind="props.action" @click="navigate">
+                        <span :class="item.icon" />
+                        <span class="ml-2">{{ item.label }}</span>
+                    </a>
+                </router-link>
+                <a v-else :href="item.url" :target="item.target" v-bind="props.action">
+                    <span :class="item.icon" />
+                    <span class="ml-2">{{ item.label }}</span>
+                </a>
+            </template> -->
+            <template #end>
+                <!-- <div class="mt-auto">
+                    <button v-ripple
+                        class="relative overflow-hidden w-full p-link flex items-center p-2 pl-3 text-surface-700 dark:text-surface-0/80 hover:bg-surface-200 dark:hover:bg-surface-600 rounded-none">
+                        <Avatar image="/images/avatar/amyelsner.png" class="mr-2" shape="circle" />
+                        <span class="inline-flex flex-col justify-start">
+                            <span class="font-bold">Amy Elsner</span>
+                            <span class="text-sm">Admin</span>
+                        </span>
+                    </button>
+                </div> -->
+            </template>
+        </Menu>
+    </aside>
+</template>
+<script setup lang="ts">
+import { ref } from "vue";
+import Menu from 'primevue/menu';
+
+import { useSettingsStore } from "@/stores";
+const settings = useSettingsStore();
+
+const items = ref([
+    {
+                label: 'Dashboard',
+                route: "/"
+    },
+    {
+        label: 'Data',
+        items: [
+            {
+                label: 'Locations',
+                items: [
+                    {
+                        label: 'Networks',
+                        route: "/"
+                    },
+                    {
+                        label: 'Networks',
+                        route: "/"
+                    },
+                ]
+            },
+            {
+                label: 'Networks',
+                route: "/"
+            },
+            {
+                label: 'Devices',
+                route: "/"
+            },
+            {
+                label: 'Contacts',
+                route: "/"
+            },
+        ]
+    },
+    {
+        label: 'Network Agents',
+        items: [
+            {
+                label: 'Agents',
+            },
+            {
+                label: 'Plugins',
+            },
+            {
+                label: 'Tasks',
+            }
+        ]
+    }
+]);
+</script>
