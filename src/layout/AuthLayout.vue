@@ -12,8 +12,10 @@
       <FooterBar></FooterBar>
     </main>
   </div>
+  <DynamicDialog />
 </template>
 <script setup lang="ts">
+import DynamicDialog from 'primevue/dynamicdialog';
 import SideBar from "./components/SideBar.vue";
 import HeaderBar from "./components/HeaderBar.vue";
 import FooterBar from "./components/FooterBar.vue";

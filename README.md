@@ -1,4 +1,126 @@
-# gui
+# Runbook Solutions GUI
+
+This repository contains the GUI for RunBook.Solutions.
+
+## Roadmap
+
+- [ ] Features
+    - [ ] Notifications
+        - [ ] https://tailwind.primevue.org/toast/
+    - [ ] GraphQL
+        - [ ] Error Processing
+    - [ ] Widget Grid
+        - [ ] Installation
+        - [ ] Widget Registation
+
+- [ ] Style
+    - [ ] Custom Autocomplete
+        - [ ] Fix Styles
+    - [ ] Theme
+        - [ ] Improve colors to match branding
+        - [ ] Dark/Light Mode
+    - [ ] Main content Background
+
+- [ ] Layout
+    - [ ] Team Selection
+        - [ ] AuthStore
+        - [ ] Component
+
+- [ ] Team
+    - [ ] Selection
+    - [ ] Create
+    - [ ] Update
+
+- [ ] Invitations
+    - [ ] List
+        - [ ] Sent Invitiations
+        - [ ] Recieved Invitations
+        - [ ] Display
+            - [ ] Grid
+            - [ ] Items
+    - [ ] Recieve
+        - [ ] Accept
+        - [ ] Deny
+    - [ ] Create
+
+- [ ] Agent
+    - [ ] List
+        - [ ] Display
+            - [ ] Grid
+            - [ ] Items
+    - [ ] Create
+    - [ ] Join
+    - [ ] View
+
+- [ ] Agents
+    - [ ] Plugin
+        - [ ] List
+            - [ ] Team Only
+            - [ ] Public
+        - [ ] View
+        - [ ] Edit
+        - [ ] Create
+    - [ ] Task
+        - [ ] List
+        - [ ] View
+        - [ ] Create
+    - [ ] Response
+        - [ ] List
+        - [ ] View
+    - [ ] Plugins
+        - [ ] Command
+            - [ ] List
+            - [ ] View
+        - [ ] Argument
+            - [ ] List
+            - [ ] View
+    
+
+
+- [ ] Core
+    - [ ] Location
+        - [ ] Create
+        - [ ] List
+        - [ ] Single
+        - [ ] Update
+        - [ ] Widgets
+            - [ ] Attach Location
+            - [ ] Location Tree
+    - [ ] Network
+        - [ ] Create
+        - [ ] List
+        - [ ] Single
+        - [ ] Update
+        - [ ] Widgets
+            - [ ] Network Tree
+
+    - [ ] Networks
+        - [ ] Address
+            - [ ] List
+            - [ ] Single
+            - [ ] Widgets
+                - [ ]
+    
+
+    - [ ] Device
+        - [ ] Create
+        - [ ] List
+        - [ ] Single
+        - [ ] Update
+        - [ ] Widgets
+            - [ ] 
+
+    - [ ] Contact
+        - [ ] Create
+        - [ ] List
+        - [ ] Single
+        - [ ] Update
+        - [ ] Widgets
+            - [ ] 
+
+-----------------------------------------------------------------------------------------
+
+# Vite Default Readme:
 
 This template should help get you started developing with Vue 3 in Vite.
 

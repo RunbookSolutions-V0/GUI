@@ -12,6 +12,7 @@ import { DefaultApolloClient } from "@vue/apollo-composable";
 import { apolloClient, apolloProvider } from "./graphql/apollo.client";
 
 import PrimeVue from 'primevue/config';
+import DialogService from 'primevue/dialogservice';
 import Wind from '@/presets/wind';
 
 const app = createApp(App)
@@ -29,5 +30,6 @@ app.use(PrimeVue, {
     unstyled: true,
     pt: Wind
 });
+app.use(DialogService);
 
 app.mount('#app')

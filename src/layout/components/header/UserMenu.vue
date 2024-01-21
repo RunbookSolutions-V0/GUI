@@ -11,11 +11,11 @@
         >
             <Avatar
                 class="dark:text-white"
-                :label="authStore.user.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')"
-                :image="authStore.user.photo"
+                :label="authStore.user?.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')"
+                :image="(authStore.user?.photo as string)"
               />
               <span class="flex flex-col">
-                <span class="truncate w-20 font-semibold tracking-wide leading-none">{{ authStore.user.name }}</span>
+                <span class="truncate w-20 font-semibold tracking-wide leading-none">{{ authStore.user?.name }}</span>
                 <span class="truncate w-20 text-gray-500 text-xs leading-none mt-1">Manager</span>
               </span>
         </Button>
@@ -36,7 +36,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Avatar from 'primevue/avatar';
 import Menu from 'primevue/menu';
 import Button from 'primevue/button';
@@ -66,7 +66,7 @@ const items = ref([
     },
 ]);
 
-const toggle = (event) => {
+const toggle = (event: any) => {
     menu.value.toggle(event);
 };
 </script>

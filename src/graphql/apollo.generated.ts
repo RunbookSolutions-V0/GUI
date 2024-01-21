@@ -2235,6 +2235,18 @@ export type VerifyEmailInput = {
   token: Scalars['String']['input'];
 };
 
+export type CoreLocationListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CoreLocationListQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', location: { __typename?: 'CoreLocationQueries', list: { __typename?: 'CoreLocationPaginator', data: Array<{ __typename?: 'CoreLocation', id: string, name: string, parent_id?: string | null, type: CoreLocationTypes, description?: string | null, created_at: Date, address?: string | null }> } } } };
+
+export type CoreLocationCreateMutationVariables = Exact<{
+  input?: InputMaybe<CoreLocationCreateInput>;
+}>;
+
+
+export type CoreLocationCreateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', location: { __typename?: 'CoreLocationMutations', create: { __typename?: 'CoreLocation', id: string } } } };
+
 export type ForgotPasswordMutationVariables = Exact<{
   input: ForgotPasswordInput;
 }>;
@@ -2248,6 +2260,13 @@ export type LoginMutationVariables = Exact<{
 
 
 export type LoginMutation = { __typename?: 'Mutation', auth: { __typename?: 'AuthMutations', login: { __typename?: 'AuthPayload', access_token?: string | null, refresh_token?: string | null, expires_in?: number | null, token_type?: string | null, user?: { __typename?: 'CurrentUser', id: string, email: string, name: string, photo?: string | null, created_at: Date, updated_at: Date, personal_team: { __typename?: 'Team', id: string, name: string, photo?: string | null }, teams?: Array<{ __typename?: 'Team', id: string, name: string, photo?: string | null }> | null } | null } } };
+
+export type RefreshTokenMutationVariables = Exact<{
+  input?: InputMaybe<RefreshTokenInput>;
+}>;
+
+
+export type RefreshTokenMutation = { __typename?: 'Mutation', auth: { __typename?: 'AuthMutations', refreshToken: { __typename?: 'RefreshTokenPayload', access_token: string, expires_in: number, refresh_token: string, token_type: string } } };
 
 export type RegisterMutationVariables = Exact<{
   input: RegisterInput;
@@ -2269,6 +2288,78 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 export type LogoutMutation = { __typename?: 'Mutation', auth: { __typename?: 'AuthMutations', logout: { __typename?: 'LogoutResponse', status: string, message?: string | null } } };
 
 
+export const CoreLocationListDocument = gql`
+    query coreLocationList {
+  core {
+    location {
+      list {
+        data {
+          id
+          name
+          parent_id
+          type
+          description
+          created_at
+          address
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreLocationListQuery__
+ *
+ * To run a query within a Vue component, call `useCoreLocationListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCoreLocationListQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCoreLocationListQuery();
+ */
+export function useCoreLocationListQuery(options: VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<CoreLocationListQuery, CoreLocationListQueryVariables>(CoreLocationListDocument, {}, options);
+}
+export function useCoreLocationListLazyQuery(options: VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<CoreLocationListQuery, CoreLocationListQueryVariables>(CoreLocationListDocument, {}, options);
+}
+export type CoreLocationListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreLocationListQuery, CoreLocationListQueryVariables>;
+export const CoreLocationCreateDocument = gql`
+    mutation coreLocationCreate($input: CoreLocationCreateInput) {
+  core {
+    location {
+      create(input: $input) {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreLocationCreateMutation__
+ *
+ * To run a mutation, you first call `useCoreLocationCreateMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCoreLocationCreateMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCoreLocationCreateMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCoreLocationCreateMutation(options: VueApolloComposable.UseMutationOptions<CoreLocationCreateMutation, CoreLocationCreateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreLocationCreateMutation, CoreLocationCreateMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CoreLocationCreateMutation, CoreLocationCreateMutationVariables>(CoreLocationCreateDocument, options);
+}
+export type CoreLocationCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreLocationCreateMutation, CoreLocationCreateMutationVariables>;
 export const ForgotPasswordDocument = gql`
     mutation forgotPassword($input: ForgotPasswordInput!) {
   auth {
@@ -2353,6 +2444,40 @@ export function useLoginMutation(options: VueApolloComposable.UseMutationOptions
   return VueApolloComposable.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
 }
 export type LoginMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<LoginMutation, LoginMutationVariables>;
+export const RefreshTokenDocument = gql`
+    mutation refreshToken($input: RefreshTokenInput) {
+  auth {
+    refreshToken(input: $input) {
+      access_token
+      expires_in
+      refresh_token
+      token_type
+    }
+  }
+}
+    `;
+
+/**
+ * __useRefreshTokenMutation__
+ *
+ * To run a mutation, you first call `useRefreshTokenMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useRefreshTokenMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useRefreshTokenMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRefreshTokenMutation(options: VueApolloComposable.UseMutationOptions<RefreshTokenMutation, RefreshTokenMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<RefreshTokenMutation, RefreshTokenMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<RefreshTokenMutation, RefreshTokenMutationVariables>(RefreshTokenDocument, options);
+}
+export type RefreshTokenMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<RefreshTokenMutation, RefreshTokenMutationVariables>;
 export const RegisterDocument = gql`
     mutation register($input: RegisterInput!) {
   auth {

@@ -43,6 +43,18 @@ export const LOGIN_QUERY = gql`
   }
 `;
 
+export const REFRESH_TOKEN_QUERY = gql`
+mutation refreshToken($input: RefreshTokenInput) {
+  auth {
+    refreshToken(input: $input) {
+      access_token
+      expires_in
+      refresh_token
+      token_type
+    }
+  }
+}`;
+
 export const REGISTER_QUERY = gql`
   mutation register($input: RegisterInput!) {
     auth {

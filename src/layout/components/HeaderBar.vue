@@ -10,7 +10,9 @@
                 </svg>
               </div>
 
-              <input id="search" type="text" name="search"
+              <input
+                disabled
+                id="search" type="text" name="search"
                 class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-300 w-full h-10 focus:outline-none focus:border-indigo-400"
                 placeholder="Search..." />
             </div>
@@ -31,7 +33,7 @@
       </header>
 </template>
 <script setup lang="ts">
-import DarkMode from "./DarkMode.vue";
-import UserMenu from "./UserMenu.vue";
+import DarkMode from "./header/DarkMode.vue";
+import UserMenu from "./header/UserMenu.vue";
 
 </script>

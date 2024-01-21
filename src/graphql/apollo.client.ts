@@ -2,7 +2,7 @@ import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client/core";
 import { onError } from "@apollo/client/link/error";
 import type { ErrorResponse } from "@apollo/client/link/error";
 import { createApolloProvider } from "@vue/apollo-option";
-// import { useAuthStore } from "@/stores/auth";
+import { useAuthStore } from "@/stores";
 // import { useAlertStore } from "@/stores/alert";
 // import { useConfigStore } from "@/stores/config";
 import type { GraphQLError, GraphQLErrorExtensions } from "graphql";
@@ -15,14 +15,14 @@ interface Headers {
 // Get Authorization Headers
 export function getHeaders(): object {
   const headers: Headers = {};
-//   const token = useAuthStore().getToken;
-//   const selectedTeam = useAuthStore().getSelectedTeam;
-//   if (token) {
-//     headers["Authorization"] = `Bearer ${token}`;
-//   }
-//   if (selectedTeam) {
-//     headers["X-Team-ID"] = selectedTeam.id;
-//   }
+  const token: string | null = useAuthStore().getToken;
+  const selectedTeam = useAuthStore().team;
+  if (token) {
+    headers["Authorization"] = `${token}`;
+  }
+  if (selectedTeam) {
+    headers["X-Team-ID"] = selectedTeam;
+  }
   headers["Content-Type"] = "application/json";
   return headers;
 }
@@ -45,7 +45,7 @@ interface ValidationError extends GraphQLErrorExtensions {
 
 // Handle errors
 const errorLink = onError((errorInput: ErrorResponse) => {
-  console.log(errorInput);
+  //console.log(errorInput);
 
   if ("response" in errorInput) {
     if (errorInput.response && "errors" in errorInput.response) {
@@ -60,13 +60,12 @@ const errorLink = onError((errorInput: ErrorResponse) => {
 });
 
 function processError(error: GraphQLError) {
-//   const alertStore = useAlertStore();
-//   const authStore = useAuthStore();
-  console.log(error);
+  //const alertStore = useAlertStore();
+  const authStore = useAuthStore();
   const message: string = error.message;
   if (["Not Authenticated", "Unauthenticated."].indexOf(message) > -1) {
     // alertStore.addAlert("error", "You need to be signed-in to do that.");
-    // authStore.logoutUser();
+    authStore.logout();
   } else if (["Internal server error"].indexOf(message) > -1) {
     // alertStore.addAlert("error", message);
   } else if ("extensions" in error) {
