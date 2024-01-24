@@ -35,7 +35,7 @@ import VPButton from 'primevue/button';
 import Dropdown from 'primevue/dropdown';
 import InputTextLabel from '@/components/Input/InputTextLabel.vue';
 import TextAreaLabel from '@/components/Input/TextAreaLabel.vue';
-import CoreLocationSelect from "@/components/Core/Location/Select.vue";
+import CoreLocationSelect from "@/components/core/location/CoreLocationSelect.vue";
 
 import gql from "graphql-tag";
 import { 
@@ -67,6 +67,7 @@ const selectedParentLocation = ref();
 
 
 // Submission Mutation
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument = gql`
 mutation coreLocationCreate($input: CoreLocationCreateInput) {
     core {

@@ -51,6 +51,7 @@ const variables = ref<CoreLocationSelectFilteredListQueryVariables>({
 })
 
 // Define our GraphQL Document
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument = gql`
 query coreLocationSelectFilteredList($name: String) {
     core {

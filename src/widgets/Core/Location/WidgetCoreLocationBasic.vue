@@ -1,5 +1,6 @@
 <template>
-    <WidgetInterface
+    <h1>Basic Info</h1>
+    <!-- <WidgetInterface
         v-bind="$props"
     >
         <PVCard
@@ -63,45 +64,45 @@
         <div v-else>
             Loading...
         </div>
-    </WidgetInterface>
+    </WidgetInterface> -->
 </template>
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+// import { defineComponent } from 'vue';
 
-// Prime Vue
-import PVCard from 'primevue/card';
+// // Prime Vue
+// import PVCard from 'primevue/card';
 
-// Widgets
-import type { AllTypes as T } from "s7k-widgets-core";
-import { WidgetInterface, defaultWidgetComponent } from "s7k-widgets-core";
+// // Widgets
+// import type { AllTypes as T } from "s7k-widgets-core";
+// import { WidgetInterface, defaultWidgetComponent } from "s7k-widgets-core";
 
-// GraphQL
-import type { CoreLocation } from "@/graphql"
+// // GraphQL
+// import type { CoreLocation } from "@/graphql"
 
-export default defineComponent({
-    name: 'WidgetCoreLocationBasic',
-    components: {
-        PVCard,
+// export default defineComponent({
+//     name: 'WidgetCoreLocationBasic',
+//     components: {
+//         PVCard,
 
-        WidgetInterface
-    },
-    data(){
-        return {
-            location: null as CoreLocation | null,
-        }
-    },
-    props: {
-        ...defaultWidgetComponent.props as T.RequiredWidgetsProps,
-    },
-    watch: {
-        content: {
-            handler(newContent, oldContent) {
-                this.location = newContent.data as CoreLocation
-            },
-            deep: true
-        }
-    },
-});
+//         WidgetInterface
+//     },
+//     data(){
+//         return {
+//             location: null as CoreLocation | null,
+//         }
+//     },
+//     props: {
+//         ...defaultWidgetComponent.props as T.RequiredWidgetsProps,
+//     },
+//     watch: {
+//         content: {
+//             handler(newContent, oldContent) {
+//                 this.location = newContent.data as CoreLocation
+//             },
+//             deep: true
+//         }
+//     },
+// });
 
 
 </script>

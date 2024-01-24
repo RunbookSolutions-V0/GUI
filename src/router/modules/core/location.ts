@@ -1,7 +1,7 @@
 import { type RouteRecordRaw } from "vue-router";
 
-import List from "@/pages/core/location/List.vue";
-import View from "@/pages/core/location/View.vue";
+import List from "@/pages/core/location/PageCoreLocationList.vue";
+import View from "@/pages/core/location/PageCoreLocationView.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {

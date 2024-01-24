@@ -13,7 +13,6 @@
 </template>
 <script setup lang="ts">
 // Imports
-import { onMounted, ref, watch } from "vue"
 import Paginator from 'primevue/paginator';
 
 // Props

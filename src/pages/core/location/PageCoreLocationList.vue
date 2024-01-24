@@ -78,7 +78,7 @@ import PVDropdown from 'primevue/dropdown'
 import { useDialog } from 'primevue/usedialog';
 
 // Our Components
-import Create from "./Create.vue";
+import Create from "@/components/core/location/CoreLocationCreate.vue";
 import GraphQLPaginator from "@/components/GraphQLPaginator.vue"
 
 // Dialog
@@ -112,6 +112,7 @@ const locations = ref<CoreLocation[]>([]);
 const paginator = ref({});
 
 // GraphQL
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument = gql`
 query coreLocationList($first: Int, $page: Int, $name: String, $type: CoreLocationTypes) {
     core {

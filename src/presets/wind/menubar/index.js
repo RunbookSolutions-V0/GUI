@@ -68,6 +68,7 @@ export default {
                 'text-background-500 dark:text-white/70': !context.focused && !context.active,
                 'text-background-500 dark:text-white/70 bg-background-200 dark:bg-black/70': context.focused && !context.active,
                 'text-background-900 dark:text-background-0/80 bg-background-50 dark:bg-black/70': context.focused && context.active,
+                // eslint-disable-next-line no-dupe-keys
                 'text-background-900 dark:text-background-0/80 bg-background-50 dark:bg-black/70': !context.focused && context.active
             },
 

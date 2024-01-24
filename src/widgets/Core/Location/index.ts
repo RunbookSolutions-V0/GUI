@@ -1,6 +1,6 @@
-import BasicWidget from "./Basic.vue";
-import MapWidget from "./Map.vue";
-import TreeWidget from "./Tree.vue";
+import BasicWidget from "./WidgetCoreLocationBasic.vue";
+import MapWidget from "./WidgetCoreLocationMap.vue";
+import TreeWidget from "./WidgetCoreLocationTree.vue";
 
 const widgets = [
     {

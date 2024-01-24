@@ -69,11 +69,10 @@ import PVButton from 'primevue/button';
 import PVDataTable from 'primevue/datatable';
 import PVColumn from 'primevue/column';
 import PVInputText from 'primevue/inputtext'
-import PVDropdown from 'primevue/dropdown'
 import { useDialog } from 'primevue/usedialog';
 
 // Our Compoents
-import Create from "./Create.vue";
+import Create from "@/components/core/network/CoreNetworkCreate.vue"
 import GraphQLPaginator from "@/components/GraphQLPaginator.vue"
 
 // Dialog
@@ -100,6 +99,7 @@ const networks = ref<CoreNetwork[]>([]);
 const paginator = ref({});
 
 // GraphQL
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument = gql`
 query coreNetworkList($perPage: Int, $page: Int, $name: String, $network: String) {
     core {

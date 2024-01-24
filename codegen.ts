@@ -4,7 +4,7 @@ const config: CodegenConfig = {
   schema: "http://192.168.1.197/graphql",
   documents: [
     "./src/**/*.vue",
-    "./src/stores/auth.graphql.ts"
+    "./src/**/graphql.ts"
   ],
   //ignoreNoDocuments: true, // for better experience with the watcher
   generates: {

@@ -1,6 +1,6 @@
 <template>
     <WidgetsPage
-        page="core-network-view" 
+        page="core-contact-view" 
         :default-layouts="layouts"
         :page-content="pageContent"
     />
@@ -15,8 +15,8 @@ import { v4 as uuidv4 } from "uuid";
 
 // GraphQL
 import gql from "graphql-tag";
-import type { CoreNetwork } from "@/graphql";
-import { useCoreNetworkSingleQuery, useCoreNetworkUpdateMutation } from "@/graphql";
+import type { CoreContact } from "@/graphql";
+import { useCoreContactSingleQuery, useCoreContactUpdateMutation } from "@/graphql";
 
 // Define our Reactive Variables
 //TODO: Define Page Content
@@ -27,53 +27,57 @@ const pageContent = ref<{data: any, update: any}>({
 
 // GraphQL
 // Get Data
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument1 = gql`
-    query coreNetworkSingle($id: ID) {
+    query coreContactSingle($id: ID) {
       core {
-        network {
+        contact {
           single(id: $id) {
+            company_id
             created_at
             description
+            email
             id
-            mask
             name
-            network
-            parent_id
+            phone
+            photo
+            type
             updated_at
           }
         }
       }
     }`;
-const { loading, error, onResult } = useCoreNetworkSingleQuery({ id: useRoute().params.id });
+const { loading, error, onResult } = useCoreContactSingleQuery({ id: useRoute().params.id });
 onResult((result) => {
     if(!result.data) return;
-    const network = result.data.core.network.single as CoreNetwork;
-    if(!network) return;
-    pageContent.value.data = network;
+    const contact = result.data.core.contact.single as CoreContact;
+    if(!contact) return;
+    pageContent.value.data = contact;
 });
 // Allow for Updates
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument2 = gql`
-    mutation coreNetworkUpdate($input: CoreNetworkUpdateInput!) {
+    mutation coreContactUpdate($input: CoreContactUpdateInput!) {
       core {
-        network {
+        contact {
           update(input: $input) {
             id
           }
         }
       }
     }`;
-const { mutate, onDone, onError } = useCoreNetworkUpdateMutation();
+const { mutate, onDone, onError } = useCoreContactUpdateMutation();
 pageContent.value.update = mutate;
 onDone((result) => {
     if (!result.data) return;
-    const network = result.data.core.network.update;
-    if (!network) return;
-    console.log("Mutation Complete. Updated Network:")
-    console.log(network);
+    const contact = result.data.core.contact.update;
+    if (!contact) return;
+    console.log("Mutation Complete. Updated Contact:")
+    console.log(contact);
     refetch()
 });
 onError((result) => {
-    console.log("Error Updating Network!");
+    console.log("Error Updating Contact!");
     console.log(result);
 });
 
@@ -81,7 +85,7 @@ onError((result) => {
 const layouts = [
     {
         id: "0000-000-000-0000",
-        name: "Default Network View",
+        name: "Default Contact View",
         default: false,
         grid: {
             id: uuidv4(),

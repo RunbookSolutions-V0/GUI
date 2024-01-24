@@ -74,7 +74,7 @@ import { useDialog } from 'primevue/usedialog';
 
 // Our Components
 import GraphQLPaginator from "@/components/GraphQLPaginator.vue"
-import Create from "./Create.vue";
+import Create from "@/components/core/device/CoreDeviceCreate.vue";
 
 // Dialog
 const dialog = useDialog();
@@ -111,6 +111,7 @@ const types = [
 ];
 
 // GraphQL
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument = gql`
 query coreDeviceList($first: Int, $page: Int, $name: String, $hostname: String, $type: CoreDeviceTypes) {
     core {

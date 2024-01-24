@@ -16,7 +16,7 @@ import VPButton from 'primevue/button';
 import InputTextLabel from '@/components/Input/InputTextLabel.vue';
 import TextAreaLabel from '@/components/Input/TextAreaLabel.vue';
 
-import CoreNetworkSelect from "@/components/Core/Network/Select.vue";
+import CoreNetworkSelect from "@/components/core/network/CoreNetworkSelect.vue";
 
 import IPInput from "@/components/Input/IPInput.vue";
 
@@ -38,6 +38,7 @@ const formData = ref<CoreNetworkCreateInput>({
 
 const selectedParentNetwork = ref();
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument = gql`
   mutation coreNetworkCreate($input: CoreNetworkCreateInput) {
       core {

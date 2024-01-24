@@ -40,6 +40,7 @@ export default {
             'font-medium'
         ]
     },
+    // eslint-disable-next-line no-unused-vars
     button: ({ props }) => ({
         class: [
             // Flexbox

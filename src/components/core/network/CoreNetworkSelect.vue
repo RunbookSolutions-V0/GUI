@@ -13,7 +13,7 @@
                 :suggestions="items"
                 @complete="search"
                 optionLabel="name"
-                placeholder="Parent Company"
+                placeholder="Parent Network"
                 forceSelection
                 dropdown
                 dropdownMode="current"
@@ -24,40 +24,27 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import AutoComplete from 'primevue/autocomplete';
+import AutoComplete, { type AutoCompleteCompleteEvent } from 'primevue/autocomplete';
 import gql from "graphql-tag";
 
 import { 
-    useCoreContactSelectFilteredListQuery,
-    type CoreContactSelectFilteredListQueryVariables,
-    CoreContactTypes
+    useCoreNetworkSelectFilteredListQuery,
+    type CoreNetworkSelectFilteredListQueryVariables,
+    type CoreNetwork,
+    type InputMaybe
 } from "@/graphql";
 
-// Props
-const props = defineProps({
-    label: {
-        type: [String || null],
-        default: null,
-    },
-    type: {
-        type: String as CoreContactTypes,
-        default: null,
-    }
-});
+const items = ref<CoreNetwork[]>([]);
+const variables = ref<CoreNetworkSelectFilteredListQueryVariables>({
+    name: null as InputMaybe<string>
+})
 
-// Define some reactive variables;
-const items = ref([]);
-const variables = ref<CoreContactSelectFilteredListQueryVariables>({
-    type: props.type,
-    name: null,
-});
-
-// Define our GraphQL Query
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument = gql`
-query coreContactSelectFilteredList($name: String, $type: CoreContactTypes) {
+query coreNetworkSelectFilteredList($name: String) {
     core {
-      contact {
-        list(name: $name, type: $type) {
+      network {
+        list(name: $name) {
           data {
             id
             name
@@ -67,16 +54,13 @@ query coreContactSelectFilteredList($name: String, $type: CoreContactTypes) {
     }
   }`;
 
-// Setup our Query
-const { onResult, loading } = useCoreContactSelectFilteredListQuery(variables);
-// and what we will do with the data
+const { onResult, loading } = useCoreNetworkSelectFilteredListQuery();
 onResult((result) => {
     if(!result.data) return;
-    items.value = result.data.core.contact.list.data;
+    items.value = result.data.core.network.list.data as CoreNetwork[]
 });
 
-// Functions
-function search(event) {
+function search(event: AutoCompleteCompleteEvent){
     variables.value.name = "%" + event.query + "%";
 }
 </script>

@@ -27,6 +27,7 @@ const pageContent = ref<{data: any, update: any}>({
 
 // GraphQL
 // Get Data
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument1 = gql`
 query coreLocationSingle($id: ID) {
   core {
@@ -58,6 +59,7 @@ onResult((result) => {
     pageContent.value.data = location;
 });
 // Allow for Updates
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument2 = gql`
 mutation coreLocationUpdate($input: CoreLocationUpdateInput!) {
   core {

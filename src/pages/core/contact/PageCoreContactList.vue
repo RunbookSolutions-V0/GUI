@@ -98,7 +98,7 @@ import { useDialog } from 'primevue/usedialog';
 
 // Our Components
 import GraphQLPaginator from "@/components/GraphQLPaginator.vue"
-import Create from "./Create.vue";
+import Create from "@/components/core/contact/CoreContactCreate.vue";
 
 // Dialog
 const dialog = useDialog();
@@ -136,6 +136,7 @@ const contacts = ref<CoreContact[]>([]);
         const paginator = ref({});
 
 // GraphQL
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument = gql`
 query coreContactList($first: Int, $page: Int, $name: String, $email: String, $phone: String $type: CoreContactTypes) {
     core {

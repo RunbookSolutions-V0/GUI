@@ -1,6 +1,6 @@
 <template>
     <WidgetsPage
-        page="core-device-view" 
+        page="core-network-view" 
         :default-layouts="layouts"
         :page-content="pageContent"
     />
@@ -15,8 +15,8 @@ import { v4 as uuidv4 } from "uuid";
 
 // GraphQL
 import gql from "graphql-tag";
-import type { CoreDevice } from "@/graphql";
-import { useCoreDeviceSingleQuery, useCoreDeviceUpdateMutation } from "@/graphql";
+import type { CoreNetwork } from "@/graphql";
+import { useCoreNetworkSingleQuery, useCoreNetworkUpdateMutation } from "@/graphql";
 
 // Define our Reactive Variables
 //TODO: Define Page Content
@@ -27,52 +27,54 @@ const pageContent = ref<{data: any, update: any}>({
 
 // GraphQL
 // Get Data
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument1 = gql`
-    query coreDeviceSingle($id: ID) {
+    query coreNetworkSingle($id: ID) {
       core {
-        device {
+        network {
           single(id: $id) {
             created_at
             description
-            hostname
             id
+            mask
             name
-            type
+            network
+            parent_id
             updated_at
           }
         }
       }
     }`;
-const { loading, error, onResult } = useCoreDeviceSingleQuery({ id: useRoute().params.id });
+const { loading, error, onResult } = useCoreNetworkSingleQuery({ id: useRoute().params.id });
 onResult((result) => {
     if(!result.data) return;
-    const device = result.data.core.device.single as CoreDevice;
-    if(!device) return;
-    pageContent.value.data = device;
+    const network = result.data.core.network.single as CoreNetwork;
+    if(!network) return;
+    pageContent.value.data = network;
 });
 // Allow for Updates
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument2 = gql`
-    mutation coreDeviceUpdate($input: CoreDeviceUpdateInput!) {
+    mutation coreNetworkUpdate($input: CoreNetworkUpdateInput!) {
       core {
-        device {
+        network {
           update(input: $input) {
             id
           }
         }
       }
     }`;
-const { mutate, onDone, onError } = useCoreDeviceUpdateMutation();
+const { mutate, onDone, onError } = useCoreNetworkUpdateMutation();
 pageContent.value.update = mutate;
 onDone((result) => {
     if (!result.data) return;
-    const device = result.data.core.device.update;
-    if (!device) return;
-    console.log("Mutation Complete. Updated Device:")
-    console.log(device);
-    refetch()
+    const network = result.data.core.network.update;
+    if (!network) return;
+    console.log("Mutation Complete. Updated Network:")
+    console.log(network);
 });
 onError((result) => {
-    console.log("Error Updating Device!");
+    console.log("Error Updating Network!");
     console.log(result);
 });
 
@@ -80,7 +82,7 @@ onError((result) => {
 const layouts = [
     {
         id: "0000-000-000-0000",
-        name: "Default Device View",
+        name: "Default Network View",
         default: false,
         grid: {
             id: uuidv4(),

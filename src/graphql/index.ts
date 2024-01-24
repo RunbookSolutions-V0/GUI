@@ -2240,6 +2240,13 @@ export type VerifyEmailInput = {
   token: Scalars['String']['input'];
 };
 
+export type CoreContactCreateMutationVariables = Exact<{
+  input: CoreContactCreateInput;
+}>;
+
+
+export type CoreContactCreateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', contact: { __typename?: 'CoreContactMutations', create: { __typename?: 'CoreContact', id: string } } } };
+
 export type CoreContactSelectFilteredListQueryVariables = Exact<{
   name?: InputMaybe<Scalars['String']['input']>;
   type?: InputMaybe<CoreContactTypes>;
@@ -2248,6 +2255,20 @@ export type CoreContactSelectFilteredListQueryVariables = Exact<{
 
 export type CoreContactSelectFilteredListQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', contact: { __typename?: 'CoreContactQueries', list: { __typename?: 'CoreContactPaginator', data: Array<{ __typename?: 'CoreContact', id: string, name: string }> } } } };
 
+export type CoreDeviceCreateMutationVariables = Exact<{
+  input: CoreDeviceCreateInput;
+}>;
+
+
+export type CoreDeviceCreateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', device: { __typename?: 'CoreDeviceMutations', create: { __typename?: 'CoreDevice', id: string } } } };
+
+export type CoreLocationCreateMutationVariables = Exact<{
+  input?: InputMaybe<CoreLocationCreateInput>;
+}>;
+
+
+export type CoreLocationCreateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', location: { __typename?: 'CoreLocationMutations', create: { __typename?: 'CoreLocation', id: string } } } };
+
 export type CoreLocationSelectFilteredListQueryVariables = Exact<{
   name?: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -2255,19 +2276,19 @@ export type CoreLocationSelectFilteredListQueryVariables = Exact<{
 
 export type CoreLocationSelectFilteredListQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', location: { __typename?: 'CoreLocationQueries', list: { __typename?: 'CoreLocationPaginator', data: Array<{ __typename?: 'CoreLocation', id: string, name: string }> } } } };
 
+export type CoreNetworkCreateMutationVariables = Exact<{
+  input?: InputMaybe<CoreNetworkCreateInput>;
+}>;
+
+
+export type CoreNetworkCreateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', network: { __typename?: 'CoreNetworkMutations', create: { __typename?: 'CoreNetwork', id: string } } } };
+
 export type CoreNetworkSelectFilteredListQueryVariables = Exact<{
   name?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type CoreNetworkSelectFilteredListQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', network: { __typename?: 'CoreNetworkQueries', list: { __typename?: 'CoreNetworkPaginator', data: Array<{ __typename?: 'CoreNetwork', id: string, name: string }> } } } };
-
-export type CoreContactCreateMutationVariables = Exact<{
-  input: CoreContactCreateInput;
-}>;
-
-
-export type CoreContactCreateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', contact: { __typename?: 'CoreContactMutations', create: { __typename?: 'CoreContact', id: string } } } };
 
 export type CoreContactListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -2295,13 +2316,6 @@ export type CoreContactUpdateMutationVariables = Exact<{
 
 export type CoreContactUpdateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', contact: { __typename?: 'CoreContactMutations', update: { __typename?: 'CoreContact', id: string } } } };
 
-export type CoreDeviceCreateMutationVariables = Exact<{
-  input: CoreDeviceCreateInput;
-}>;
-
-
-export type CoreDeviceCreateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', device: { __typename?: 'CoreDeviceMutations', create: { __typename?: 'CoreDevice', id: string } } } };
-
 export type CoreDeviceListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -2327,13 +2341,6 @@ export type CoreDeviceUpdateMutationVariables = Exact<{
 
 export type CoreDeviceUpdateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', device: { __typename?: 'CoreDeviceMutations', update: { __typename?: 'CoreDevice', id: string } } } };
 
-export type CoreLocationCreateMutationVariables = Exact<{
-  input?: InputMaybe<CoreLocationCreateInput>;
-}>;
-
-
-export type CoreLocationCreateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', location: { __typename?: 'CoreLocationMutations', create: { __typename?: 'CoreLocation', id: string } } } };
-
 export type CoreLocationListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -2357,13 +2364,6 @@ export type CoreLocationUpdateMutationVariables = Exact<{
 
 
 export type CoreLocationUpdateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', location: { __typename?: 'CoreLocationMutations', update?: { __typename?: 'CoreLocation', id: string } | null } } };
-
-export type CoreNetworkCreateMutationVariables = Exact<{
-  input?: InputMaybe<CoreNetworkCreateInput>;
-}>;
-
-
-export type CoreNetworkCreateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', network: { __typename?: 'CoreNetworkMutations', create: { __typename?: 'CoreNetwork', id: string } } } };
 
 export type CoreNetworkListQueryVariables = Exact<{
   perPage?: InputMaybe<Scalars['Int']['input']>;
@@ -2429,14 +2429,40 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type LogoutMutation = { __typename?: 'Mutation', auth: { __typename?: 'AuthMutations', logout: { __typename?: 'LogoutResponse', status: string, message?: string | null } } };
 
-export type WidgetCoreLocationTreeQueryVariables = Exact<{
-  parentId?: InputMaybe<Scalars['ID']['input']>;
-}>;
 
+export const CoreContactCreateDocument = gql`
+    mutation coreContactCreate($input: CoreContactCreateInput!) {
+  core {
+    contact {
+      create(input: $input) {
+        id
+      }
+    }
+  }
+}
+    `;
 
-export type WidgetCoreLocationTreeQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', location: { __typename?: 'CoreLocationQueries', list: { __typename?: 'CoreLocationPaginator', data: Array<{ __typename?: 'CoreLocation', id: string, name: string, type: CoreLocationTypes }> } } } };
-
-
+/**
+ * __useCoreContactCreateMutation__
+ *
+ * To run a mutation, you first call `useCoreContactCreateMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCoreContactCreateMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCoreContactCreateMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCoreContactCreateMutation(options: VueApolloComposable.UseMutationOptions<CoreContactCreateMutation, CoreContactCreateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreContactCreateMutation, CoreContactCreateMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CoreContactCreateMutation, CoreContactCreateMutationVariables>(CoreContactCreateDocument, options);
+}
+export type CoreContactCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreContactCreateMutation, CoreContactCreateMutationVariables>;
 export const CoreContactSelectFilteredListDocument = gql`
     query coreContactSelectFilteredList($name: String, $type: CoreContactTypes) {
   core {
@@ -2475,6 +2501,72 @@ export function useCoreContactSelectFilteredListLazyQuery(variables: CoreContact
   return VueApolloComposable.useLazyQuery<CoreContactSelectFilteredListQuery, CoreContactSelectFilteredListQueryVariables>(CoreContactSelectFilteredListDocument, variables, options);
 }
 export type CoreContactSelectFilteredListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreContactSelectFilteredListQuery, CoreContactSelectFilteredListQueryVariables>;
+export const CoreDeviceCreateDocument = gql`
+    mutation coreDeviceCreate($input: CoreDeviceCreateInput!) {
+  core {
+    device {
+      create(input: $input) {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreDeviceCreateMutation__
+ *
+ * To run a mutation, you first call `useCoreDeviceCreateMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCoreDeviceCreateMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCoreDeviceCreateMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCoreDeviceCreateMutation(options: VueApolloComposable.UseMutationOptions<CoreDeviceCreateMutation, CoreDeviceCreateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreDeviceCreateMutation, CoreDeviceCreateMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CoreDeviceCreateMutation, CoreDeviceCreateMutationVariables>(CoreDeviceCreateDocument, options);
+}
+export type CoreDeviceCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreDeviceCreateMutation, CoreDeviceCreateMutationVariables>;
+export const CoreLocationCreateDocument = gql`
+    mutation coreLocationCreate($input: CoreLocationCreateInput) {
+  core {
+    location {
+      create(input: $input) {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreLocationCreateMutation__
+ *
+ * To run a mutation, you first call `useCoreLocationCreateMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCoreLocationCreateMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCoreLocationCreateMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCoreLocationCreateMutation(options: VueApolloComposable.UseMutationOptions<CoreLocationCreateMutation, CoreLocationCreateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreLocationCreateMutation, CoreLocationCreateMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CoreLocationCreateMutation, CoreLocationCreateMutationVariables>(CoreLocationCreateDocument, options);
+}
+export type CoreLocationCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreLocationCreateMutation, CoreLocationCreateMutationVariables>;
 export const CoreLocationSelectFilteredListDocument = gql`
     query coreLocationSelectFilteredList($name: String) {
   core {
@@ -2512,6 +2604,39 @@ export function useCoreLocationSelectFilteredListLazyQuery(variables: CoreLocati
   return VueApolloComposable.useLazyQuery<CoreLocationSelectFilteredListQuery, CoreLocationSelectFilteredListQueryVariables>(CoreLocationSelectFilteredListDocument, variables, options);
 }
 export type CoreLocationSelectFilteredListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreLocationSelectFilteredListQuery, CoreLocationSelectFilteredListQueryVariables>;
+export const CoreNetworkCreateDocument = gql`
+    mutation coreNetworkCreate($input: CoreNetworkCreateInput) {
+  core {
+    network {
+      create(input: $input) {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreNetworkCreateMutation__
+ *
+ * To run a mutation, you first call `useCoreNetworkCreateMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCoreNetworkCreateMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCoreNetworkCreateMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCoreNetworkCreateMutation(options: VueApolloComposable.UseMutationOptions<CoreNetworkCreateMutation, CoreNetworkCreateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreNetworkCreateMutation, CoreNetworkCreateMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CoreNetworkCreateMutation, CoreNetworkCreateMutationVariables>(CoreNetworkCreateDocument, options);
+}
+export type CoreNetworkCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreNetworkCreateMutation, CoreNetworkCreateMutationVariables>;
 export const CoreNetworkSelectFilteredListDocument = gql`
     query coreNetworkSelectFilteredList($name: String) {
   core {
@@ -2549,39 +2674,6 @@ export function useCoreNetworkSelectFilteredListLazyQuery(variables: CoreNetwork
   return VueApolloComposable.useLazyQuery<CoreNetworkSelectFilteredListQuery, CoreNetworkSelectFilteredListQueryVariables>(CoreNetworkSelectFilteredListDocument, variables, options);
 }
 export type CoreNetworkSelectFilteredListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreNetworkSelectFilteredListQuery, CoreNetworkSelectFilteredListQueryVariables>;
-export const CoreContactCreateDocument = gql`
-    mutation coreContactCreate($input: CoreContactCreateInput!) {
-  core {
-    contact {
-      create(input: $input) {
-        id
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useCoreContactCreateMutation__
- *
- * To run a mutation, you first call `useCoreContactCreateMutation` within a Vue component and pass it any options that fit your needs.
- * When your component renders, `useCoreContactCreateMutation` returns an object that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
- *
- * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
- *
- * @example
- * const { mutate, loading, error, onDone } = useCoreContactCreateMutation({
- *   variables: {
- *     input: // value for 'input'
- *   },
- * });
- */
-export function useCoreContactCreateMutation(options: VueApolloComposable.UseMutationOptions<CoreContactCreateMutation, CoreContactCreateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreContactCreateMutation, CoreContactCreateMutationVariables>> = {}) {
-  return VueApolloComposable.useMutation<CoreContactCreateMutation, CoreContactCreateMutationVariables>(CoreContactCreateDocument, options);
-}
-export type CoreContactCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreContactCreateMutation, CoreContactCreateMutationVariables>;
 export const CoreContactListDocument = gql`
     query coreContactList($first: Int, $page: Int, $name: String, $email: String, $phone: String, $type: CoreContactTypes) {
   core {
@@ -2729,39 +2821,6 @@ export function useCoreContactUpdateMutation(options: VueApolloComposable.UseMut
   return VueApolloComposable.useMutation<CoreContactUpdateMutation, CoreContactUpdateMutationVariables>(CoreContactUpdateDocument, options);
 }
 export type CoreContactUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreContactUpdateMutation, CoreContactUpdateMutationVariables>;
-export const CoreDeviceCreateDocument = gql`
-    mutation coreDeviceCreate($input: CoreDeviceCreateInput!) {
-  core {
-    device {
-      create(input: $input) {
-        id
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useCoreDeviceCreateMutation__
- *
- * To run a mutation, you first call `useCoreDeviceCreateMutation` within a Vue component and pass it any options that fit your needs.
- * When your component renders, `useCoreDeviceCreateMutation` returns an object that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
- *
- * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
- *
- * @example
- * const { mutate, loading, error, onDone } = useCoreDeviceCreateMutation({
- *   variables: {
- *     input: // value for 'input'
- *   },
- * });
- */
-export function useCoreDeviceCreateMutation(options: VueApolloComposable.UseMutationOptions<CoreDeviceCreateMutation, CoreDeviceCreateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreDeviceCreateMutation, CoreDeviceCreateMutationVariables>> = {}) {
-  return VueApolloComposable.useMutation<CoreDeviceCreateMutation, CoreDeviceCreateMutationVariables>(CoreDeviceCreateDocument, options);
-}
-export type CoreDeviceCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreDeviceCreateMutation, CoreDeviceCreateMutationVariables>;
 export const CoreDeviceListDocument = gql`
     query coreDeviceList($first: Int, $page: Int, $name: String, $hostname: String, $type: CoreDeviceTypes) {
   core {
@@ -2891,39 +2950,6 @@ export function useCoreDeviceUpdateMutation(options: VueApolloComposable.UseMuta
   return VueApolloComposable.useMutation<CoreDeviceUpdateMutation, CoreDeviceUpdateMutationVariables>(CoreDeviceUpdateDocument, options);
 }
 export type CoreDeviceUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreDeviceUpdateMutation, CoreDeviceUpdateMutationVariables>;
-export const CoreLocationCreateDocument = gql`
-    mutation coreLocationCreate($input: CoreLocationCreateInput) {
-  core {
-    location {
-      create(input: $input) {
-        id
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useCoreLocationCreateMutation__
- *
- * To run a mutation, you first call `useCoreLocationCreateMutation` within a Vue component and pass it any options that fit your needs.
- * When your component renders, `useCoreLocationCreateMutation` returns an object that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
- *
- * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
- *
- * @example
- * const { mutate, loading, error, onDone } = useCoreLocationCreateMutation({
- *   variables: {
- *     input: // value for 'input'
- *   },
- * });
- */
-export function useCoreLocationCreateMutation(options: VueApolloComposable.UseMutationOptions<CoreLocationCreateMutation, CoreLocationCreateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreLocationCreateMutation, CoreLocationCreateMutationVariables>> = {}) {
-  return VueApolloComposable.useMutation<CoreLocationCreateMutation, CoreLocationCreateMutationVariables>(CoreLocationCreateDocument, options);
-}
-export type CoreLocationCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreLocationCreateMutation, CoreLocationCreateMutationVariables>;
 export const CoreLocationListDocument = gql`
     query coreLocationList($first: Int, $page: Int, $name: String, $type: CoreLocationTypes) {
   core {
@@ -3062,39 +3088,6 @@ export function useCoreLocationUpdateMutation(options: VueApolloComposable.UseMu
   return VueApolloComposable.useMutation<CoreLocationUpdateMutation, CoreLocationUpdateMutationVariables>(CoreLocationUpdateDocument, options);
 }
 export type CoreLocationUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreLocationUpdateMutation, CoreLocationUpdateMutationVariables>;
-export const CoreNetworkCreateDocument = gql`
-    mutation coreNetworkCreate($input: CoreNetworkCreateInput) {
-  core {
-    network {
-      create(input: $input) {
-        id
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useCoreNetworkCreateMutation__
- *
- * To run a mutation, you first call `useCoreNetworkCreateMutation` within a Vue component and pass it any options that fit your needs.
- * When your component renders, `useCoreNetworkCreateMutation` returns an object that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
- *
- * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
- *
- * @example
- * const { mutate, loading, error, onDone } = useCoreNetworkCreateMutation({
- *   variables: {
- *     input: // value for 'input'
- *   },
- * });
- */
-export function useCoreNetworkCreateMutation(options: VueApolloComposable.UseMutationOptions<CoreNetworkCreateMutation, CoreNetworkCreateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreNetworkCreateMutation, CoreNetworkCreateMutationVariables>> = {}) {
-  return VueApolloComposable.useMutation<CoreNetworkCreateMutation, CoreNetworkCreateMutationVariables>(CoreNetworkCreateDocument, options);
-}
-export type CoreNetworkCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreNetworkCreateMutation, CoreNetworkCreateMutationVariables>;
 export const CoreNetworkListDocument = gql`
     query coreNetworkList($perPage: Int, $page: Int, $name: String, $network: String) {
   core {
@@ -3461,41 +3454,3 @@ export function useLogoutMutation(options: VueApolloComposable.UseMutationOption
   return VueApolloComposable.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument, options);
 }
 export type LogoutMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<LogoutMutation, LogoutMutationVariables>;
-export const WidgetCoreLocationTreeDocument = gql`
-    query widgetCoreLocationTree($parentId: ID) {
-  core {
-    location {
-      list(parentId: $parentId) {
-        data {
-          id
-          name
-          type
-        }
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useWidgetCoreLocationTreeQuery__
- *
- * To run a query within a Vue component, call `useWidgetCoreLocationTreeQuery` and pass it any options that fit your needs.
- * When your component renders, `useWidgetCoreLocationTreeQuery` returns an object from Apollo Client that contains result, loading and error properties
- * you can use to render your UI.
- *
- * @param variables that will be passed into the query
- * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
- *
- * @example
- * const { result, loading, error } = useWidgetCoreLocationTreeQuery({
- *   parentId: // value for 'parentId'
- * });
- */
-export function useWidgetCoreLocationTreeQuery(variables: WidgetCoreLocationTreeQueryVariables | VueCompositionApi.Ref<WidgetCoreLocationTreeQueryVariables> | ReactiveFunction<WidgetCoreLocationTreeQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables>(WidgetCoreLocationTreeDocument, variables, options);
-}
-export function useWidgetCoreLocationTreeLazyQuery(variables: WidgetCoreLocationTreeQueryVariables | VueCompositionApi.Ref<WidgetCoreLocationTreeQueryVariables> | ReactiveFunction<WidgetCoreLocationTreeQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables>(WidgetCoreLocationTreeDocument, variables, options);
-}
-export type WidgetCoreLocationTreeQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables>;

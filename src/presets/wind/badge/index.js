@@ -1,4 +1,5 @@
 export default {
+    // eslint-disable-next-line no-unused-vars
     root: ({ props, context }) => ({
         class: [
             // Font

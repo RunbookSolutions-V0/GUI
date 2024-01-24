@@ -109,6 +109,7 @@ export default {
                     'bg-background-0 dark:bg-background-800': parent.state.d_activeIndex !== context.index,
                     'text-background-700 dark:text-background-0/80': parent.state.d_activeIndex !== context.index,
 
+                    // eslint-disable-next-line no-dupe-keys
                     'bg-background-0 dark:bg-background-800': parent.state.d_activeIndex === context.index,
                     'border-primary-500 dark:border-primary-400': parent.state.d_activeIndex === context.index,
                     'text-primary-500 dark:text-primary-400': parent.state.d_activeIndex === context.index

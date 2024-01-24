@@ -1,12 +1,11 @@
 <template>
     <div clas="mx-4 space-y-4">
         <InputTextLabel v-model="form.name" label="Name"></InputTextLabel>
-
         <VPDropdown 
             v-model="selectedType" 
             :options="types" 
             optionLabel="name" 
-            placeholder="Contact Type" 
+            placeholder="Device Type" 
             class="w-full md:w-full mb-2"
         >
             <template #value="slotProps">
@@ -23,33 +22,22 @@
                 </div>
             </template>
         </VPDropdown>
-
-        <CoreContactSelect 
-            v-if="selectedType?.value == CoreContactTypes.PERSON" 
-            v-model="selectedCompany" 
-            label="Company"
-            type="COMPANY"
-        />
-
-        <InputTextLabel v-model="form.email" label="Email"></InputTextLabel>
-        <InputTextLabel v-model="form.phone" label="Phone"></InputTextLabel>
-
+        <InputTextLabel v-model="form.hostname" label="Hostname"></InputTextLabel>
         <TextAreaLabel v-model="form.description" label="Description"></TextAreaLabel>
-
     </div>
-    <VPButton label="Create Contact" @click="createContact" />
+    <VPButton label="Create Device" @click="createDevice" />
 </template>
 <script setup lang="ts">
-import { ref, inject, watch } from 'vue';
+import { ref, inject } from 'vue';
 import router from "@/router";
 
 // GraphQL
 import gql from "graphql-tag";
 import {
-    type CoreContactCreateInput,
-    CoreContactTypes
+    type CoreDeviceCreateInput,
+    CoreDeviceTypes
 } from "@/graphql";
-import { useCoreContactCreateMutation } from "@/graphql"
+import { useCoreDeviceCreateMutation } from "@/graphql"
 
 // Prime Vue
 import type { DynamicDialogInstance } from 'primevue/dynamicdialogoptions';
@@ -59,32 +47,34 @@ import VPDropdown from 'primevue/dropdown';
 // Our Components
 import InputTextLabel from '@/components/Input/InputTextLabel.vue';
 import TextAreaLabel from '@/components/Input/TextAreaLabel.vue';
-import CoreContactSelect from "@/components/Core/Contact/Select.vue";
 
 // Injections
 const dialog = inject('dialogRef');
 
-// Props
-
-// Define our Reactive Props
-const form = ref<CoreContactCreateInput>({
-    name: null,
-    type: CoreContactTypes.PERSON,
+// Define some reactive variables
+const form = ref<CoreDeviceCreateInput>({
+    name: "",
+    type: CoreDeviceTypes.OTHER,
+    hostname: null,
     description: null,
 });
-const selectedType = ref<{name: string, value: string}>();
-const selectedCompany = ref<{name: string, id: string}>();
+
+const selectedType = ref<{ name: string, value: string }>();
 
 const types = [
-    { name: 'Person', value: CoreContactTypes.PERSON },
-    { name: 'Company', value: CoreContactTypes.COMPANY },
+    { name: 'Laptop', value: CoreDeviceTypes.LAPTOP },
+    { name: 'Other', value: CoreDeviceTypes.OTHER},
+    { name: 'Printer', value: CoreDeviceTypes.PRINTER },
+    { name: 'Server', value: CoreDeviceTypes.SERVER},
+    { name: 'Workstation', value: CoreDeviceTypes.WORKSTATION },
 ];
 
 // GraphQL
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument = gql`
-  mutation coreContactCreate($input: CoreContactCreateInput!) {
+  mutation coreDeviceCreate($input: CoreDeviceCreateInput!) {
       core {
-        contact {
+        device {
           create(
             input: $input
           ) {
@@ -93,33 +83,26 @@ const GraphQLDocument = gql`
         }
       }
     }`;
-const { mutate: createMutation, onDone } = useCoreContactCreateMutation();
+const { mutate: createMutation, onDone } = useCoreDeviceCreateMutation();
 onDone((result) => {
-    console.log(result);
     if(!result.data) return;
     router.push({
-        name: 'core.contact.view', 
+        name: 'core.device.view', 
         params: { 
-            id: result.data.core.contact.create.id
+            id: result.data.core.device.create.id
         }
     });
 });
 
-// Some Watchers
-watch(() => selectedType, (v) => {
-    form.value.type = v
-}, { deep: true });
+// Our Functions
+function createDevice() {
+    if (!selectedType.value) return;
 
-watch(() => selectedCompany, (v) => {
-    form.value.company_id = v.value.id
-}, { deep: true });
+    form.value.type = selectedType.value.value as CoreDeviceTypes;
 
-// Functions
-function createContact() {
-    if (!this.selectedType) return;
-    this.form.type = this.selectedType.value as CoreContactTypes;
-    this.createMutation({input: this.form});
-    if (!this.dialog) return;
-    (this.dialog as DynamicDialogInstance).close();
-}
+    createMutation({input: form.value});
+
+    if (!dialog) return;
+    (dialog as DynamicDialogInstance).close();
+};
 </script>

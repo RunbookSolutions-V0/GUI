@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from "vue-router";
 
 import { useAuthStore } from '@/stores';
-import DashboardView from '../pages/Dashboard.vue'
+import DashboardView from '../pages/PageDashboard.vue'
 
 let routes: Array<RouteRecordRaw> = [
   {

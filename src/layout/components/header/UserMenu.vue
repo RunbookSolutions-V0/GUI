@@ -58,11 +58,33 @@ const items = ref([
     //     ]
     // },
     {
-        label: 'Logout',
-        icon: 'pi pi-sign-out',
-        command: () => {
-            authStore.logout();
-        }
+        label: 'Teams',
+        items: [
+            {
+                label: 'Create Team',
+            },
+            {
+                label: 'My Invitations',
+            },
+            {
+                label: 'Invite To Team'
+            }
+        ]
+    },
+    {
+        label: 'User',
+        items: [
+            {
+                label: 'Edit Profile'
+            },
+            {
+                label: 'Logout',
+                icon: 'pi pi-sign-out',
+                command: () => {
+                    authStore.logout();
+                }
+            }
+        ]
     },
 ]);
 

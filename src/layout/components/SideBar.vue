@@ -1,7 +1,7 @@
 <template>
     <aside
         class="sidebar w-64 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in">
-        <Menu 
+        <VPMenu 
             :model="items"
             :ptOptions="{ mergeProps: true, mergeSections: true }" 
             :pt="{ root: 'flex flex-col h-full rounded-none', menu: 'flex-grow' }"
@@ -29,16 +29,22 @@
             </template>
 
             <template #item="{ item, props }">
-                <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
-                    <a :href="href" v-bind="props.action" @click="navigate">
+                <PVPanelMenu
+                    :model="[item]"
+                    v-if="item.items"
+                />
+                <template v-else>
+                    <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+                        <a :href="href" v-bind="props.action" @click="navigate">
+                            <span :class="item.icon" />
+                            <span class="ml-2">{{ item.label }}</span>
+                        </a>
+                    </router-link>
+                    <a v-else :href="item.url" :target="item.target" v-bind="props.action">
                         <span :class="item.icon" />
                         <span class="ml-2">{{ item.label }}</span>
                     </a>
-                </router-link>
-                <a v-else :href="item.url" :target="item.target" v-bind="props.action">
-                    <span :class="item.icon" />
-                    <span class="ml-2">{{ item.label }}</span>
-                </a>
+                </template>
             </template>
             <!-- <template #end>
                 <div class="mt-auto">
@@ -52,12 +58,13 @@
                     </button>
                 </div>
             </template> -->
-        </Menu>
+        </VPMenu>
     </aside>
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-import Menu from 'primevue/menu';
+import PVPanelMenu from 'primevue/panelmenu';
+import VPMenu from 'primevue/menu';
 
 import { useSettingsStore } from "@/stores";
 const settings = useSettingsStore();
@@ -90,17 +97,30 @@ const items = ref([
         ]
     },
     {
-        label: 'Network Agents',
+        label: 'Automation',
         items: [
             {
-                label: 'Agents',
+                label: 'Network Agents',
+                items: [
+                    {
+                        label: 'Agents',
+                    },
+                    {
+                        label: 'Plugins',
+                        items: [
+                            {
+                                label: 'Team Plugins',
+                            },
+                            {
+                                label: 'Public Plugins'
+                            }
+                        ]
+                    },
+                    {
+                        label: 'Tasks'
+                    }
+                ]
             },
-            {
-                label: 'Plugins',
-            },
-            {
-                label: 'Tasks',
-            }
         ]
     }
 ]);
