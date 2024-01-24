@@ -1,3 +1,3 @@
-const widgets = [];
+const widgets = []
 
-export default widgets;
+export default widgets

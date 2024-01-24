@@ -1,6 +1,6 @@
 <template>
-    <h1>Tree</h1>
-    <!-- <WidgetInterface
+  <h1>Tree</h1>
+  <!-- <WidgetInterface
         v-bind="$props"
     >
         <PVCard
@@ -162,7 +162,7 @@
 //                 label: this.location.name,
 //                 type: this.location.type,
 //                 children: [
-                    
+
 //                     {
 //                         key: 'none',
 //                         type: 'LOAD_MORE',
@@ -211,6 +211,4 @@
 //         },
 //     }
 // });
-
-
 </script>

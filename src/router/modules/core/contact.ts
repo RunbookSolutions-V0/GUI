@@ -1,19 +1,19 @@
-import { type RouteRecordRaw } from "vue-router";
+import { type RouteRecordRaw } from 'vue-router'
 
-import List from "@/pages/core/contact/PageCoreContactList.vue";
-import View from "@/pages/core/contact/PageCoreContactView.vue";
+import List from '@/pages/core/contact/PageCoreContactList.vue'
+import View from '@/pages/core/contact/PageCoreContactView.vue'
 
 const routes: Array<RouteRecordRaw> = [
-    {
-      path: "/core/contact/list",
-      name: "core.contact.list",
-      component: List,
-    },
-    {
-        path: "/core/contact/:id/view",
-        name: "core.contact.view",
-        component: View,
-    }
-  ];
+  {
+    path: '/core/contact/list',
+    name: 'core.contact.list',
+    component: List
+  },
+  {
+    path: '/core/contact/:id/view',
+    name: 'core.contact.view',
+    component: View
+  }
+]
 
-export default routes;
+export default routes

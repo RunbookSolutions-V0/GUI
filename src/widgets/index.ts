@@ -1,7 +1,5 @@
-import CoreWidgets from "./Core";
+import CoreWidgets from './Core'
 
-const widgets = [
-    ...CoreWidgets
-];
+const widgets = [...CoreWidgets]
 
-export default widgets;
+export default widgets

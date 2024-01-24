@@ -4,20 +4,20 @@ import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 // Apollo
-import { DefaultApolloClient } from "@vue/apollo-composable";
-import { apolloClient } from "./graphql/apollo.client";
+import { DefaultApolloClient } from '@vue/apollo-composable'
+import { apolloClient } from './graphql/apollo.client'
 
 // PrimeVue
-import PrimeVue from 'primevue/config';
-import DialogService from 'primevue/dialogservice';
-import Wind from '@/presets/wind';
+import PrimeVue from 'primevue/config'
+import DialogService from 'primevue/dialogservice'
+import ToastService from 'primevue/toastservice'
+import Wind from '@/presets/wind'
 
 // Widgets
-import { type WidgetsPluginOptions } from "s7k-widgets-core";
-import WidgetsPlugin from "s7k-widgets-core";
-import "s7k-widgets-core/dist/widgets-core.css"
+import WidgetsPlugin from 's7k-widgets-core'
+import 's7k-widgets-core/dist/widgets-core.css'
 
-import applicationWidgets from "@/widgets"
+import applicationWidgets from '@/widgets'
 
 // Application
 import './assets/main.css'
@@ -40,16 +40,16 @@ app.provide(DefaultApolloClient, apolloClient)
 
 // Setup PrimeVue
 app.use(PrimeVue, {
-    unstyled: true,
-    pt: Wind
-});
-app.use(DialogService);
+  unstyled: true,
+  pt: Wind
+})
+app.use(DialogService)
+app.use(ToastService)
 
 // Widgets
-const WidgetsPluginOptions: WidgetsPluginOptions = {
-    widgets: applicationWidgets,
-};
-app.use(WidgetsPlugin, WidgetsPluginOptions);
+app.use(WidgetsPlugin, {
+  widgets: applicationWidgets
+})
 
 // Mount the App
 app.mount('#app')

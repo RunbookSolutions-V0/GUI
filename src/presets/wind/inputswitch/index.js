@@ -1,56 +1,59 @@
 export default {
-    root: ({ props, state }) => ({
-        class: [
-            // Alignments
-            'inline-flex relative',
-            'shrink-0',
+  root: ({ props, state }) => ({
+    class: [
+      // Alignments
+      'inline-flex relative',
+      'shrink-0',
 
-            // Shape
-            'rounded-2xl',
+      // Shape
+      'rounded-2xl',
 
-            // Size
-            'h-5 w-9',
+      // Size
+      'h-5 w-9',
 
-            // States
-            { 'outline-none outline-offset-0 ring-2 ring-primary-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-900 dark:ring-primary-400': state.focused },
-            {
-                'opacity-60 select-none pointer-events-none cursor-default': props.disabled
-            }
-        ]
-    }),
-    slider: ({ props }) => ({
-        class: [
-            // Position
-            'absolute top-0 left-0 right-0 bottom-0',
+      // States
+      {
+        'outline-none outline-offset-0 ring-2 ring-primary-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-900 dark:ring-primary-400':
+          state.focused
+      },
+      {
+        'opacity-60 select-none pointer-events-none cursor-default': props.disabled
+      }
+    ]
+  }),
+  slider: ({ props }) => ({
+    class: [
+      // Position
+      'absolute top-0 left-0 right-0 bottom-0',
 
-            // Shape
-            'rounded-2xl',
+      // Shape
+      'rounded-2xl',
 
-            // Before:
-            'before:absolute before:top-1/2',
-            'before:-mt-2',
-            'before:h-4 before:w-4',
-            'before:rounded-full',
-            'before:duration-200 before:transition before:ease-in-out',
-            'before:bg-background-0 before:dark:bg-background-900',
-            'before:shadow',
-            { 'before:transform before:translate-x-4': props.modelValue },
+      // Before:
+      'before:absolute before:top-1/2',
+      'before:-mt-2',
+      'before:h-4 before:w-4',
+      'before:rounded-full',
+      'before:duration-200 before:transition before:ease-in-out',
+      'before:bg-background-0 before:dark:bg-background-900',
+      'before:shadow',
+      { 'before:transform before:translate-x-4': props.modelValue },
 
-            // Colors
-            'border-2 border-transparent',
-            {
-                'bg-background-200 dark:bg-background-700': !props.modelValue,
-                'bg-primary-500 dark:bg-primary-400': props.modelValue
-            },
+      // Colors
+      'border-2 border-transparent',
+      {
+        'bg-background-200 dark:bg-background-700': !props.modelValue,
+        'bg-primary-500 dark:bg-primary-400': props.modelValue
+      },
 
-            // States
-            { 'hover:bg-background-300 hover:dark:bg-background-600 ': !props.modelValue },
+      // States
+      { 'hover:bg-background-300 hover:dark:bg-background-600 ': !props.modelValue },
 
-            // Transition
-            'transition-colors duration-200',
+      // Transition
+      'transition-colors duration-200',
 
-            // Misc
-            'cursor-pointer'
-        ]
-    })
-};
+      // Misc
+      'cursor-pointer'
+    ]
+  })
+}

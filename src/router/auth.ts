@@ -1,13 +1,13 @@
-import { type RouteRecordRaw } from "vue-router";
+import { type RouteRecordRaw } from 'vue-router'
 
-import LoginView from "../views/auth/LoginView.vue";
+import LoginView from '@/pages/auth/PageAuthLogin.vue'
 
 const routes: Array<RouteRecordRaw> = [
-    {
-      path: "/auth/login",
-      name: "auth.login",
-      component: LoginView,
-    },
-  ];
+  {
+    path: '/auth/login',
+    name: 'auth.login',
+    component: LoginView
+  }
+]
 
-export default routes;
+export default routes

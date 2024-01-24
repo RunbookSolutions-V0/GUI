@@ -1,5 +1,4 @@
-import gql from "graphql-tag";
-
+import gql from 'graphql-tag'
 
 export const FORGOT_PASSWORD_QUERY = gql`
   mutation forgotPassword($input: ForgotPasswordInput!) {
@@ -10,7 +9,7 @@ export const FORGOT_PASSWORD_QUERY = gql`
       }
     }
   }
-`;
+`
 
 export const LOGIN_QUERY = gql`
   mutation login($input: LoginInput) {
@@ -41,19 +40,20 @@ export const LOGIN_QUERY = gql`
       }
     }
   }
-`;
+`
 
 export const REFRESH_TOKEN_QUERY = gql`
-mutation refreshToken($input: RefreshTokenInput) {
-  auth {
-    refreshToken(input: $input) {
-      access_token
-      expires_in
-      refresh_token
-      token_type
+  mutation refreshToken($input: RefreshTokenInput) {
+    auth {
+      refreshToken(input: $input) {
+        access_token
+        expires_in
+        refresh_token
+        token_type
+      }
     }
   }
-}`;
+`
 
 export const REGISTER_QUERY = gql`
   mutation register($input: RegisterInput!) {
@@ -86,7 +86,7 @@ export const REGISTER_QUERY = gql`
       }
     }
   }
-`;
+`
 
 export const FORGOT_RESET_PASSWORD_QUERY = gql`
   mutation updateForgottenPassword($input: NewPasswordWithCodeInput!) {
@@ -97,7 +97,7 @@ export const FORGOT_RESET_PASSWORD_QUERY = gql`
       }
     }
   }
-`;
+`
 
 export const LOGOUT_QUERY = gql`
   mutation logout {
@@ -108,4 +108,4 @@ export const LOGOUT_QUERY = gql`
       }
     }
   }
-`;
+`

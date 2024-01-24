@@ -1,6 +1,6 @@
 <template>
-    <h1>Basic Info</h1>
-    <!-- <WidgetInterface
+  <h1>Basic Info</h1>
+  <!-- <WidgetInterface
         v-bind="$props"
     >
         <PVCard
@@ -103,6 +103,4 @@
 //         }
 //     },
 // });
-
-
 </script>
