@@ -28,11 +28,11 @@ export default {
             },
 
             // Color
-            'text-white dark:text-surface-900',
-            'ring-1 ring-white dark:ring-surface-900',
+            'text-white dark:text-background-900',
+            'ring-1 ring-white dark:ring-background-900',
             {
                 'bg-primary-500 dark:bg-primary-400': !context.info && !context.success && !context.warning && !context.danger && !context.help && !context.secondary,
-                'bg-surface-500 dark:bg-surface-400': context.secondary,
+                'bg-background-500 dark:bg-background-400': context.secondary,
                 'bg-green-500 dark:bg-green-400': context.success,
                 'bg-blue-500 dark:bg-blue-400': context.info,
                 'bg-orange-500 dark:bg-orange-400': context.warning,

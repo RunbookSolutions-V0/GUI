@@ -20,9 +20,9 @@ export default {
             'min-w-[3rem]',
 
             // Color
-            'bg-surface-50 dark:bg-surface-800',
-            'text-surface-600 dark:text-surface-400',
-            'border-surface-300 dark:border-surface-600'
+            'bg-background-50 dark:bg-background-800',
+            'text-background-600 dark:text-background-400',
+            'border-background-300 dark:border-background-600'
         ]
     }
 };

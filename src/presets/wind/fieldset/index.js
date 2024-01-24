@@ -10,9 +10,9 @@ export default {
             'rounded-md rounded-lg',
 
             // Color
-            'bg-surface-0 dark:bg-surface-900',
-            'text-surface-700 dark:text-surface-0/80',
-            'ring-1 ring-inset ring-surface-300 dark:ring-surface-700 ring-offset-0'
+            'bg-background-0 dark:bg-background-900',
+            'text-background-700 dark:text-background-0/80',
+            'ring-1 ring-inset ring-background-300 dark:ring-background-700 ring-offset-0'
         ]
     },
     legend: ({ props }) => ({
@@ -28,9 +28,9 @@ export default {
             'rounded-md',
 
             // Color
-            'text-surface-700 dark:text-surface-0/80',
+            'text-background-700 dark:text-background-0/80',
 
-            'bg-surface-0 dark:bg-surface-900',
+            'bg-background-0 dark:bg-background-900',
 
             // Transition
             'transition-none',
@@ -53,10 +53,10 @@ export default {
             { 'rounded-md': props.toggleable },
 
             // Color
-            { 'text-surface-700 dark:text-surface-200 hover:text-surface-900 hover:text-surface-900': props.toggleable },
+            { 'text-background-700 dark:text-background-200 hover:text-background-900 hover:text-background-900': props.toggleable },
 
             // States
-            { 'hover:text-surface-900 dark:hover:text-surface-100': props.toggleable },
+            { 'hover:text-background-900 dark:hover:text-background-100': props.toggleable },
             { 'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-inset focus:ring-primary-600 dark:focus:ring-primary-500': props.toggleable },
 
             // Misc

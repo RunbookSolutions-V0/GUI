@@ -24,7 +24,7 @@ export default {
                 'rounded-md',
 
                 // Color
-                'text-white dark:text-surface-900',
+                'text-white dark:text-background-900',
                 'bg-primary-500 dark:bg-primary-400',
                 'border border-primary-500 dark:border-primary-400',
 
@@ -68,7 +68,7 @@ export default {
                 'rounded-md',
 
                 // Color
-                'text-white dark:text-surface-900',
+                'text-white dark:text-background-900',
                 'bg-primary-500 dark:bg-primary-400',
                 'border border-primary-500 dark:border-primary-400',
 
@@ -112,7 +112,7 @@ export default {
                 'rounded-md',
 
                 // Color
-                'text-white dark:text-surface-900',
+                'text-white dark:text-background-900',
                 'bg-primary-500 dark:bg-primary-400',
                 'border border-primary-500 dark:border-primary-400',
 
@@ -156,7 +156,7 @@ export default {
                 'rounded-md',
 
                 // Color
-                'text-white dark:text-surface-900',
+                'text-white dark:text-background-900',
                 'bg-primary-500 dark:bg-primary-400',
                 'border border-primary-500 dark:border-primary-400',
 
@@ -204,9 +204,9 @@ export default {
             'py-3.5 px-3',
 
             // Color
-            'text-surface-800 dark:text-white/80',
-            'bg-surface-0 dark:bg-surface-800',
-            'border-surface-200 dark:border-surface-700 border-b'
+            'text-background-800 dark:text-white/80',
+            'bg-background-0 dark:bg-background-800',
+            'border-background-200 dark:border-background-700 border-b'
         ]
     },
     list: {
@@ -221,9 +221,9 @@ export default {
             'rounded-b-md border-0',
 
             // Color
-            'text-surface-600 dark:text-white/80',
-            'bg-surface-0 dark:bg-surface-800',
-            'border border-surface-200 dark:border-surface-700',
+            'text-background-600 dark:text-white/80',
+            'bg-background-0 dark:bg-background-800',
+            'border border-background-200 dark:border-background-700',
 
             // Spacing
             'py-3 px-0',
@@ -250,14 +250,14 @@ export default {
             'transition duration-200',
 
             // Color
-            'text-surface-700 dark:text-white/80',
-            'border-surface-200 dark:border-surface-700',
-            { 'bg-surface-100 dark:bg-surface-600/30': context.active && !context.focused },
-            { 'bg-surface-200 dark:bg-surface-500/30': context.active && context.focused },
-            { 'bg-surface-50 dark:bg-surface-700/70': !context.active && context.focused },
+            'text-background-700 dark:text-white/80',
+            'border-background-200 dark:border-background-700',
+            { 'bg-background-100 dark:bg-background-600/30': context.active && !context.focused },
+            { 'bg-background-200 dark:bg-background-500/30': context.active && context.focused },
+            { 'bg-background-50 dark:bg-background-700/70': !context.active && context.focused },
 
             // State
-            'hover:bg-surface-100 dark:hover:bg-surface-700',
+            'hover:bg-background-100 dark:hover:bg-background-700',
 
             // Misc
             'cursor-pointer overflow-hidden'

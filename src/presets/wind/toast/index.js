@@ -13,8 +13,8 @@ export default {
             'my-4 rounded-md w-full',
 
             'shadow-lg',
-            'bg-surface-0 dark:bg-surface-800',
-            'ring-1 ring-inset ring-surface-200 dark:ring-surface-700 ring-offset-0',
+            'bg-background-0 dark:bg-background-800',
+            'ring-1 ring-inset ring-background-200 dark:ring-background-700 ring-offset-0',
             // Colors
             {
                 'text-blue-500 dark:text-blue-300': props.message.severity == 'info',
@@ -46,7 +46,7 @@ export default {
         class: 'font-medium block'
     },
     detail: {
-        class: 'mt-1.5 block text-surface-600 dark:text-surface-0/70'
+        class: 'mt-1.5 block text-background-600 dark:text-background-0/70'
     },
     closebutton: {
         class: [
@@ -64,13 +64,13 @@ export default {
 
             // Colors
             'bg-transparent',
-            'text-surface-700 dark:text-surface-0/80',
+            'text-background-700 dark:text-background-0/80',
 
             // Transitions
             'transition duration-200 ease-in-out',
 
             // States
-            'hover:bg-surface-100 dark:hover:bg-surface-700',
+            'hover:bg-background-100 dark:hover:bg-background-700',
             'outline-none focus:ring-1 focus:ring-inset',
             'focus:ring-primary-500 dark:focus:ring-primary-400',
 

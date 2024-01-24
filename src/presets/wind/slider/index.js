@@ -11,7 +11,7 @@ export default {
             'border-0 rounded-lg',
 
             // Colors
-            'bg-surface-100 dark:bg-surface-700',
+            'bg-background-100 dark:bg-background-700',
 
             // States
             { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }
@@ -56,7 +56,7 @@ export default {
             'ring-2',
 
             // Colors
-            'bg-surface-0 dark:bg-surface-900',
+            'bg-background-0 dark:bg-background-900',
             'ring-primary-500 dark:ring-primary-400',
 
             // Transitions
@@ -84,7 +84,7 @@ export default {
             'ring-2',
 
             // Colors
-            'bg-surface-0 dark:bg-surface-900',
+            'bg-background-0 dark:bg-background-900',
             'ring-primary-500 dark:ring-primary-400',
 
             // Transitions
@@ -112,7 +112,7 @@ export default {
             'ring-2',
 
             // Colors
-            'bg-surface-0 dark:bg-surface-900',
+            'bg-background-0 dark:bg-background-900',
             'ring-primary-500 dark:ring-primary-400',
 
             // Transitions

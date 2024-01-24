@@ -26,13 +26,13 @@ export default {
             'rounded-md',
 
             // Color
-            'text-surface-900 dark:text-surface-0',
-            'bg-surface-0 dark:bg-surface-900',
-            'placeholder:text-surface-400 dark:placeholder:text-surface-500',
+            'text-background-900 dark:text-background-0',
+            'bg-background-0 dark:bg-background-900',
+            'placeholder:text-background-400 dark:placeholder:text-background-500',
             'shadow-sm',
 
             // States
-            { 'ring-1 ring-inset ring-surface-300 dark:ring-surface-700 ring-offset-0': !state.focused, 'ring-2 ring-primary-500 dark:ring-primary-400': state.focused },
+            { 'ring-1 ring-inset ring-background-300 dark:ring-background-700 ring-offset-0': !state.focused, 'ring-2 ring-primary-500 dark:ring-primary-400': state.focused },
 
             // Transition
             'transition-colors duration-200',
@@ -62,9 +62,9 @@ export default {
             'border-0 outline-none',
 
             // Color
-            'text-surface-700 dark:text-white/80',
+            'text-background-700 dark:text-white/80',
             'bg-transparent',
-            'placeholder:text-surface-400 dark:placeholder:text-surface-500'
+            'placeholder:text-background-400 dark:placeholder:text-background-500'
         ]
     },
     token: {
@@ -79,8 +79,8 @@ export default {
             'rounded-[1.14rem]',
 
             // Colors
-            'text-surface-700 dark:text-white/70',
-            'bg-surface-200 dark:bg-surface-700'
+            'text-background-700 dark:text-white/70',
+            'bg-background-200 dark:bg-background-700'
         ]
     },
     label: {

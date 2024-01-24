@@ -11,10 +11,10 @@ export default {
             'shadow-sm',
 
             // Color and Background
-            'bg-surface-0 dark:bg-surface-900',
+            'bg-background-0 dark:bg-background-900',
 
             // States
-            { 'ring-1 ring-inset ring-surface-300 dark:ring-surface-700': !state.focused, 'ring-2 ring-inset ring-primary-500 dark:ring-primary-400': state.focused },
+            { 'ring-1 ring-inset ring-background-300 dark:ring-background-700': !state.focused, 'ring-2 ring-inset ring-primary-500 dark:ring-primary-400': state.focused },
 
             // Misc
             'cursor-default',
@@ -32,8 +32,8 @@ export default {
             props.display === 'chip' && props?.modelValue?.length > 0 ? 'py-1 px-3' : 'py-1.5 px-3',
 
             // Color
-            { 'text-surface-800 dark:text-white/80': props.modelValue, 'text-surface-400 dark:text-surface-500': !props.modelValue },
-            'placeholder:text-surface-400 dark:placeholder:text-surface-500',
+            { 'text-background-800 dark:text-white/80': props.modelValue, 'text-background-400 dark:text-background-500': !props.modelValue },
+            'placeholder:text-background-400 dark:placeholder:text-background-500',
 
             // Transitions
             'transition duration-200',
@@ -54,8 +54,8 @@ export default {
             'rounded-[1.14rem]',
 
             // Colors
-            'text-surface-700 dark:text-white/70',
-            'bg-surface-200 dark:bg-surface-700'
+            'text-background-700 dark:text-white/70',
+            'bg-background-200 dark:bg-background-700'
         ]
     },
     removeTokenIcon: {
@@ -87,7 +87,7 @@ export default {
 
             // Color and Background
             'bg-transparent',
-            'text-surface-500',
+            'text-background-500',
 
             // Size
             'w-12',
@@ -109,9 +109,9 @@ export default {
             'shadow-md',
 
             // Color
-            'bg-surface-0 dark:bg-surface-800',
-            'text-surface-800 dark:text-white/80',
-            'ring-1 ring-inset ring-surface-300 dark:ring-surface-700'
+            'bg-background-0 dark:bg-background-800',
+            'text-background-800 dark:text-white/80',
+            'ring-1 ring-inset ring-background-300 dark:ring-background-700'
         ]
     },
     header: {
@@ -127,9 +127,9 @@ export default {
             'rounded-tr-md',
 
             // Color
-            'text-surface-700 dark:text-white/80',
-            'bg-surface-50 dark:bg-surface-800',
-            'border-surface-200 dark:border-surface-700'
+            'text-background-700 dark:text-white/80',
+            'bg-background-50 dark:bg-background-800',
+            'border-background-200 dark:border-background-700'
         ]
     },
     headerCheckboxContainer: {
@@ -168,9 +168,9 @@ export default {
             'border',
 
             // Colors
-            'text-surface-600',
+            'text-background-600',
             {
-                'border-surface-300 bg-surface-0 dark:border-surface-700 dark:bg-surface-900': !context?.selected,
+                'border-background-300 bg-background-0 dark:border-background-700 dark:bg-background-900': !context?.selected,
                 'border-primary-500 bg-primary-500 dark:border-primary-400 dark:bg-primary-400': context?.selected
             },
 
@@ -187,7 +187,7 @@ export default {
             'h-3',
 
             // Colors
-            'text-white dark:text-surface-900',
+            'text-white dark:text-background-900',
 
             // Transitions
             'transition-all',
@@ -211,15 +211,15 @@ export default {
             'rounded-full',
 
             // Colors
-            'text-surface-500',
+            'text-background-500',
             'bg-transparent',
 
             // Transitions
             'transition duration-200 ease-in-out',
 
             // States
-            'hover:text-surface-700 dark:hover:text-white/80',
-            'hover:bg-surface-100 dark:hover:bg-surface-800/80',
+            'hover:text-background-700 dark:hover:text-white/80',
+            'hover:bg-background-100 dark:hover:bg-background-800/80',
             'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-inset',
             'focus:ring-primary-500 dark:focus:ring-primary-400',
 
@@ -271,13 +271,13 @@ export default {
             'py-2 px-4',
 
             // Color
-            { 'text-surface-700 dark:text-white/80': !context.focused && !context.selected },
-            { 'bg-surface-200 dark:bg-surface-600/60 text-surface-700 dark:text-white/80': context.focused && !context.selected },
-            { 'bg-primary-500 dark:bg-primary-400 text-white dark:text-surface-700': context.focused && context.selected },
-            { 'bg-transparent text-surface-700 dark:text-white/80': !context.focused && context.selected },
+            { 'text-background-700 dark:text-white/80': !context.focused && !context.selected },
+            { 'bg-background-200 dark:bg-background-600/60 text-background-700 dark:text-white/80': context.focused && !context.selected },
+            { 'bg-primary-500 dark:bg-primary-400 text-white dark:text-background-700': context.focused && context.selected },
+            { 'bg-transparent text-background-700 dark:text-white/80': !context.focused && context.selected },
 
             //States
-            'hover:bg-primary-500 dark:hover:bg-primary-400 hover:text-white dark:hover:text-surface-700',
+            'hover:bg-primary-500 dark:hover:bg-primary-400 hover:text-white dark:hover:text-background-700',
 
             // Misc
             'cursor-pointer',
@@ -321,9 +321,9 @@ export default {
             'border',
 
             // Colors
-            'text-surface-600',
+            'text-background-600',
             {
-                'border-surface-300 bg-surface-0 dark:border-surface-700 dark:bg-surface-900': !context?.selected,
+                'border-background-300 bg-background-0 dark:border-background-700 dark:bg-background-900': !context?.selected,
                 'border-primary-400 bg-primary-500 dark:border-primary-300 dark:bg-primary-400': context?.selected
             },
 
@@ -340,7 +340,7 @@ export default {
             'h-3',
 
             // Colors
-            'text-white dark:text-surface-900',
+            'text-white dark:text-background-900',
 
             // Transitions
             'transition-all',
@@ -358,8 +358,8 @@ export default {
             'py-2 px-4',
 
             // Color
-            'text-surface-800 dark:text-white/80',
-            'bg-surface-0 dark:bg-surface-600/80',
+            'text-background-800 dark:text-white/80',
+            'bg-background-0 dark:bg-background-600/80',
 
             // Misc
             'cursor-auto'
@@ -382,10 +382,10 @@ export default {
             'w-full',
 
             //Color
-            'text-surface-700 dark:text-white/80',
-            'bg-surface-0 dark:bg-surface-900',
-            'placeholder:text-surface-400',
-            'ring-1 ring-inset ring-surface-300 dark:ring-surface-700',
+            'text-background-700 dark:text-white/80',
+            'bg-background-0 dark:bg-background-900',
+            'placeholder:text-background-400',
+            'ring-1 ring-inset ring-background-300 dark:ring-background-700',
 
             // Shape
             'border-0',
@@ -406,7 +406,7 @@ export default {
     clearicon: {
         class: [
             // Color
-            'text-surface-500',
+            'text-background-500',
 
             // Position
             'absolute',
@@ -427,7 +427,7 @@ export default {
             'py-2 px-4',
 
             // Color
-            'text-surface-800 dark:text-white/80',
+            'text-background-800 dark:text-white/80',
             'bg-transparent'
         ]
     },

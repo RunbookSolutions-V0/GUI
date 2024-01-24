@@ -17,9 +17,9 @@ export default {
             'shadow-md rounded-md',
 
             // Colors
-            'bg-surface-0 dark:bg-surface-900',
-            'text-surface-700 dark:text-white/80',
-            'dark:border-surface-700'
+            'bg-background-0 dark:bg-background-900',
+            'text-background-700 dark:text-white/80',
+            'dark:border-background-700'
         ]
     },
     meter: {
@@ -37,7 +37,7 @@ export default {
             'mb-2',
 
             // Colors
-            'bg-surface-100 dark:bg-surface-700'
+            'bg-background-100 dark:bg-background-700'
         ]
     },
     meterlabel: ({ instance }) => ({
@@ -57,10 +57,10 @@ export default {
         ]
     }),
     showicon: {
-        class: ['absolute top-1/2 right-3 -mt-2', 'text-surface-600 dark:text-white/70']
+        class: ['absolute top-1/2 right-3 -mt-2', 'text-background-600 dark:text-white/70']
     },
     hideicon: {
-        class: ['absolute top-1/2 right-3 -mt-2', 'text-surface-600 dark:text-white/70']
+        class: ['absolute top-1/2 right-3 -mt-2', 'text-background-600 dark:text-white/70']
     },
     transition: {
         enterFromClass: 'opacity-0 scale-y-[0.8]',

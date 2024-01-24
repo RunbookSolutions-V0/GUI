@@ -27,7 +27,7 @@ export default {
             { 'pr-4 min-[576px]:pr-32 md:pr-40': props.model.length !== context.index + 1 },
 
             // Colors
-            'bg-surface-0',
+            'bg-background-0',
             'dark:bg-transparent',
 
             // Misc
@@ -35,7 +35,7 @@ export default {
 
             // After
             'after:border-t-2',
-            { 'after:border-surface-200 after:dark:border-surface-700': state.d_activeStep <= context.index },
+            { 'after:border-background-200 after:dark:border-background-700': state.d_activeStep <= context.index },
             { 'after:border-primary-500 after:dark:border-primary-400': state.d_activeStep > context.index },
             'after:w-full',
             'after:absolute',
@@ -66,9 +66,9 @@ export default {
 
             // Colors
             {
-                'text-surface-400 dark:text-white/60': !context.active && state.d_activeStep < context.index,
-                'border-surface-100 dark:border-surface-700': !context.active && state.d_activeStep < context.index,
-                'bg-surface-0 dark:bg-surface-800': state.d_activeStep <= context.index
+                'text-background-400 dark:text-white/60': !context.active && state.d_activeStep < context.index,
+                'border-background-100 dark:border-background-700': !context.active && state.d_activeStep < context.index,
+                'bg-background-0 dark:bg-background-800': state.d_activeStep <= context.index
             },
             {
                 'border-primary-500 dark:border-primary-400': context.active,
@@ -76,13 +76,13 @@ export default {
             },
             {
                 'bg-primary-500 dark:bg-primary-400': state.d_activeStep > context.index,
-                'text-surface-0 dark:text-surface-900': state.d_activeStep > context.index,
+                'text-background-0 dark:text-background-900': state.d_activeStep > context.index,
                 'border-primary-500 dark:border-primary-400': state.d_activeStep > context.index
             },
 
             // States
             {
-                'hover:border-surface-300 dark:hover:border-surface-500': !context.active && !props.readonly
+                'hover:border-background-300 dark:hover:border-background-500': !context.active && !props.readonly
             },
 
             // Transition
@@ -103,7 +103,7 @@ export default {
             'mt-2',
 
             // Colors
-            { 'text-surface-400 dark:text-white/60': !context.active, 'text-surface-800 dark:text-white/80': context.active },
+            { 'text-background-400 dark:text-white/60': !context.active, 'text-background-800 dark:text-white/80': context.active },
 
             // Text and Overflow
             'whitespace-nowrap',

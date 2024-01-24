@@ -11,8 +11,8 @@ export default {
             'rounded-[1.14rem]',
 
             // Colors
-            'text-surface-700 dark:text-surface-0/70',
-            'bg-surface-200 dark:bg-surface-700'
+            'text-background-700 dark:text-background-0/70',
+            'bg-background-200 dark:bg-background-700'
         ]
     },
     label: {

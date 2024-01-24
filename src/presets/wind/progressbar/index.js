@@ -8,10 +8,10 @@ export default {
             'border-0',
             'rounded-md',
             { 'h-7 pt-5': props.mode !== 'indeterminate' && props.showValue },
-            { 'h-2 bg-surface-100 dark:bg-surface-700 ': props.mode == 'indeterminate' || !props.showValue },
+            { 'h-2 bg-background-100 dark:bg-background-700 ': props.mode == 'indeterminate' || !props.showValue },
 
             // Before & After (!indeterminate)
-            { 'before:absolute before:w-full before:rounded-md before:h-2 before:top-[1.25rem] before:left-0 before:bottom-0 before:bg-surface-100 dark:before:bg-surface-700': props.mode !== 'indeterminate' }
+            { 'before:absolute before:w-full before:rounded-md before:h-2 before:top-[1.25rem] before:left-0 before:bottom-0 before:bg-background-100 dark:before:bg-background-700': props.mode !== 'indeterminate' }
         ]
     }),
     value: ({ props }) => ({
@@ -49,7 +49,7 @@ export default {
             'absolute inset-0 mr-1 -top-[1.15rem]',
 
             // Font and Text
-            'text-sm text-surface-600 dark:text-surface-0/60',
+            'text-sm text-background-600 dark:text-background-0/60',
             'leading-none'
         ]
     }

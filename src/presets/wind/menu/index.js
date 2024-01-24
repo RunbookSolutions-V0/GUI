@@ -7,9 +7,9 @@ export default {
             // Spacing
             'p-1.5',
             // Colors
-            'bg-surface-0 dark:bg-surface-700',
-            'text-surface-700 dark:text-white/80',
-            'ring-1 ring-surface-200 dark:ring-surface-700'
+            'bg-background-0 dark:bg-background-700',
+            'text-background-700 dark:text-white/80',
+            'ring-1 ring-background-100 dark:ring-background-600'
         ]
     },
     menu: {
@@ -34,8 +34,8 @@ export default {
 
             // Colors
             {
-                'text-surface-700 dark:text-surface-0': !context.focused,
-                'bg-surface-100 text-primary-500 dark:bg-surface-300/10 dark:text-primary-400': context.focused
+                'text-background-700 dark:text-background-0': !context.focused,
+                'bg-background-100 text-primary-500 dark:bg-background-300/10 dark:text-primary-400': context.focused
             },
 
             // Transitions
@@ -44,7 +44,7 @@ export default {
 
             // States
             'hover:text-primary-600 dark:hover:text-primary-400',
-            'hover:bg-surface-100 dark:hover:bg-surface-400/10'
+            'hover:bg-background-100 dark:hover:bg-background-400/10'
         ]
     }),
     action: {
@@ -96,8 +96,8 @@ export default {
             'rounded-tr-none',
 
             // Colors
-            'bg-surface-0 dark:bg-surface-700',
-            'text-surface-600 dark:text-surface-0/60'
+            'bg-background-0 dark:bg-background-700',
+            'text-background-600 dark:text-background-0/60'
         ]
     },
     transition: {

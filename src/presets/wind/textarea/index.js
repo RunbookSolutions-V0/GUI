@@ -14,10 +14,10 @@ export default {
             'appearance-none',
 
             // Colors
-            'text-surface-900 dark:text-surface-0',
-            'placeholder:text-surface-400 dark:placeholder:text-surface-500',
-            'bg-surface-0 dark:bg-surface-900',
-            'ring-1 ring-inset ring-surface-300 dark:ring-surface-700 ring-offset-0',
+            'text-background-900 dark:text-background-0',
+            'placeholder:text-background-400 dark:placeholder:text-background-500',
+            'bg-background-0 dark:bg-background-900',
+            'ring-1 ring-inset ring-background-300 dark:ring-background-700 ring-offset-0',
             'shadow-sm',
 
             // States

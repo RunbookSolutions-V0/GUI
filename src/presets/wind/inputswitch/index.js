@@ -32,19 +32,19 @@ export default {
             'before:h-4 before:w-4',
             'before:rounded-full',
             'before:duration-200 before:transition before:ease-in-out',
-            'before:bg-surface-0 before:dark:bg-surface-900',
+            'before:bg-background-0 before:dark:bg-background-900',
             'before:shadow',
             { 'before:transform before:translate-x-4': props.modelValue },
 
             // Colors
             'border-2 border-transparent',
             {
-                'bg-surface-200 dark:bg-surface-700': !props.modelValue,
+                'bg-background-200 dark:bg-background-700': !props.modelValue,
                 'bg-primary-500 dark:bg-primary-400': props.modelValue
             },
 
             // States
-            { 'hover:bg-surface-300 hover:dark:bg-surface-600 ': !props.modelValue },
+            { 'hover:bg-background-300 hover:dark:bg-background-600 ': !props.modelValue },
 
             // Transition
             'transition-colors duration-200',

@@ -19,16 +19,16 @@ export default {
             },
 
             // Color
-            'text-white dark:text-surface-900',
+            'text-white dark:text-background-900',
             {
                 'bg-primary-500 dark:bg-primary-400 hover:bg-primary-600 dark:hover:bg-primary-300': props.target === 'parent',
-                'bg-surface-500 dark:bg-surface-400 hover:bg-surface-600 dark:hover:bg-surface-300': props.target === 'window'
+                'bg-background-500 dark:bg-background-400 hover:bg-background-600 dark:hover:bg-background-300': props.target === 'window'
             },
 
             // States
             {
                 'hover:bg-primary-600 dark:hover:bg-primary-300': props.target === 'parent',
-                'hover:bg-surface-600 dark:hover:bg-surface-300': props.target === 'window'
+                'hover:bg-background-600 dark:hover:bg-background-300': props.target === 'window'
             }
         ]
     }),

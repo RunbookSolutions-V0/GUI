@@ -12,12 +12,12 @@ export default {
 
             // Color
             'dark:border',
-            'dark:border-surface-700',
-            'bg-surface-0 dark:bg-surface-800',
-            'text-surface-700 dark:text-surface-0/80',
+            'dark:border-background-700',
+            'bg-background-0 dark:bg-background-800',
+            'text-background-700 dark:text-background-0/80',
 
             // Before: Arrow
-            'before:absolute before:w-0 before:-top-3 before:h-0 before:border-transparent before:border-solid before:ml-6 before:border-x-[0.75rem] before:border-b-[0.75rem] before:border-t-0 before:border-b-surface-0 dark:before:border-b-surface-800'
+            'before:absolute before:w-0 before:-top-3 before:h-0 before:border-transparent before:border-solid before:ml-6 before:border-x-[0.75rem] before:border-b-[0.75rem] before:border-t-0 before:border-b-background-0 dark:before:border-b-background-800'
         ]
     },
     content: {
@@ -30,8 +30,8 @@ export default {
             'py-3',
 
             // Colors
-            'bg-surface-0 dark:bg-surface-800',
-            'text-surface-600 dark:text-surface-0/70',
+            'bg-background-0 dark:bg-background-800',
+            'text-background-600 dark:text-background-0/70',
 
             // Misc
             'overflow-y-auto'
@@ -57,8 +57,8 @@ export default {
             'rounded-b-lg',
 
             // Colors
-            'bg-surface-50 dark:bg-surface-700',
-            'text-surface-700 dark:text-surface-0/80'
+            'bg-background-50 dark:bg-background-700',
+            'text-background-700 dark:text-background-0/80'
         ]
     },
     rejectbutton: {
@@ -102,7 +102,7 @@ export default {
                 'rounded-md',
 
                 // Color
-                'text-white dark:text-surface-900',
+                'text-white dark:text-background-900',
                 'bg-primary-500 dark:bg-primary-400',
                 'ring-1 ring-primary-500 dark:ring-primary-400',
 

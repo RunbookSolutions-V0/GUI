@@ -32,17 +32,17 @@ export default {
             'rounded',
 
             // Color
-            'border-surface-200 dark:border-surface-700',
+            'border-background-200 dark:border-background-700',
             {
-                'text-surface-600 dark:text-white/80': !context?.selected,
-                'bg-surface-0 dark:bg-surface-800': !context?.selected,
-                'text-surface-700 dark:text-surface-0': context?.selected,
-                'bg-surface-50 dark:bg-surface-700': context?.selected
+                'text-background-600 dark:text-white/80': !context?.selected,
+                'bg-background-0 dark:bg-background-800': !context?.selected,
+                'text-background-700 dark:text-background-0': context?.selected,
+                'bg-background-50 dark:bg-background-700': context?.selected
             },
 
             // States
             {
-                'hover:bg-surface-100 dark:hover:bg-surface-600/40': context?.selectable
+                'hover:bg-background-100 dark:hover:bg-background-600/40': context?.selectable
             },
 
             { 'cursor-pointer': context?.selectable }
@@ -66,7 +66,7 @@ export default {
             'w-px h-[20px]',
 
             // Color
-            'bg-surface-200 dark:bg-surface-700'
+            'bg-background-200 dark:bg-background-700'
         ]
     },
     lineleft: ({ context }) => ({
@@ -82,7 +82,7 @@ export default {
             { 'border-t': context.lineTop },
 
             // Color
-            'border-surface-200 dark:border-surface-700'
+            'border-background-200 dark:border-background-700'
         ]
     }),
     lineright: ({ context }) => ({
@@ -97,7 +97,7 @@ export default {
             'rounded-none',
 
             // Color
-            { 'border-t border-surface-200 dark:border-surface-700': context.lineTop }
+            { 'border-t border-background-200 dark:border-background-700': context.lineTop }
         ]
     }),
     nodecell: {

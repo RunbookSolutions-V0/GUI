@@ -13,16 +13,16 @@ export default {
             },
 
             // Colors
-            'text-surface-900 dark:text-surface-0',
-            'placeholder:text-surface-400 dark:placeholder:text-surface-500',
-            'bg-surface-0 dark:bg-surface-900',
+            'text-background-900 dark:text-background-0',
+            'placeholder:text-background-400 dark:placeholder:text-background-500',
+            'bg-background-0 dark:bg-background-900',
             'shadow-sm',
-            { 'ring-1 ring-inset ring-surface-300 dark:ring-surface-700 ring-offset-0': parent.instance.$name !== 'InputGroup' },
+            { 'ring-1 ring-inset ring-background-300 dark:ring-background-700 ring-offset-0': parent.instance.$name !== 'InputGroup' },
 
             // Shape
             { 'rounded-md': parent.instance.$name !== 'InputGroup' },
             { 'first:rounded-l-md rounded-none last:rounded-r-md': parent.instance.$name == 'InputGroup' },
-            { 'border-0 border-y border-l last:border-r border-surface-300 dark:border-surface-600': parent.instance.$name == 'InputGroup' },
+            { 'border-0 border-y border-l last:border-r border-background-300 dark:border-background-600': parent.instance.$name == 'InputGroup' },
             { 'first:ml-0 ml-[-1px]': parent.instance.$name == 'InputGroup' && !props.showButtons },
             'appearance-none',
 

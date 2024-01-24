@@ -12,10 +12,10 @@ export default {
             { 'rounded-br-md rounded-bl-md': !context.active || instance.activeItem?.items === undefined, 'rounded-br-0 rounded-bl-0': context.active && instance.activeItem?.items !== undefined },
 
             // Color
-            'border border-surface-200 dark:border-surface-700',
-            'bg-surface-0 dark:bg-surface-800',
-            'text-surface-600 dark:text-surface-0/80',
-            { 'text-surface-900 ark:text-surface-0': context.active },
+            'border border-background-200 dark:border-background-700',
+            'bg-background-0 dark:bg-background-800',
+            'text-background-600 dark:text-background-0/80',
+            { 'text-background-900 ark:text-background-0': context.active },
 
             // Transition
             'transition duration-200 ease-in-out',
@@ -60,9 +60,9 @@ export default {
             'rounded-t-none rounded-br-md rounded-bl-md',
 
             // Color
-            'text-surface-700 dark:text-white/80',
-            'bg-surface-0 dark:bg-surface-800',
-            'border-surface-200 dark:border-surface-700'
+            'text-background-700 dark:text-white/80',
+            'bg-background-0 dark:bg-background-800',
+            'border-background-200 dark:border-background-700'
         ]
     },
     menu: {
@@ -74,7 +74,7 @@ export default {
             'border-none rounded-none',
 
             // Color
-            'text-surface-700 dark:text-white/80',
+            'text-background-700 dark:text-white/80',
 
             // Transition
             'transition-shadow duration-200'
@@ -94,12 +94,12 @@ export default {
             'py-2 px-3',
 
             // Color
-            'text-surface-700 dark:text-white/80',
+            'text-background-700 dark:text-white/80',
 
             // States
-            'hover:bg-surface-100 dark:hover:bg-surface-700/80 hover:text-surface-700 dark:hover:text-white/80',
+            'hover:bg-background-100 dark:hover:bg-background-700/80 hover:text-background-700 dark:hover:text-white/80',
             {
-                'bg-surface-200 text-surface-700 dark:text-white/80 dark:bg-surface-600/90': context.focused
+                'bg-background-200 text-background-700 dark:text-white/80 dark:bg-background-600/90': context.focused
             },
 
             // Misc

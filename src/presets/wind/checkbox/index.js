@@ -32,9 +32,9 @@ export default {
             'border',
 
             // Colors
-            'text-surface-600',
+            'text-background-600',
             {
-                'border-surface-300 bg-surface-0 dark:border-surface-700 dark:bg-surface-900': !context.checked,
+                'border-background-300 bg-background-0 dark:border-background-700 dark:bg-background-900': !context.checked,
                 'border-primary-500 bg-primary-500 dark:border-primary-400 dark:bg-primary-400': context.checked
             },
 
@@ -60,7 +60,7 @@ export default {
             'h-3',
 
             // Colors
-            'text-white dark:text-surface-900',
+            'text-white dark:text-background-900',
 
             // Transitions
             'transition-all',

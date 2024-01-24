@@ -22,8 +22,8 @@ export default {
             'h-4',
 
             // Colors
-            'bg-surface-0 dark:bg-surface-900',
-            'border border-surface-300 dark:border-surface-700',
+            'bg-background-0 dark:bg-background-900',
+            'border border-background-300 dark:border-background-700',
 
             // States
             'hover:border-primary-500 dark:hover:border-primary-400',
@@ -51,8 +51,8 @@ export default {
             'rounded-md',
 
             // Colors
-            'bg-surface-800',
-            'ring-1 ring-inset ring-surface-900 dark:ring-surface-600'
+            'bg-background-800',
+            'ring-1 ring-inset ring-background-900 dark:ring-background-600'
         ]
     }),
     selector: {

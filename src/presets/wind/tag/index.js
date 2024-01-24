@@ -17,7 +17,7 @@ export default {
             },
 
             //Colors
-            'text-white dark:text-surface-900',
+            'text-white dark:text-background-900',
             {
                 'bg-primary-500 dark:bg-primary-400': props.severity == null || props.severity == 'primary',
                 'bg-green-500 dark:bg-green-400': props.severity == 'success',

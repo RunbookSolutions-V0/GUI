@@ -20,7 +20,7 @@ export default {
             'rounded-md',
 
             // Color
-            'text-surface-500 dark:text-white/70',
+            'text-background-500 dark:text-white/70',
 
             // States
             'focus-visible:outline-none focus-visible:outline-offset-0',
@@ -31,7 +31,7 @@ export default {
         ]
     },
     icon: {
-        class: 'text-surface-500 dark:text-white/70'
+        class: 'text-background-500 dark:text-white/70'
     },
     separator: {
         class: [
@@ -39,7 +39,7 @@ export default {
             'flex items-center shrink-0',
 
             // Color
-            'text-surface-500 dark:text-white/70'
+            'text-background-500 dark:text-white/70'
         ]
     }
 };

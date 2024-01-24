@@ -8,8 +8,8 @@ export default {
             'rounded-md',
 
             // Color
-            'bg-surface-900 text-white',
-            'border border-surface-700',
+            'bg-background-900 text-white',
+            'border border-background-700',
 
             // Sizing & Overflow
             'h-72 overflow-auto'
@@ -24,7 +24,7 @@ export default {
     prompt: {
         class: [
             // Color
-            'text-surface-400'
+            'text-background-400'
         ]
     },
     response: {

@@ -10,7 +10,7 @@ export default {
             { 'w-full': props.multiple },
 
             // Color
-            'text-surface-900 dark:text-surface-0',
+            'text-background-900 dark:text-background-0',
 
             //States
             {
@@ -38,14 +38,14 @@ export default {
             'appearance-none rounded-md',
 
             // Color
-            'text-surface-900 dark:text-surface-0',
-            'bg-surface-0 dark:bg-surface-900',
-            'placeholder:text-surface-400 dark:placeholder:text-surface-500',
+            'text-background-900 dark:text-background-0',
+            'bg-background-0 dark:bg-background-900',
+            'placeholder:text-background-400 dark:placeholder:text-background-500',
             'shadow-sm',
 
             // States
             'focus:outline-none focus:outline-offset-0',
-            { 'ring-1 ring-inset ring-surface-300 dark:ring-surface-700 ring-offset-0': !state.focused, 'ring-2 ring-primary-500 dark:ring-primary-400': state.focused },
+            { 'ring-1 ring-inset ring-background-300 dark:ring-background-700 ring-offset-0': !state.focused, 'ring-2 ring-primary-500 dark:ring-primary-400': state.focused },
 
             // Transition
             'transition duration-200 ease-in-out',
@@ -75,10 +75,10 @@ export default {
             { 'py-1.5 px-3': !props.multiple, 'p-0': props.multiple },
 
             // Colors
-            'text-surface-700 dark:text-white/80',
+            'text-background-700 dark:text-white/80',
             {
-                'bg-surface-0 dark:bg-surface-900': !props.multiple,
-                'border border-surface-300 dark:border-surface-700': !props.multiple,
+                'bg-background-0 dark:bg-background-900': !props.multiple,
+                'border border-background-300 dark:border-background-700': !props.multiple,
                 'border-0 bg-transparent': props.multiple
             },
 
@@ -101,8 +101,8 @@ export default {
             'rounded-[1.14rem]',
 
             // Colors
-            'text-surface-700 dark:text-white/70',
-            'bg-surface-200 dark:bg-surface-700'
+            'text-background-700 dark:text-white/70',
+            'bg-background-200 dark:bg-background-700'
         ]
     },
     label: {
@@ -142,19 +142,19 @@ export default {
                 '-ml-[1px]',
 
                 // Colors
-                'text-surface-600 dark:text-surface-100',
-                'bg-surface-100 dark:bg-surface-800',
-                'ring-1 ring-inset ring-surface-300 dark:ring-surface-700',
+                'text-background-600 dark:text-background-100',
+                'bg-background-100 dark:bg-background-800',
+                'ring-1 ring-inset ring-background-300 dark:ring-background-700',
 
                 // States
-                'hover:bg-surface-200 dark:hover:bg-surface-700',
+                'hover:bg-background-200 dark:hover:bg-background-700',
                 'focus:outline-none focus:outline-offset-0 focus:ring-1',
                 'focus:ring-primary-500 dark:focus:ring-primary-400'
             ]
         }
     },
     loadingicon: {
-        class: ['text-sm leading-none text-surface-500 dark:text-surface-0/70', 'absolute top-[50%] right-[0.5rem] -mt-2 animate-spin']
+        class: ['text-sm leading-none text-background-500 dark:text-background-0/70', 'absolute top-[50%] right-[0.5rem] -mt-2 animate-spin']
     },
     panel: {
         class: [
@@ -170,9 +170,9 @@ export default {
             'overflow-auto',
 
             // Color
-            'bg-surface-0 dark:bg-surface-800',
-            'text-surface-800 dark:text-white/80',
-            'ring-1 ring-inset ring-surface-300 dark:ring-surface-700'
+            'bg-background-0 dark:bg-background-800',
+            'text-background-800 dark:text-white/80',
+            'ring-1 ring-inset ring-background-300 dark:ring-background-700'
         ]
     },
     list: {
@@ -197,13 +197,13 @@ export default {
             'py-2 px-4',
 
             // Color
-            { 'text-surface-700 dark:text-white/80': !context.focused && !context.selected },
-            { 'bg-surface-200 dark:bg-surface-600/60 text-surface-700 dark:text-white/80': context.focused && !context.selected },
-            { 'bg-primary-500 dark:bg-primary-400 text-white dark:text-surface-700': context.focused && context.selected },
-            { 'bg-transparent text-surface-700 dark:text-white/80': !context.focused && context.selected },
+            { 'text-background-700 dark:text-white/80': !context.focused && !context.selected },
+            { 'bg-background-200 dark:bg-background-600/60 text-background-700 dark:text-white/80': context.focused && !context.selected },
+            { 'bg-primary-500 dark:bg-primary-400 text-white dark:text-background-700': context.focused && context.selected },
+            { 'bg-transparent text-background-700 dark:text-white/80': !context.focused && context.selected },
 
             //States
-            'hover:bg-primary-500 dark:hover:bg-primary-400 hover:text-white dark:hover:text-surface-700',
+            'hover:bg-primary-500 dark:hover:bg-primary-400 hover:text-white dark:hover:text-background-700',
 
             // Misc
             'cursor-pointer',
@@ -222,8 +222,8 @@ export default {
             'py-2 px-4',
 
             // Color
-            'text-surface-800 dark:text-white/80',
-            'bg-surface-0 dark:bg-surface-600/80',
+            'text-background-800 dark:text-white/80',
+            'bg-background-0 dark:bg-background-600/80',
 
             // Misc
             'cursor-auto'
@@ -239,7 +239,7 @@ export default {
             'py-2 px-4',
 
             // Color
-            'text-surface-800 dark:text-white/80',
+            'text-background-800 dark:text-white/80',
             'bg-transparent'
         ]
     },

@@ -19,9 +19,9 @@ export default {
             'shadow-xl',
 
             // Colors
-            'bg-surface-0 dark:bg-surface-800',
-            'text-surface-700 dark:text-white/80',
-            'dark:border-surface-700',
+            'bg-background-0 dark:bg-background-800',
+            'text-background-700 dark:text-white/80',
+            'dark:border-background-700',
 
             // Transitions
             'transition-transform',
@@ -41,8 +41,8 @@ export default {
             'px-6 pt-6',
 
             // Colors
-            'bg-surface-0 dark:bg-surface-800',
-            'text-surface-700 dark:text-surface-0/80'
+            'bg-background-0 dark:bg-background-800',
+            'text-background-700 dark:text-background-0/80'
         ]
     },
     title: {
@@ -68,15 +68,15 @@ export default {
             'rounded-full',
 
             // Colors
-            'text-surface-500',
+            'text-background-500',
             'bg-transparent',
 
             // Transitions
             'transition duration-200 ease-in-out',
 
             // States
-            'hover:text-surface-700 dark:hover:text-white/80',
-            'hover:bg-surface-100 dark:hover:bg-surface-800/80',
+            'hover:text-background-700 dark:hover:text-white/80',
+            'hover:bg-background-100 dark:hover:bg-background-800/80',
             'focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-inset',
             'focus:ring-primary-500 dark:focus:ring-primary-400',
 
@@ -115,7 +115,7 @@ export default {
             { 'p-5': !props.position == 'full' },
 
             // Background and Effects
-            { 'bg-surface-500/70 dark:bg-surface-700/70': props.modal, 'backdrop-blur-sm': props.modal }
+            { 'bg-background-500/70 dark:bg-background-700/70': props.modal, 'backdrop-blur-sm': props.modal }
         ]
     }),
     transition: ({ props }) => {

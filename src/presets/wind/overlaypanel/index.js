@@ -11,16 +11,16 @@ export default {
             'z-40 transform origin-center',
 
             // Color
-            'bg-surface-0 dark:bg-surface-800',
-            'text-surface-700 dark:text-surface-0/80',
-            'dark:border-surface-700',
+            'bg-background-0 dark:bg-background-800',
+            'text-background-700 dark:text-background-0/80',
+            'dark:border-background-700',
 
             // Before: Triangle
             'before:absolute before:-top-2 before:ml-4 before:z-50',
             'before:w-0 before:h-0 before:shadow-xl',
             'before:border-transparent before:border-solid',
             'before:border-x-[0.5rem] before:border-b-[0.5rem]',
-            'before:border-t-0 before:border-b-surface-0 dark:before:border-b-surface-800'
+            'before:border-t-0 before:border-b-background-0 dark:before:border-b-background-800'
         ]
     },
     content: {

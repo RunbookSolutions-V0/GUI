@@ -11,7 +11,7 @@ export default {
             'stroke-current',
 
             // Color
-            'stroke-surface-200 dark:stroke-surface-700',
+            'stroke-background-200 dark:stroke-background-700',
 
             // Fill
             'fill-none',
@@ -38,7 +38,7 @@ export default {
             'text-center text-xl',
 
             // Color
-            'fill-surface-600 dark:fill-surface-200'
+            'fill-background-600 dark:fill-background-200'
         ]
     }
 };

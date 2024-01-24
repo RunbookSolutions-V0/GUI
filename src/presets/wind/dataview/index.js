@@ -8,8 +8,8 @@ export default {
             'border-0',
 
             // Color
-            'text-surface-700 dark:text-white/80',
-            'bg-surface-0 dark:bg-surface-800'
+            'text-background-700 dark:text-white/80',
+            'bg-background-0 dark:bg-background-800'
         ]
     },
     grid: {
@@ -21,7 +21,7 @@ export default {
             'ml-0 mr-0 mt-0',
 
             // Color
-            'bg-surface-0 dark:bg-surface-800'
+            'bg-background-0 dark:bg-background-800'
         ]
     },
     header: {
@@ -32,9 +32,9 @@ export default {
             'p-6',
 
             // Color
-            'text-surface-800 dark:text-white/80',
-            'bg-surface-0 dark:bg-surface-800',
-            'border-surface-200 dark:border-surface-700 border-b'
+            'text-background-800 dark:text-white/80',
+            'bg-background-0 dark:bg-background-800',
+            'border-background-200 dark:border-background-700 border-b'
         ]
     }
 };

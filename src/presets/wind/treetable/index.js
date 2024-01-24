@@ -24,7 +24,7 @@ export default {
             'w-full h-full',
 
             // Color
-            'bg-surface-100/40 dark:bg-surface-800/40',
+            'bg-background-100/40 dark:bg-background-800/40',
 
             // Transition
             'transition duration-200'
@@ -53,9 +53,9 @@ export default {
             'py-3.5 px-3',
 
             // Color
-            'bg-surface-0 dark:bg-surface-800',
-            'border-surface-300 dark:border-surface-600',
-            'text-surface-700 dark:text-white/80'
+            'bg-background-0 dark:bg-background-800',
+            'border-background-300 dark:border-background-600',
+            'text-background-700 dark:text-white/80'
         ]
     }),
     footer: {
@@ -69,9 +69,9 @@ export default {
             'p-4',
 
             // Color
-            'bg-surface-0 dark:bg-surface-800',
-            'border-surface-200 dark:border-surface-700',
-            'text-surface-700 dark:text-white/80'
+            'bg-background-0 dark:bg-background-800',
+            'border-background-200 dark:border-background-700',
+            'text-background-700 dark:text-white/80'
         ]
     },
     table: {
@@ -118,12 +118,12 @@ export default {
 
             // Color
             'dark:text-white/80',
-            { 'bg-surface-50 dark:bg-surface-500/30': context.selected },
-            { 'bg-surface-0 text-surface-600 dark:bg-surface-800': !context.selected },
+            { 'bg-background-50 dark:bg-background-500/30': context.selected },
+            { 'bg-background-0 text-background-600 dark:bg-background-800': !context.selected },
 
             // Hover & Flexbox
             {
-                'hover:bg-surface-300/20 hover:text-surface-600': context.selectable && !context.selected
+                'hover:bg-background-300/20 hover:text-background-600': context.selectable && !context.selected
             },
             'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-primary-500 ring-inset dark:focus:ring-primary-400',
 
@@ -154,9 +154,9 @@ export default {
             context?.size === 'small' ? 'py-2.5 px-2' : context?.size === 'large' ? 'py-5 px-4' : 'py-3.5 px-3',
 
             // Color
-            (props.sortable === '' || props.sortable) && context.sorted ? 'text-primary-500' : 'bg-surface-0 text-surface-700',
-            (props.sortable === '' || props.sortable) && context.sorted ? 'dark:text-primary-400' : 'dark:text-white/80 dark:bg-surface-800',
-            'border-surface-200 dark:border-surface-700 ',
+            (props.sortable === '' || props.sortable) && context.sorted ? 'text-primary-500' : 'bg-background-0 text-background-700',
+            (props.sortable === '' || props.sortable) && context.sorted ? 'dark:text-primary-400' : 'dark:text-white/80 dark:bg-background-800',
+            'border-background-200 dark:border-background-700 ',
 
             // States
             'focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
@@ -194,9 +194,9 @@ export default {
                 context?.size === 'small' ? 'py-2.5 px-2' : context?.size === 'large' ? 'py-5 px-4' : 'py-3.5 px-3',
 
                 // Color
-                (props.sortable === '' || props.sortable) && context.sorted ? 'text-primary-500' : 'bg-surface-0 text-surface-700',
-                (props.sortable === '' || props.sortable) && context.sorted ? 'dark:text-primary-400' : 'dark:text-white/80 dark:bg-surface-800',
-                'border-surface-200 dark:border-surface-700 ',
+                (props.sortable === '' || props.sortable) && context.sorted ? 'text-primary-500' : 'bg-background-0 text-background-700',
+                (props.sortable === '' || props.sortable) && context.sorted ? 'dark:text-primary-400' : 'dark:text-white/80 dark:bg-background-800',
+                'border-background-200 dark:border-background-700 ',
 
                 // States
                 'focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
@@ -232,8 +232,8 @@ export default {
                 { 'last:border-r-0 border-r border-b': context?.showGridlines },
 
                 // Color
-                'border-surface-200 dark:border-surface-700',
-                { 'bg-surface-0 dark:bg-surface-800': !context.selected },
+                'border-background-200 dark:border-background-700',
+                { 'bg-background-0 dark:bg-background-800': !context.selected },
 
                 // Spacing
                 context?.size === 'small' ? 'py-2.5 px-2' : context?.size === 'large' ? 'py-5 px-4' : 'py-3.5 px-3',
@@ -263,11 +263,11 @@ export default {
                 'border-0 rounded-full',
 
                 // Color
-                'text-surface-500 dark:text-white/70',
+                'text-background-500 dark:text-white/70',
                 'bg-transparent',
 
                 // States
-                'hover:bg-surface-50 dark:hover:bg-surface-700',
+                'hover:bg-background-50 dark:hover:bg-background-700',
                 'focus-visible:outline-none focus-visible:outline-offset-0',
                 'focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
 
@@ -280,7 +280,7 @@ export default {
             ]
         },
         sorticon: ({ context }) => ({
-            class: ['ml-2 inline-block', context.sorted ? 'fill-primary-700 dark:fill-white/80' : 'fill-surface-700 dark:fill-white/70']
+            class: ['ml-2 inline-block', context.sorted ? 'fill-primary-700 dark:fill-white/80' : 'fill-background-700 dark:fill-white/70']
         }),
         sortbadge: {
             class: [
@@ -350,9 +350,9 @@ export default {
                 'w-6 h-6',
 
                 // Color
-                'text-surface-600',
+                'text-background-600',
                 {
-                    'border-surface-200 bg-surface-0 dark:border-surface-700 dark:bg-surface-900': !context.checked,
+                    'border-background-200 bg-background-0 dark:border-background-700 dark:bg-background-900': !context.checked,
                     'border-primary-500 bg-primary-500 dark:border-primary-400 dark:bg-primary-400': context.checked
                 },
 
@@ -376,7 +376,7 @@ export default {
                 'text-base leading-none',
 
                 // Color
-                'text-white dark:text-surface-900',
+                'text-white dark:text-background-900',
 
                 // Transition
                 'transition-all duration-200'

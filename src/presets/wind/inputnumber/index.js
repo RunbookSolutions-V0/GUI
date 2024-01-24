@@ -11,9 +11,9 @@ export default {
 
             // Shape
             { 'first:rounded-l-md rounded-none last:rounded-r-md': parent.instance.$name == 'InputGroup' && !props.showButtons },
-            { 'border-0 border-y border-l last:border-r border-surface-300 dark:border-surface-600': parent.instance.$name == 'InputGroup' && !props.showButtons },
+            { 'border-0 border-y border-l last:border-r border-background-300 dark:border-background-600': parent.instance.$name == 'InputGroup' && !props.showButtons },
 
-            { 'ring-1 ring-surface-300 dark:ring-surface-700 ring-offset-0': parent.instance.$name !== 'InputGroup' },
+            { 'ring-1 ring-background-300 dark:ring-background-700 ring-offset-0': parent.instance.$name !== 'InputGroup' },
             'shadow-sm',
             'rounded-md'
         ]
@@ -39,12 +39,12 @@ export default {
                 { 'rounded-none': parent.props.showButtons && parent.props.buttonLayout == 'vertical' },
 
                 // Colors
-                'text-surface-900 dark:text-surface-0',
-                'placeholder:text-surface-400 dark:placeholder:text-surface-500',
-                'bg-surface-0 dark:bg-surface-900',
-                { 'border-r border-surface-300 dark:border-surface-700': parent.props.showButtons && parent.props.buttonLayout == 'stacked' },
-                { 'border-x border-surface-300 dark:border-surface-700': parent.props.showButtons && parent.props.buttonLayout == 'horizontal' },
-                { 'border-y border-surface-300 dark:border-surface-700': parent.props.showButtons && parent.props.buttonLayout == 'vertical' },
+                'text-background-900 dark:text-background-0',
+                'placeholder:text-background-400 dark:placeholder:text-background-500',
+                'bg-background-0 dark:bg-background-900',
+                { 'border-r border-background-300 dark:border-background-700': parent.props.showButtons && parent.props.buttonLayout == 'stacked' },
+                { 'border-x border-background-300 dark:border-background-700': parent.props.showButtons && parent.props.buttonLayout == 'horizontal' },
+                { 'border-y border-background-300 dark:border-background-700': parent.props.showButtons && parent.props.buttonLayout == 'vertical' },
 
                 // States
                 'outline-none focus:ring-primary-600 dark:focus:ring-primary-500',
@@ -77,8 +77,8 @@ export default {
                 { 'order-1': parent.props.showButtons && parent.props.buttonLayout == 'vertical' },
 
                 //Color
-                'text-surface-600 dark:text-surface-400',
-                'bg-surface-0 dark:bg-surface-800',
+                'text-background-600 dark:text-background-400',
+                'bg-background-0 dark:bg-background-800',
 
                 // Sizing
                 'w-[3rem]',
@@ -94,7 +94,7 @@ export default {
 
                 //States
                 'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-inset focus:ring-primary-600 focus:dark:ring-primary-500',
-                'hover:bg-surface-50 dark:hover:bg-surface-700',
+                'hover:bg-background-50 dark:hover:bg-background-700',
 
                 //Misc
                 'cursor-pointer overflow-hidden select-none'
@@ -121,8 +121,8 @@ export default {
                 { 'order-3': parent.props.showButtons && parent.props.buttonLayout == 'vertical' },
 
                 //Color
-                'text-surface-600 dark:text-surface-400',
-                'bg-surface-0 dark:bg-surface-800',
+                'text-background-600 dark:text-background-400',
+                'bg-background-0 dark:bg-background-800',
 
                 // Sizing
                 'w-[3rem]',
@@ -138,7 +138,7 @@ export default {
 
                 //States
                 'focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-inset focus:ring-primary-600 focus:dark:ring-primary-500',
-                'hover:bg-surface-50 dark:hover:bg-surface-700',
+                'hover:bg-background-50 dark:hover:bg-background-700',
 
                 //Misc
                 'cursor-pointer overflow-hidden select-none'

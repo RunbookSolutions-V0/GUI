@@ -17,8 +17,8 @@ export default {
             'shadow-md',
 
             // Color
-            'bg-surface-0 dark:bg-surface-900',
-            'ring-1 ring-inset ring-surface-100 dark:ring-surface-800 ring-offset-0'
+            'bg-background-0 dark:bg-background-900',
+            'ring-1 ring-inset ring-background-100 dark:ring-background-800 ring-offset-0'
         ]
     },
     menu: ({ props }) => ({
@@ -49,7 +49,7 @@ export default {
             'sm:rounded-none rounded-md',
 
             // Color
-            'bg-surface-0 dark:bg-surface-900 sm:bg-transparent dark:sm:bg-transparent',
+            'bg-background-0 dark:bg-background-900 sm:bg-transparent dark:sm:bg-transparent',
 
             // Misc
             'outline-none'
@@ -65,16 +65,16 @@ export default {
 
             //  Colors
             {
-                'text-surface-500 dark:text-white/70': !context.focused && !context.active,
-                'text-surface-500 dark:text-white/70 bg-surface-200 dark:bg-black/70': context.focused && !context.active,
-                'text-surface-900 dark:text-surface-0/80 bg-surface-50 dark:bg-black/70': context.focused && context.active,
-                'text-surface-900 dark:text-surface-0/80 bg-surface-50 dark:bg-black/70': !context.focused && context.active
+                'text-background-500 dark:text-white/70': !context.focused && !context.active,
+                'text-background-500 dark:text-white/70 bg-background-200 dark:bg-black/70': context.focused && !context.active,
+                'text-background-900 dark:text-background-0/80 bg-background-50 dark:bg-black/70': context.focused && context.active,
+                'text-background-900 dark:text-background-0/80 bg-background-50 dark:bg-black/70': !context.focused && context.active
             },
 
             // Hover States
             {
-                'hover:bg-surface-50 dark:hover:bg-surface-800': !context.active,
-                'hover:bg-surface-100 dark:hover:bg-black/40 text-surface-900 dark:text-surface-0/80': context.active
+                'hover:bg-background-50 dark:hover:bg-background-800': !context.active,
+                'hover:bg-background-100 dark:hover:bg-black/40 text-background-900 dark:text-background-0/80': context.active
             },
 
             // Transitions
@@ -142,11 +142,11 @@ export default {
             { 'sm:absolute sm:left-full sm:top-0': props.level > 1 },
 
             // Color
-            'bg-surface-0 dark:bg-surface-900'
+            'bg-background-0 dark:bg-background-900'
         ]
     }),
     separator: {
-        class: 'border-t border-surface-200 dark:border-surface-600 my-1'
+        class: 'border-t border-background-200 dark:border-background-600 my-1'
     },
     button: {
         class: [
@@ -161,11 +161,11 @@ export default {
             // Shape
             'rounded-full',
             // Color
-            'text-surface-500 dark:text-white/80',
+            'text-background-500 dark:text-white/80',
 
             // States
-            'hover:text-surface-600 dark:hover:text-white/60',
-            'hover:bg-surface-50 dark:hover:bg-surface-800/80',
+            'hover:text-background-600 dark:hover:text-white/60',
+            'hover:bg-background-50 dark:hover:bg-background-800/80',
             'focus:outline-none focus:outline-offset-0',
             'focus:ring-2 focus:ring-inset focus:ring-primary-500 dark:focus:ring-primary-400',
 

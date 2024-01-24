@@ -16,20 +16,20 @@ export default {
             'px-2.5 py-1.5',
 
             // Shape
-            'ring-1 ring-surface-200 dark:ring-surface-700',
+            'ring-1 ring-background-200 dark:ring-background-700',
             'first:rounded-l-md first:rounded-tr-none first:rounded-br-none',
             'last:rounded-tl-none last:rounded-bl-none last:rounded-r-md ',
 
             // Color
             {
-                'bg-surface-0 dark:bg-surface-900': !context.active,
-                'text-surface-700 dark:text-white/80': !context.active,
-                'bg-surface-100 dark:bg-surface-700': context.active
+                'bg-background-0 dark:bg-background-900': !context.active,
+                'text-background-700 dark:text-white/80': !context.active,
+                'bg-background-100 dark:bg-background-700': context.active
             },
 
             // States
             'focus:outline-none focus:outline-offset-0 focus:ring-primary-500 dark:focus:ring-primary-400',
-            'hover:bg-surface-200 dark:hover:bg-surface-600/80',
+            'hover:bg-background-200 dark:hover:bg-background-600/80',
             { 'opacity-60 select-none pointer-events-none cursor-default': context.disabled },
 
             // Transition
