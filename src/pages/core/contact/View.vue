@@ -1,6 +1,6 @@
 <template>
     <WidgetsPage
-        page="core-device-view" 
+        page="core-contact-view" 
         :default-layouts="layouts"
         :page-content="pageContent"
     />
@@ -15,8 +15,8 @@ import { v4 as uuidv4 } from "uuid";
 
 // GraphQL
 import gql from "graphql-tag";
-import type { CoreDevice } from "@/graphql";
-import { useCoreDeviceSingleQuery, useCoreDeviceUpdateMutation } from "@/graphql";
+import type { CoreContact } from "@/graphql";
+import { useCoreContactSingleQuery, useCoreContactUpdateMutation } from "@/graphql";
 
 // Define our Reactive Variables
 //TODO: Define Page Content
@@ -28,51 +28,54 @@ const pageContent = ref<{data: any, update: any}>({
 // GraphQL
 // Get Data
 const GraphQLDocument1 = gql`
-    query coreDeviceSingle($id: ID) {
+    query coreContactSingle($id: ID) {
       core {
-        device {
+        contact {
           single(id: $id) {
+            company_id
             created_at
             description
-            hostname
+            email
             id
             name
+            phone
+            photo
             type
             updated_at
           }
         }
       }
     }`;
-const { loading, error, onResult } = useCoreDeviceSingleQuery({ id: useRoute().params.id });
+const { loading, error, onResult } = useCoreContactSingleQuery({ id: useRoute().params.id });
 onResult((result) => {
     if(!result.data) return;
-    const device = result.data.core.device.single as CoreDevice;
-    if(!device) return;
-    pageContent.value.data = device;
+    const contact = result.data.core.contact.single as CoreContact;
+    if(!contact) return;
+    pageContent.value.data = contact;
 });
 // Allow for Updates
 const GraphQLDocument2 = gql`
-    mutation coreDeviceUpdate($input: CoreDeviceUpdateInput!) {
+    mutation coreContactUpdate($input: CoreContactUpdateInput!) {
       core {
-        device {
+        contact {
           update(input: $input) {
             id
           }
         }
       }
     }`;
-const { mutate, onDone, onError } = useCoreDeviceUpdateMutation();
+const { mutate, onDone, onError } = useCoreContactUpdateMutation();
 pageContent.value.update = mutate;
 onDone((result) => {
     if (!result.data) return;
-    const device = result.data.core.device.update;
-    if (!device) return;
-    console.log("Mutation Complete. Updated Device:")
-    console.log(device);
+    const contact = result.data.core.contact.update;
+    if (!contact) return;
+    console.log("Mutation Complete. Updated Contact:")
+    console.log(contact);
     refetch()
 });
 onError((result) => {
-    console.log("Error Updating Device!");
+    console.log("Error Updating Contact!");
     console.log(result);
 });
 
@@ -80,7 +83,7 @@ onError((result) => {
 const layouts = [
     {
         id: "0000-000-000-0000",
-        name: "Default Device View",
+        name: "Default Contact View",
         default: false,
         grid: {
             id: uuidv4(),

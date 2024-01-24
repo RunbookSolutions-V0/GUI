@@ -14,10 +14,10 @@
                 :label="authStore.user?.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')"
                 :image="(authStore.user?.photo as string)"
               />
-              <span class="flex flex-col">
+              <!-- <span class="flex flex-col">
                 <span class="truncate w-20 font-semibold tracking-wide leading-none">{{ authStore.user?.name }}</span>
                 <span class="truncate w-20 text-gray-500 text-xs leading-none mt-1">Manager</span>
-              </span>
+              </span> -->
         </Button>
         <Menu ref="menu" id="overlay_menu" :model="items" :popup="true">
             <template #item="{ item, props }">

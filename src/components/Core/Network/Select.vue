@@ -2,18 +2,18 @@
     <div class="flex mb-2">
         <span class="relative flex-grow">
             <label 
-                v-if="props.label"
-                :for="($attrs.inputId as string)"
+                v-if="label"
+                :for="$attrs.inputId"
                 class="text-sm text-primary-500 dark:text-primary-400/60 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
             >
-                {{ props.label }}
+                {{ label }}
             </label>
             <AutoComplete
                 v-bind="$attrs"
                 :suggestions="items"
                 @complete="search"
                 optionLabel="name"
-                placeholder="Parent Location"
+                placeholder="Parent Network"
                 forceSelection
                 dropdown
                 dropdownMode="current"
@@ -28,33 +28,21 @@ import AutoComplete, { type AutoCompleteCompleteEvent } from 'primevue/autocompl
 import gql from "graphql-tag";
 
 import { 
-    useCoreLocationSelectFilteredListQuery,
-    type CoreLocationSelectFilteredListQueryVariables,
-    type CoreLocation,
-    type InputMaybe,
+    useCoreNetworkSelectFilteredListQuery,
+    type CoreNetworkSelectFilteredListQueryVariables,
+    type CoreNetwork,
+    type InputMaybe
 } from "@/graphql";
 
-
-// Props
-const props = defineProps({
-    label: {
-        type: [String || null],
-        default: null,
-    },
-});
-
-// Define some reactive variables
-// const value = ref("");
-const items = ref<CoreLocation[]>([]);
-const variables = ref<CoreLocationSelectFilteredListQueryVariables>({
+const items = ref<CoreNetwork[]>([]);
+const variables = ref<CoreNetworkSelectFilteredListQueryVariables>({
     name: null as InputMaybe<string>
 })
 
-// Define our GraphQL Document
 const GraphQLDocument = gql`
-query coreLocationSelectFilteredList($name: String) {
+query coreNetworkSelectFilteredList($name: String) {
     core {
-      location {
+      network {
         list(name: $name) {
           data {
             id
@@ -65,12 +53,10 @@ query coreLocationSelectFilteredList($name: String) {
     }
   }`;
 
-// Setup our Query
-const { onResult, loading } = useCoreLocationSelectFilteredListQuery(variables);
-// and what we will do with the data
+const { onResult, loading } = useCoreNetworkSelectFilteredListQuery();
 onResult((result) => {
     if(!result.data) return;
-    items.value = result.data.core.location.list.data as CoreLocation[];
+    items.value = result.data.core.network.list.data as CoreNetwork[]
 });
 
 function search(event: AutoCompleteCompleteEvent){

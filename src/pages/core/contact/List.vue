@@ -1,16 +1,24 @@
 <template>
     <div class="card">
         <PVDataTable 
-            :value="devices"
+            :value="contacts"
             :loading="loading"
             filterDisplay="row"
             tableStyle="min-width: 50rem"
         >
-            <template #empty> No Devices found. </template>
-            <template #loading> Loading device data. Please wait. </template>
+            <template #empty> No Contacts found. </template>
+            <template #loading> Loading contact data. Please wait. </template>
             <PVColumn field="id" header="ID">
-                <template #body="slotProps">
-                    <RouterLink :to="{name:'core.device.view', params: { id: slotProps.data.id}}">{{ slotProps.data.id }}</RouterLink>
+                <template #body="{ data }">
+                    <RouterLink :to="{ name:'core.contact.view', params: { id: data.id } }">
+                        {{ data.id }}
+                    </RouterLink>
+                </template>
+            </PVColumn>
+
+            <PVColumn field="photo" header="Photo" :showFilterMenu="false">
+                <template #body="{ data }">
+                    {{ data.photo }}
                 </template>
             </PVColumn>
 
@@ -23,12 +31,29 @@
                 </template>
             </PVColumn>
 
-            <PVColumn field="hostname" header="Hostname" :showFilterMenu="false">
+            <PVColumn field="company_id" header="Company" :showFilterMenu="false">
                 <template #body="{ data }">
-                    {{ data.hostname }}
+                    <RouterLink v-if="data.company_id" :to="{name:'core.contact.view', params: { id: data.company.id }}">
+                        {{ data.company.name }}
+                    </RouterLink>
+                </template>
+            </PVColumn>
+
+            <PVColumn field="email" header="Email" :showFilterMenu="false">
+                <template #body="{ data }">
+                    {{ data.email }}
                 </template>
                 <template #filter="{ }">
-                    <PVInputText v-model="filter.hostname" type="text" class="p-column-filter" placeholder="Search by hostname" />
+                    <PVInputText v-model="filter.email" type="text" class="p-column-filter" placeholder="Search by email" />
+                </template>
+            </PVColumn>
+
+            <PVColumn field="phone" header="Phone" :showFilterMenu="false">
+                <template #body="{ data }">
+                    {{ data.phone }}
+                </template>
+                <template #filter="{ }">
+                    <PVInputText v-model="filter.phone" type="text" class="p-column-filter" placeholder="Search by phone number" />
                 </template>
             </PVColumn>
 
@@ -45,7 +70,6 @@
                 </template>
             </PVColumn>
 
-            <PVColumn field="description" header="Description"></PVColumn>
         </PVDataTable>
     </div>
     <GraphQLPaginator :variables="variables" :paginator="paginator"></GraphQLPaginator>
@@ -58,10 +82,10 @@ import { ref, watch } from 'vue';
 // GraphQL
 import gql from "graphql-tag";
 import { 
-    useCoreDeviceListQuery,
-    type CoreDeviceQueriesListArgs,
-    type CoreDevice,
-    CoreDeviceTypes
+    useCoreContactListQuery,
+    type CoreContactQueriesListArgs,
+    type CoreContact,
+    CoreContactTypes
 } from "@/graphql"
 
 // PrimeVue
@@ -79,49 +103,44 @@ import Create from "./Create.vue";
 // Dialog
 const dialog = useDialog();
 
-// Define some reactive variables
+// Define our Reactive Variables
 const filter = ref<
     {
-        name: string | null,
-        type: string | null,
-        hostname: string | null,
+        name: string | null, 
+        email: string | null, 
+        phone: string | null, 
+        type: string | null
     }
 >({
     name: null,
+    email: null,
+    phone: null,
     type: null,
-    hostname: null,
 });
 
-const variables = ref<CoreDeviceQueriesListArgs>({
+const types = [
+    { name: 'Person', value: CoreContactTypes.PERSON },
+    { name: 'Company', value: CoreContactTypes.COMPANY },
+]
+
+const variables = ref<CoreContactQueriesListArgs>({
     first: 10,
     page: 1,
     name: null,
-    hostname: null,
+    email: null,
+    phone: null,
     type: null
 });
-const devices = ref<CoreDevice[]>([]);
-const paginator = ref({});
 
-const types = [
-    { name: 'Laptop', value: CoreDeviceTypes.LAPTOP },
-    { name: 'Other', value: CoreDeviceTypes.OTHER},
-    { name: 'Printer', value: CoreDeviceTypes.PRINTER },
-    { name: 'Server', value: CoreDeviceTypes.SERVER},
-    { name: 'Workstation', value: CoreDeviceTypes.WORKSTATION },
-];
+const contacts = ref<CoreContact[]>([]);
+        const paginator = ref({});
 
 // GraphQL
 const GraphQLDocument = gql`
-query coreDeviceList($first: Int, $page: Int, $name: String, $hostname: String, $type: CoreDeviceTypes) {
+query coreContactList($first: Int, $page: Int, $name: String, $email: String, $phone: String $type: CoreContactTypes) {
     core {
-        device {
-          list(
-            name: $name, 
-            hostname: $hostname, 
-            first: $first, 
-            page: $page, 
-            type: $type
-          ) {
+        contact {
+          list(first: $first, page: $page, name: $name, email: $email,  phone: $phone, type: $type) {
             paginatorInfo {
               count
               currentPage
@@ -133,11 +152,18 @@ query coreDeviceList($first: Int, $page: Int, $name: String, $hostname: String, 
               total
             }
             data {
+              company_id
+              company {
+                id
+                name
+              }
               created_at
               description
-              hostname
+              email
               id
               name
+              phone
+              photo
               type
               updated_at
             }
@@ -145,13 +171,14 @@ query coreDeviceList($first: Int, $page: Int, $name: String, $hostname: String, 
         }
       }
   }`;
-const { loading, error, onResult } = useCoreDeviceListQuery(variables);
+const { loading, error, onResult } = useCoreContactListQuery(variables);
 onResult((result) => {
     if (!result.data) return;
-    
-    const response = result.data.core.device.list;
-    devices.value = response.data as CoreDevice[];
+            
+    const response = result.data.core.contact.list;
+    contacts.value = response.data as CoreContact[];
     paginator.value = response.paginatorInfo;
+
 });
 
 // Some Watchers
@@ -161,25 +188,32 @@ watch(filter, (v) => {
         variables.value.name = null
     else
         variables.value.name = "%" + v.name + "%"
-
-    // Hostname
-    if (!v.hostname) 
-        variables.value.hostname = null
+                
+    // Email
+    if (!v.email) 
+        variables.value.email = null
     else
-        variables.value.hostname = "%" + v.hostname + "%"
+        variables.value.email = "%" + v.email + "%"
+
+    // Phone
+    if (!v.phone) 
+        variables.value.phone = null
+    else
+        variables.value.phone = "%" + v.phone + "%"
 
     // Type
     if (!v.type)
         variables.value.type = null;
     else
         variables.value.type = v.type.value;
-},{ deep: true });
+}, { deep: true });
+
 
 // Functions
 function showCreate() {
     dialog.open(Create, {
         props: {
-            header: "New Device",
+            header: "New Contact",
             modal: true,
         }
     });

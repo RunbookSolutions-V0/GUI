@@ -26,6 +26,10 @@ This repository contains the GUI for RunBook.Solutions.
         - [ ] AuthStore
         - [ ] Component
 
+- [ ] Auth
+    - [ ] Forgot Password
+    - [ ] Reset Password
+
 - [ ] Team
     - [ ] Selection
     - [ ] Create
@@ -80,7 +84,15 @@ This repository contains the GUI for RunBook.Solutions.
 - [ ] Core
     - [ ] Location
         - [ ] Create
+            - [x] Name
+            - [x] Parent Location
+            - [x] Type
+            - [x] Description
+            - [ ] Address
         - [ ] List
+            - [x] Table
+            - [ ] Item
+            - [x] Pagination
         - [ ] Single
         - [ ] Update
         - [ ] Widgets

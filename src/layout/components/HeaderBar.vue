@@ -27,6 +27,7 @@
           </form>
           <div class="flex ml-auto">
             <DarkMode class="mr-2"></DarkMode>
+            <TeamSelect class="mr-2"></TeamSelect>
             <UserMenu></UserMenu>
           </div>
         </div>
@@ -34,6 +35,7 @@
 </template>
 <script setup lang="ts">
 import DarkMode from "./header/DarkMode.vue";
+import TeamSelect from "./header/TeamSelect.vue";
 import UserMenu from "./header/UserMenu.vue";
 
 </script>

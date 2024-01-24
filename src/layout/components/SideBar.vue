@@ -4,7 +4,7 @@
         <Menu 
             :model="items"
             :ptOptions="{ mergeProps: true, mergeSections: true }" 
-            :pt="{ root: 'flex flex-col h-full rounded-none dark:ring-surface-600', menu: 'flex-grow' }"
+            :pt="{ root: 'flex flex-col h-full rounded-none', menu: 'flex-grow' }"
             class="w-full md:w-[17rem]"
         >
            <template #start>

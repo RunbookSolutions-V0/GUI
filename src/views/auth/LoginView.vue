@@ -44,7 +44,7 @@ import { useAuthStore } from '@/stores';
 
 import type {
   LoginInput,
-} from "@/graphql/apollo.generated";
+} from "@/graphql";
 
 import { useRoute } from 'vue-router';
 

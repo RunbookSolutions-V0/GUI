@@ -978,11 +978,13 @@ export type CoreContactQueries = {
 
 /** Queries for retrieving Core Contacts. */
 export type CoreContactQueriesListArgs = {
+  email?: InputMaybe<Scalars['String']['input']>;
   first?: Scalars['Int']['input'];
   includeIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   name?: InputMaybe<Scalars['String']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   parentId?: InputMaybe<Scalars['ID']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
   type?: InputMaybe<CoreContactTypes>;
 };
 
@@ -995,8 +997,8 @@ export type CoreContactQueriesSingleArgs = {
 
 /** Type representing the different types of Core Contacts, either company or person. */
 export enum CoreContactTypes {
-  COMPANY = 'company',
-  PERSON = 'person'
+  COMPANY = 'COMPANY',
+  PERSON = 'PERSON'
 }
 
 /** Input for updating an existing Core Contact instance. */
@@ -1150,9 +1152,11 @@ export type CoreDeviceQueries = {
 /** Queries for retrieving Core Devices. */
 export type CoreDeviceQueriesListArgs = {
   first?: Scalars['Int']['input'];
+  hostname?: InputMaybe<Scalars['String']['input']>;
   includeIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   name?: InputMaybe<Scalars['String']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
+  type?: InputMaybe<CoreDeviceTypes>;
 };
 
 
@@ -1165,11 +1169,11 @@ export type CoreDeviceQueriesSingleArgs = {
 
 /** Enum representing different types of Core Devices, such as server, workstation, printer, laptop, or other. */
 export enum CoreDeviceTypes {
-  LAPTOP = 'laptop',
-  OTHER = 'other',
-  PRINTER = 'printer',
-  SERVER = 'server',
-  WORKSTATION = 'workstation'
+  LAPTOP = 'LAPTOP',
+  OTHER = 'OTHER',
+  PRINTER = 'PRINTER',
+  SERVER = 'SERVER',
+  WORKSTATION = 'WORKSTATION'
 }
 
 /** Input for updating an existing Core Device instance. */
@@ -1314,7 +1318,7 @@ export type CoreLocationQueriesListArgs = {
   name?: InputMaybe<Scalars['String']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   parentId?: InputMaybe<Scalars['ID']['input']>;
-  type?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<CoreLocationTypes>;
 };
 
 
@@ -1326,10 +1330,10 @@ export type CoreLocationQueriesSingleArgs = {
 
 /** Enum representing different types of Core Locations, such as building, room, rack, or other. */
 export enum CoreLocationTypes {
-  BUILDING = 'building',
-  OTHER = 'other',
-  RACK = 'rack',
-  ROOM = 'room'
+  BUILDING = 'BUILDING',
+  OTHER = 'OTHER',
+  RACK = 'RACK',
+  ROOM = 'ROOM'
 }
 
 /** Input for updating an existing Core Location instance. */
@@ -1505,6 +1509,7 @@ export type CoreNetworkQueriesListArgs = {
   first?: Scalars['Int']['input'];
   includeIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   name?: InputMaybe<Scalars['String']['input']>;
+  network?: InputMaybe<Scalars['String']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   parentId?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -2235,10 +2240,92 @@ export type VerifyEmailInput = {
   token: Scalars['String']['input'];
 };
 
-export type CoreLocationListQueryVariables = Exact<{ [key: string]: never; }>;
+export type CoreContactSelectFilteredListQueryVariables = Exact<{
+  name?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<CoreContactTypes>;
+}>;
 
 
-export type CoreLocationListQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', location: { __typename?: 'CoreLocationQueries', list: { __typename?: 'CoreLocationPaginator', data: Array<{ __typename?: 'CoreLocation', id: string, name: string, parent_id?: string | null, type: CoreLocationTypes, description?: string | null, created_at: Date, address?: string | null }> } } } };
+export type CoreContactSelectFilteredListQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', contact: { __typename?: 'CoreContactQueries', list: { __typename?: 'CoreContactPaginator', data: Array<{ __typename?: 'CoreContact', id: string, name: string }> } } } };
+
+export type CoreLocationSelectFilteredListQueryVariables = Exact<{
+  name?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type CoreLocationSelectFilteredListQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', location: { __typename?: 'CoreLocationQueries', list: { __typename?: 'CoreLocationPaginator', data: Array<{ __typename?: 'CoreLocation', id: string, name: string }> } } } };
+
+export type CoreNetworkSelectFilteredListQueryVariables = Exact<{
+  name?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type CoreNetworkSelectFilteredListQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', network: { __typename?: 'CoreNetworkQueries', list: { __typename?: 'CoreNetworkPaginator', data: Array<{ __typename?: 'CoreNetwork', id: string, name: string }> } } } };
+
+export type CoreContactCreateMutationVariables = Exact<{
+  input: CoreContactCreateInput;
+}>;
+
+
+export type CoreContactCreateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', contact: { __typename?: 'CoreContactMutations', create: { __typename?: 'CoreContact', id: string } } } };
+
+export type CoreContactListQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<CoreContactTypes>;
+}>;
+
+
+export type CoreContactListQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', contact: { __typename?: 'CoreContactQueries', list: { __typename?: 'CoreContactPaginator', paginatorInfo: { __typename?: 'PaginatorInfo', count: number, currentPage: number, firstItem?: number | null, hasMorePages: boolean, lastItem?: number | null, lastPage: number, perPage: number, total: number }, data: Array<{ __typename?: 'CoreContact', company_id?: string | null, created_at: Date, description?: string | null, email?: string | null, id: string, name: string, phone?: string | null, photo?: string | null, type: CoreContactTypes, updated_at: Date, company?: { __typename?: 'CoreContact', id: string, name: string } | null }> } } } };
+
+export type CoreContactSingleQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type CoreContactSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', contact: { __typename?: 'CoreContactQueries', single?: { __typename?: 'CoreContact', company_id?: string | null, created_at: Date, description?: string | null, email?: string | null, id: string, name: string, phone?: string | null, photo?: string | null, type: CoreContactTypes, updated_at: Date } | null } } };
+
+export type CoreContactUpdateMutationVariables = Exact<{
+  input: CoreContactUpdateInput;
+}>;
+
+
+export type CoreContactUpdateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', contact: { __typename?: 'CoreContactMutations', update: { __typename?: 'CoreContact', id: string } } } };
+
+export type CoreDeviceCreateMutationVariables = Exact<{
+  input: CoreDeviceCreateInput;
+}>;
+
+
+export type CoreDeviceCreateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', device: { __typename?: 'CoreDeviceMutations', create: { __typename?: 'CoreDevice', id: string } } } };
+
+export type CoreDeviceListQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  hostname?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<CoreDeviceTypes>;
+}>;
+
+
+export type CoreDeviceListQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', device: { __typename?: 'CoreDeviceQueries', list: { __typename?: 'CoreDevicePaginator', paginatorInfo: { __typename?: 'PaginatorInfo', count: number, currentPage: number, firstItem?: number | null, hasMorePages: boolean, lastItem?: number | null, lastPage: number, perPage: number, total: number }, data: Array<{ __typename?: 'CoreDevice', created_at: Date, description?: string | null, hostname?: string | null, id: string, name: string, type: CoreDeviceTypes, updated_at: Date }> } } } };
+
+export type CoreDeviceSingleQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type CoreDeviceSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', device: { __typename?: 'CoreDeviceQueries', single?: { __typename?: 'CoreDevice', created_at: Date, description?: string | null, hostname?: string | null, id: string, name: string, type: CoreDeviceTypes, updated_at: Date } | null } } };
+
+export type CoreDeviceUpdateMutationVariables = Exact<{
+  input: CoreDeviceUpdateInput;
+}>;
+
+
+export type CoreDeviceUpdateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', device: { __typename?: 'CoreDeviceMutations', update: { __typename?: 'CoreDevice', id: string } } } };
 
 export type CoreLocationCreateMutationVariables = Exact<{
   input?: InputMaybe<CoreLocationCreateInput>;
@@ -2246,6 +2333,61 @@ export type CoreLocationCreateMutationVariables = Exact<{
 
 
 export type CoreLocationCreateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', location: { __typename?: 'CoreLocationMutations', create: { __typename?: 'CoreLocation', id: string } } } };
+
+export type CoreLocationListQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<CoreLocationTypes>;
+}>;
+
+
+export type CoreLocationListQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', location: { __typename?: 'CoreLocationQueries', list: { __typename?: 'CoreLocationPaginator', data: Array<{ __typename?: 'CoreLocation', id: string, name: string, parent_id?: string | null, type: CoreLocationTypes, description?: string | null, created_at: Date, address?: string | null, parent_location?: { __typename?: 'CoreLocation', id: string, name: string } | null }>, paginatorInfo: { __typename?: 'PaginatorInfo', firstItem?: number | null, lastItem?: number | null, count: number, currentPage: number, hasMorePages: boolean, lastPage: number, perPage: number, total: number } } } } };
+
+export type CoreLocationSingleQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type CoreLocationSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', location: { __typename?: 'CoreLocationQueries', single?: { __typename?: 'CoreLocation', id: string, type: CoreLocationTypes, name: string, description?: string | null, parent_id?: string | null, address?: string | null, created_at: Date, updated_at: Date, parent_location?: { __typename?: 'CoreLocation', id: string, name: string, type: CoreLocationTypes } | null } | null } } };
+
+export type CoreLocationUpdateMutationVariables = Exact<{
+  input: CoreLocationUpdateInput;
+}>;
+
+
+export type CoreLocationUpdateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', location: { __typename?: 'CoreLocationMutations', update?: { __typename?: 'CoreLocation', id: string } | null } } };
+
+export type CoreNetworkCreateMutationVariables = Exact<{
+  input?: InputMaybe<CoreNetworkCreateInput>;
+}>;
+
+
+export type CoreNetworkCreateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', network: { __typename?: 'CoreNetworkMutations', create: { __typename?: 'CoreNetwork', id: string } } } };
+
+export type CoreNetworkListQueryVariables = Exact<{
+  perPage?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  network?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type CoreNetworkListQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', network: { __typename?: 'CoreNetworkQueries', list: { __typename?: 'CoreNetworkPaginator', data: Array<{ __typename?: 'CoreNetwork', id: string, name: string, parent_id?: string | null, description?: string | null, created_at: Date, network: string, mask?: string | null, updated_at: Date, parent_network?: { __typename?: 'CoreNetwork', id: string, name: string } | null }>, paginatorInfo: { __typename?: 'PaginatorInfo', firstItem?: number | null, lastItem?: number | null, count: number, currentPage: number, hasMorePages: boolean, lastPage: number, perPage: number, total: number } } } } };
+
+export type CoreNetworkSingleQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type CoreNetworkSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', network: { __typename?: 'CoreNetworkQueries', single?: { __typename?: 'CoreNetwork', created_at: Date, description?: string | null, id: string, mask?: string | null, name: string, network: string, parent_id?: string | null, updated_at: Date } | null } } };
+
+export type CoreNetworkUpdateMutationVariables = Exact<{
+  input: CoreNetworkUpdateInput;
+}>;
+
+
+export type CoreNetworkUpdateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', network: { __typename?: 'CoreNetworkMutations', update: { __typename?: 'CoreNetwork', id: string } } } };
 
 export type ForgotPasswordMutationVariables = Exact<{
   input: ForgotPasswordInput;
@@ -2287,20 +2429,22 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type LogoutMutation = { __typename?: 'Mutation', auth: { __typename?: 'AuthMutations', logout: { __typename?: 'LogoutResponse', status: string, message?: string | null } } };
 
+export type WidgetCoreLocationTreeQueryVariables = Exact<{
+  parentId?: InputMaybe<Scalars['ID']['input']>;
+}>;
 
-export const CoreLocationListDocument = gql`
-    query coreLocationList {
+
+export type WidgetCoreLocationTreeQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', location: { __typename?: 'CoreLocationQueries', list: { __typename?: 'CoreLocationPaginator', data: Array<{ __typename?: 'CoreLocation', id: string, name: string, type: CoreLocationTypes }> } } } };
+
+
+export const CoreContactSelectFilteredListDocument = gql`
+    query coreContactSelectFilteredList($name: String, $type: CoreContactTypes) {
   core {
-    location {
-      list {
+    contact {
+      list(name: $name, type: $type) {
         data {
           id
           name
-          parent_id
-          type
-          description
-          created_at
-          address
         }
       }
     }
@@ -2309,24 +2453,444 @@ export const CoreLocationListDocument = gql`
     `;
 
 /**
- * __useCoreLocationListQuery__
+ * __useCoreContactSelectFilteredListQuery__
  *
- * To run a query within a Vue component, call `useCoreLocationListQuery` and pass it any options that fit your needs.
- * When your component renders, `useCoreLocationListQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * To run a query within a Vue component, call `useCoreContactSelectFilteredListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCoreContactSelectFilteredListQuery` returns an object from Apollo Client that contains result, loading and error properties
  * you can use to render your UI.
  *
+ * @param variables that will be passed into the query
  * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
  *
  * @example
- * const { result, loading, error } = useCoreLocationListQuery();
+ * const { result, loading, error } = useCoreContactSelectFilteredListQuery({
+ *   name: // value for 'name'
+ *   type: // value for 'type'
+ * });
  */
-export function useCoreLocationListQuery(options: VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<CoreLocationListQuery, CoreLocationListQueryVariables>(CoreLocationListDocument, {}, options);
+export function useCoreContactSelectFilteredListQuery(variables: CoreContactSelectFilteredListQueryVariables | VueCompositionApi.Ref<CoreContactSelectFilteredListQueryVariables> | ReactiveFunction<CoreContactSelectFilteredListQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreContactSelectFilteredListQuery, CoreContactSelectFilteredListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreContactSelectFilteredListQuery, CoreContactSelectFilteredListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreContactSelectFilteredListQuery, CoreContactSelectFilteredListQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<CoreContactSelectFilteredListQuery, CoreContactSelectFilteredListQueryVariables>(CoreContactSelectFilteredListDocument, variables, options);
 }
-export function useCoreLocationListLazyQuery(options: VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<CoreLocationListQuery, CoreLocationListQueryVariables>(CoreLocationListDocument, {}, options);
+export function useCoreContactSelectFilteredListLazyQuery(variables: CoreContactSelectFilteredListQueryVariables | VueCompositionApi.Ref<CoreContactSelectFilteredListQueryVariables> | ReactiveFunction<CoreContactSelectFilteredListQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreContactSelectFilteredListQuery, CoreContactSelectFilteredListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreContactSelectFilteredListQuery, CoreContactSelectFilteredListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreContactSelectFilteredListQuery, CoreContactSelectFilteredListQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<CoreContactSelectFilteredListQuery, CoreContactSelectFilteredListQueryVariables>(CoreContactSelectFilteredListDocument, variables, options);
 }
-export type CoreLocationListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreLocationListQuery, CoreLocationListQueryVariables>;
+export type CoreContactSelectFilteredListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreContactSelectFilteredListQuery, CoreContactSelectFilteredListQueryVariables>;
+export const CoreLocationSelectFilteredListDocument = gql`
+    query coreLocationSelectFilteredList($name: String) {
+  core {
+    location {
+      list(name: $name) {
+        data {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreLocationSelectFilteredListQuery__
+ *
+ * To run a query within a Vue component, call `useCoreLocationSelectFilteredListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCoreLocationSelectFilteredListQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCoreLocationSelectFilteredListQuery({
+ *   name: // value for 'name'
+ * });
+ */
+export function useCoreLocationSelectFilteredListQuery(variables: CoreLocationSelectFilteredListQueryVariables | VueCompositionApi.Ref<CoreLocationSelectFilteredListQueryVariables> | ReactiveFunction<CoreLocationSelectFilteredListQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreLocationSelectFilteredListQuery, CoreLocationSelectFilteredListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreLocationSelectFilteredListQuery, CoreLocationSelectFilteredListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreLocationSelectFilteredListQuery, CoreLocationSelectFilteredListQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<CoreLocationSelectFilteredListQuery, CoreLocationSelectFilteredListQueryVariables>(CoreLocationSelectFilteredListDocument, variables, options);
+}
+export function useCoreLocationSelectFilteredListLazyQuery(variables: CoreLocationSelectFilteredListQueryVariables | VueCompositionApi.Ref<CoreLocationSelectFilteredListQueryVariables> | ReactiveFunction<CoreLocationSelectFilteredListQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreLocationSelectFilteredListQuery, CoreLocationSelectFilteredListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreLocationSelectFilteredListQuery, CoreLocationSelectFilteredListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreLocationSelectFilteredListQuery, CoreLocationSelectFilteredListQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<CoreLocationSelectFilteredListQuery, CoreLocationSelectFilteredListQueryVariables>(CoreLocationSelectFilteredListDocument, variables, options);
+}
+export type CoreLocationSelectFilteredListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreLocationSelectFilteredListQuery, CoreLocationSelectFilteredListQueryVariables>;
+export const CoreNetworkSelectFilteredListDocument = gql`
+    query coreNetworkSelectFilteredList($name: String) {
+  core {
+    network {
+      list(name: $name) {
+        data {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreNetworkSelectFilteredListQuery__
+ *
+ * To run a query within a Vue component, call `useCoreNetworkSelectFilteredListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCoreNetworkSelectFilteredListQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCoreNetworkSelectFilteredListQuery({
+ *   name: // value for 'name'
+ * });
+ */
+export function useCoreNetworkSelectFilteredListQuery(variables: CoreNetworkSelectFilteredListQueryVariables | VueCompositionApi.Ref<CoreNetworkSelectFilteredListQueryVariables> | ReactiveFunction<CoreNetworkSelectFilteredListQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreNetworkSelectFilteredListQuery, CoreNetworkSelectFilteredListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreNetworkSelectFilteredListQuery, CoreNetworkSelectFilteredListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreNetworkSelectFilteredListQuery, CoreNetworkSelectFilteredListQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<CoreNetworkSelectFilteredListQuery, CoreNetworkSelectFilteredListQueryVariables>(CoreNetworkSelectFilteredListDocument, variables, options);
+}
+export function useCoreNetworkSelectFilteredListLazyQuery(variables: CoreNetworkSelectFilteredListQueryVariables | VueCompositionApi.Ref<CoreNetworkSelectFilteredListQueryVariables> | ReactiveFunction<CoreNetworkSelectFilteredListQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreNetworkSelectFilteredListQuery, CoreNetworkSelectFilteredListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreNetworkSelectFilteredListQuery, CoreNetworkSelectFilteredListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreNetworkSelectFilteredListQuery, CoreNetworkSelectFilteredListQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<CoreNetworkSelectFilteredListQuery, CoreNetworkSelectFilteredListQueryVariables>(CoreNetworkSelectFilteredListDocument, variables, options);
+}
+export type CoreNetworkSelectFilteredListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreNetworkSelectFilteredListQuery, CoreNetworkSelectFilteredListQueryVariables>;
+export const CoreContactCreateDocument = gql`
+    mutation coreContactCreate($input: CoreContactCreateInput!) {
+  core {
+    contact {
+      create(input: $input) {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreContactCreateMutation__
+ *
+ * To run a mutation, you first call `useCoreContactCreateMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCoreContactCreateMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCoreContactCreateMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCoreContactCreateMutation(options: VueApolloComposable.UseMutationOptions<CoreContactCreateMutation, CoreContactCreateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreContactCreateMutation, CoreContactCreateMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CoreContactCreateMutation, CoreContactCreateMutationVariables>(CoreContactCreateDocument, options);
+}
+export type CoreContactCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreContactCreateMutation, CoreContactCreateMutationVariables>;
+export const CoreContactListDocument = gql`
+    query coreContactList($first: Int, $page: Int, $name: String, $email: String, $phone: String, $type: CoreContactTypes) {
+  core {
+    contact {
+      list(
+        first: $first
+        page: $page
+        name: $name
+        email: $email
+        phone: $phone
+        type: $type
+      ) {
+        paginatorInfo {
+          count
+          currentPage
+          firstItem
+          hasMorePages
+          lastItem
+          lastPage
+          perPage
+          total
+        }
+        data {
+          company_id
+          company {
+            id
+            name
+          }
+          created_at
+          description
+          email
+          id
+          name
+          phone
+          photo
+          type
+          updated_at
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreContactListQuery__
+ *
+ * To run a query within a Vue component, call `useCoreContactListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCoreContactListQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCoreContactListQuery({
+ *   first: // value for 'first'
+ *   page: // value for 'page'
+ *   name: // value for 'name'
+ *   email: // value for 'email'
+ *   phone: // value for 'phone'
+ *   type: // value for 'type'
+ * });
+ */
+export function useCoreContactListQuery(variables: CoreContactListQueryVariables | VueCompositionApi.Ref<CoreContactListQueryVariables> | ReactiveFunction<CoreContactListQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreContactListQuery, CoreContactListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreContactListQuery, CoreContactListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreContactListQuery, CoreContactListQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<CoreContactListQuery, CoreContactListQueryVariables>(CoreContactListDocument, variables, options);
+}
+export function useCoreContactListLazyQuery(variables: CoreContactListQueryVariables | VueCompositionApi.Ref<CoreContactListQueryVariables> | ReactiveFunction<CoreContactListQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreContactListQuery, CoreContactListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreContactListQuery, CoreContactListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreContactListQuery, CoreContactListQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<CoreContactListQuery, CoreContactListQueryVariables>(CoreContactListDocument, variables, options);
+}
+export type CoreContactListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreContactListQuery, CoreContactListQueryVariables>;
+export const CoreContactSingleDocument = gql`
+    query coreContactSingle($id: ID) {
+  core {
+    contact {
+      single(id: $id) {
+        company_id
+        created_at
+        description
+        email
+        id
+        name
+        phone
+        photo
+        type
+        updated_at
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreContactSingleQuery__
+ *
+ * To run a query within a Vue component, call `useCoreContactSingleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCoreContactSingleQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCoreContactSingleQuery({
+ *   id: // value for 'id'
+ * });
+ */
+export function useCoreContactSingleQuery(variables: CoreContactSingleQueryVariables | VueCompositionApi.Ref<CoreContactSingleQueryVariables> | ReactiveFunction<CoreContactSingleQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreContactSingleQuery, CoreContactSingleQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreContactSingleQuery, CoreContactSingleQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreContactSingleQuery, CoreContactSingleQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<CoreContactSingleQuery, CoreContactSingleQueryVariables>(CoreContactSingleDocument, variables, options);
+}
+export function useCoreContactSingleLazyQuery(variables: CoreContactSingleQueryVariables | VueCompositionApi.Ref<CoreContactSingleQueryVariables> | ReactiveFunction<CoreContactSingleQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreContactSingleQuery, CoreContactSingleQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreContactSingleQuery, CoreContactSingleQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreContactSingleQuery, CoreContactSingleQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<CoreContactSingleQuery, CoreContactSingleQueryVariables>(CoreContactSingleDocument, variables, options);
+}
+export type CoreContactSingleQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreContactSingleQuery, CoreContactSingleQueryVariables>;
+export const CoreContactUpdateDocument = gql`
+    mutation coreContactUpdate($input: CoreContactUpdateInput!) {
+  core {
+    contact {
+      update(input: $input) {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreContactUpdateMutation__
+ *
+ * To run a mutation, you first call `useCoreContactUpdateMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCoreContactUpdateMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCoreContactUpdateMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCoreContactUpdateMutation(options: VueApolloComposable.UseMutationOptions<CoreContactUpdateMutation, CoreContactUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreContactUpdateMutation, CoreContactUpdateMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CoreContactUpdateMutation, CoreContactUpdateMutationVariables>(CoreContactUpdateDocument, options);
+}
+export type CoreContactUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreContactUpdateMutation, CoreContactUpdateMutationVariables>;
+export const CoreDeviceCreateDocument = gql`
+    mutation coreDeviceCreate($input: CoreDeviceCreateInput!) {
+  core {
+    device {
+      create(input: $input) {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreDeviceCreateMutation__
+ *
+ * To run a mutation, you first call `useCoreDeviceCreateMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCoreDeviceCreateMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCoreDeviceCreateMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCoreDeviceCreateMutation(options: VueApolloComposable.UseMutationOptions<CoreDeviceCreateMutation, CoreDeviceCreateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreDeviceCreateMutation, CoreDeviceCreateMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CoreDeviceCreateMutation, CoreDeviceCreateMutationVariables>(CoreDeviceCreateDocument, options);
+}
+export type CoreDeviceCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreDeviceCreateMutation, CoreDeviceCreateMutationVariables>;
+export const CoreDeviceListDocument = gql`
+    query coreDeviceList($first: Int, $page: Int, $name: String, $hostname: String, $type: CoreDeviceTypes) {
+  core {
+    device {
+      list(name: $name, hostname: $hostname, first: $first, page: $page, type: $type) {
+        paginatorInfo {
+          count
+          currentPage
+          firstItem
+          hasMorePages
+          lastItem
+          lastPage
+          perPage
+          total
+        }
+        data {
+          created_at
+          description
+          hostname
+          id
+          name
+          type
+          updated_at
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreDeviceListQuery__
+ *
+ * To run a query within a Vue component, call `useCoreDeviceListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCoreDeviceListQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCoreDeviceListQuery({
+ *   first: // value for 'first'
+ *   page: // value for 'page'
+ *   name: // value for 'name'
+ *   hostname: // value for 'hostname'
+ *   type: // value for 'type'
+ * });
+ */
+export function useCoreDeviceListQuery(variables: CoreDeviceListQueryVariables | VueCompositionApi.Ref<CoreDeviceListQueryVariables> | ReactiveFunction<CoreDeviceListQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreDeviceListQuery, CoreDeviceListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreDeviceListQuery, CoreDeviceListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreDeviceListQuery, CoreDeviceListQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<CoreDeviceListQuery, CoreDeviceListQueryVariables>(CoreDeviceListDocument, variables, options);
+}
+export function useCoreDeviceListLazyQuery(variables: CoreDeviceListQueryVariables | VueCompositionApi.Ref<CoreDeviceListQueryVariables> | ReactiveFunction<CoreDeviceListQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreDeviceListQuery, CoreDeviceListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreDeviceListQuery, CoreDeviceListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreDeviceListQuery, CoreDeviceListQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<CoreDeviceListQuery, CoreDeviceListQueryVariables>(CoreDeviceListDocument, variables, options);
+}
+export type CoreDeviceListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreDeviceListQuery, CoreDeviceListQueryVariables>;
+export const CoreDeviceSingleDocument = gql`
+    query coreDeviceSingle($id: ID) {
+  core {
+    device {
+      single(id: $id) {
+        created_at
+        description
+        hostname
+        id
+        name
+        type
+        updated_at
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreDeviceSingleQuery__
+ *
+ * To run a query within a Vue component, call `useCoreDeviceSingleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCoreDeviceSingleQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCoreDeviceSingleQuery({
+ *   id: // value for 'id'
+ * });
+ */
+export function useCoreDeviceSingleQuery(variables: CoreDeviceSingleQueryVariables | VueCompositionApi.Ref<CoreDeviceSingleQueryVariables> | ReactiveFunction<CoreDeviceSingleQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreDeviceSingleQuery, CoreDeviceSingleQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreDeviceSingleQuery, CoreDeviceSingleQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreDeviceSingleQuery, CoreDeviceSingleQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<CoreDeviceSingleQuery, CoreDeviceSingleQueryVariables>(CoreDeviceSingleDocument, variables, options);
+}
+export function useCoreDeviceSingleLazyQuery(variables: CoreDeviceSingleQueryVariables | VueCompositionApi.Ref<CoreDeviceSingleQueryVariables> | ReactiveFunction<CoreDeviceSingleQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreDeviceSingleQuery, CoreDeviceSingleQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreDeviceSingleQuery, CoreDeviceSingleQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreDeviceSingleQuery, CoreDeviceSingleQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<CoreDeviceSingleQuery, CoreDeviceSingleQueryVariables>(CoreDeviceSingleDocument, variables, options);
+}
+export type CoreDeviceSingleQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreDeviceSingleQuery, CoreDeviceSingleQueryVariables>;
+export const CoreDeviceUpdateDocument = gql`
+    mutation coreDeviceUpdate($input: CoreDeviceUpdateInput!) {
+  core {
+    device {
+      update(input: $input) {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreDeviceUpdateMutation__
+ *
+ * To run a mutation, you first call `useCoreDeviceUpdateMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCoreDeviceUpdateMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCoreDeviceUpdateMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCoreDeviceUpdateMutation(options: VueApolloComposable.UseMutationOptions<CoreDeviceUpdateMutation, CoreDeviceUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreDeviceUpdateMutation, CoreDeviceUpdateMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CoreDeviceUpdateMutation, CoreDeviceUpdateMutationVariables>(CoreDeviceUpdateDocument, options);
+}
+export type CoreDeviceUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreDeviceUpdateMutation, CoreDeviceUpdateMutationVariables>;
 export const CoreLocationCreateDocument = gql`
     mutation coreLocationCreate($input: CoreLocationCreateInput) {
   core {
@@ -2360,6 +2924,311 @@ export function useCoreLocationCreateMutation(options: VueApolloComposable.UseMu
   return VueApolloComposable.useMutation<CoreLocationCreateMutation, CoreLocationCreateMutationVariables>(CoreLocationCreateDocument, options);
 }
 export type CoreLocationCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreLocationCreateMutation, CoreLocationCreateMutationVariables>;
+export const CoreLocationListDocument = gql`
+    query coreLocationList($first: Int, $page: Int, $name: String, $type: CoreLocationTypes) {
+  core {
+    location {
+      list(first: $first, page: $page, name: $name, type: $type) {
+        data {
+          id
+          name
+          parent_id
+          parent_location {
+            id
+            name
+          }
+          type
+          description
+          created_at
+          address
+        }
+        paginatorInfo {
+          firstItem
+          lastItem
+          count
+          currentPage
+          hasMorePages
+          lastPage
+          perPage
+          total
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreLocationListQuery__
+ *
+ * To run a query within a Vue component, call `useCoreLocationListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCoreLocationListQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCoreLocationListQuery({
+ *   first: // value for 'first'
+ *   page: // value for 'page'
+ *   name: // value for 'name'
+ *   type: // value for 'type'
+ * });
+ */
+export function useCoreLocationListQuery(variables: CoreLocationListQueryVariables | VueCompositionApi.Ref<CoreLocationListQueryVariables> | ReactiveFunction<CoreLocationListQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<CoreLocationListQuery, CoreLocationListQueryVariables>(CoreLocationListDocument, variables, options);
+}
+export function useCoreLocationListLazyQuery(variables: CoreLocationListQueryVariables | VueCompositionApi.Ref<CoreLocationListQueryVariables> | ReactiveFunction<CoreLocationListQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreLocationListQuery, CoreLocationListQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<CoreLocationListQuery, CoreLocationListQueryVariables>(CoreLocationListDocument, variables, options);
+}
+export type CoreLocationListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreLocationListQuery, CoreLocationListQueryVariables>;
+export const CoreLocationSingleDocument = gql`
+    query coreLocationSingle($id: ID) {
+  core {
+    location {
+      single(id: $id) {
+        id
+        type
+        name
+        description
+        parent_id
+        parent_location {
+          id
+          name
+          type
+        }
+        address
+        created_at
+        updated_at
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreLocationSingleQuery__
+ *
+ * To run a query within a Vue component, call `useCoreLocationSingleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCoreLocationSingleQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCoreLocationSingleQuery({
+ *   id: // value for 'id'
+ * });
+ */
+export function useCoreLocationSingleQuery(variables: CoreLocationSingleQueryVariables | VueCompositionApi.Ref<CoreLocationSingleQueryVariables> | ReactiveFunction<CoreLocationSingleQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreLocationSingleQuery, CoreLocationSingleQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreLocationSingleQuery, CoreLocationSingleQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreLocationSingleQuery, CoreLocationSingleQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<CoreLocationSingleQuery, CoreLocationSingleQueryVariables>(CoreLocationSingleDocument, variables, options);
+}
+export function useCoreLocationSingleLazyQuery(variables: CoreLocationSingleQueryVariables | VueCompositionApi.Ref<CoreLocationSingleQueryVariables> | ReactiveFunction<CoreLocationSingleQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreLocationSingleQuery, CoreLocationSingleQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreLocationSingleQuery, CoreLocationSingleQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreLocationSingleQuery, CoreLocationSingleQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<CoreLocationSingleQuery, CoreLocationSingleQueryVariables>(CoreLocationSingleDocument, variables, options);
+}
+export type CoreLocationSingleQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreLocationSingleQuery, CoreLocationSingleQueryVariables>;
+export const CoreLocationUpdateDocument = gql`
+    mutation coreLocationUpdate($input: CoreLocationUpdateInput!) {
+  core {
+    location {
+      update(input: $input) {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreLocationUpdateMutation__
+ *
+ * To run a mutation, you first call `useCoreLocationUpdateMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCoreLocationUpdateMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCoreLocationUpdateMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCoreLocationUpdateMutation(options: VueApolloComposable.UseMutationOptions<CoreLocationUpdateMutation, CoreLocationUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreLocationUpdateMutation, CoreLocationUpdateMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CoreLocationUpdateMutation, CoreLocationUpdateMutationVariables>(CoreLocationUpdateDocument, options);
+}
+export type CoreLocationUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreLocationUpdateMutation, CoreLocationUpdateMutationVariables>;
+export const CoreNetworkCreateDocument = gql`
+    mutation coreNetworkCreate($input: CoreNetworkCreateInput) {
+  core {
+    network {
+      create(input: $input) {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreNetworkCreateMutation__
+ *
+ * To run a mutation, you first call `useCoreNetworkCreateMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCoreNetworkCreateMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCoreNetworkCreateMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCoreNetworkCreateMutation(options: VueApolloComposable.UseMutationOptions<CoreNetworkCreateMutation, CoreNetworkCreateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreNetworkCreateMutation, CoreNetworkCreateMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CoreNetworkCreateMutation, CoreNetworkCreateMutationVariables>(CoreNetworkCreateDocument, options);
+}
+export type CoreNetworkCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreNetworkCreateMutation, CoreNetworkCreateMutationVariables>;
+export const CoreNetworkListDocument = gql`
+    query coreNetworkList($perPage: Int, $page: Int, $name: String, $network: String) {
+  core {
+    network {
+      list(first: $perPage, page: $page, name: $name, network: $network) {
+        data {
+          id
+          name
+          parent_id
+          description
+          created_at
+          network
+          mask
+          updated_at
+          parent_network {
+            id
+            name
+          }
+        }
+        paginatorInfo {
+          firstItem
+          lastItem
+          count
+          currentPage
+          hasMorePages
+          lastPage
+          perPage
+          total
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreNetworkListQuery__
+ *
+ * To run a query within a Vue component, call `useCoreNetworkListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCoreNetworkListQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCoreNetworkListQuery({
+ *   perPage: // value for 'perPage'
+ *   page: // value for 'page'
+ *   name: // value for 'name'
+ *   network: // value for 'network'
+ * });
+ */
+export function useCoreNetworkListQuery(variables: CoreNetworkListQueryVariables | VueCompositionApi.Ref<CoreNetworkListQueryVariables> | ReactiveFunction<CoreNetworkListQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreNetworkListQuery, CoreNetworkListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreNetworkListQuery, CoreNetworkListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreNetworkListQuery, CoreNetworkListQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<CoreNetworkListQuery, CoreNetworkListQueryVariables>(CoreNetworkListDocument, variables, options);
+}
+export function useCoreNetworkListLazyQuery(variables: CoreNetworkListQueryVariables | VueCompositionApi.Ref<CoreNetworkListQueryVariables> | ReactiveFunction<CoreNetworkListQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreNetworkListQuery, CoreNetworkListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreNetworkListQuery, CoreNetworkListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreNetworkListQuery, CoreNetworkListQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<CoreNetworkListQuery, CoreNetworkListQueryVariables>(CoreNetworkListDocument, variables, options);
+}
+export type CoreNetworkListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreNetworkListQuery, CoreNetworkListQueryVariables>;
+export const CoreNetworkSingleDocument = gql`
+    query coreNetworkSingle($id: ID) {
+  core {
+    network {
+      single(id: $id) {
+        created_at
+        description
+        id
+        mask
+        name
+        network
+        parent_id
+        updated_at
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreNetworkSingleQuery__
+ *
+ * To run a query within a Vue component, call `useCoreNetworkSingleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCoreNetworkSingleQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCoreNetworkSingleQuery({
+ *   id: // value for 'id'
+ * });
+ */
+export function useCoreNetworkSingleQuery(variables: CoreNetworkSingleQueryVariables | VueCompositionApi.Ref<CoreNetworkSingleQueryVariables> | ReactiveFunction<CoreNetworkSingleQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreNetworkSingleQuery, CoreNetworkSingleQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreNetworkSingleQuery, CoreNetworkSingleQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreNetworkSingleQuery, CoreNetworkSingleQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<CoreNetworkSingleQuery, CoreNetworkSingleQueryVariables>(CoreNetworkSingleDocument, variables, options);
+}
+export function useCoreNetworkSingleLazyQuery(variables: CoreNetworkSingleQueryVariables | VueCompositionApi.Ref<CoreNetworkSingleQueryVariables> | ReactiveFunction<CoreNetworkSingleQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<CoreNetworkSingleQuery, CoreNetworkSingleQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreNetworkSingleQuery, CoreNetworkSingleQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreNetworkSingleQuery, CoreNetworkSingleQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<CoreNetworkSingleQuery, CoreNetworkSingleQueryVariables>(CoreNetworkSingleDocument, variables, options);
+}
+export type CoreNetworkSingleQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreNetworkSingleQuery, CoreNetworkSingleQueryVariables>;
+export const CoreNetworkUpdateDocument = gql`
+    mutation coreNetworkUpdate($input: CoreNetworkUpdateInput!) {
+  core {
+    network {
+      update(input: $input) {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreNetworkUpdateMutation__
+ *
+ * To run a mutation, you first call `useCoreNetworkUpdateMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCoreNetworkUpdateMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCoreNetworkUpdateMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCoreNetworkUpdateMutation(options: VueApolloComposable.UseMutationOptions<CoreNetworkUpdateMutation, CoreNetworkUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreNetworkUpdateMutation, CoreNetworkUpdateMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CoreNetworkUpdateMutation, CoreNetworkUpdateMutationVariables>(CoreNetworkUpdateDocument, options);
+}
+export type CoreNetworkUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreNetworkUpdateMutation, CoreNetworkUpdateMutationVariables>;
 export const ForgotPasswordDocument = gql`
     mutation forgotPassword($input: ForgotPasswordInput!) {
   auth {
@@ -2592,3 +3461,41 @@ export function useLogoutMutation(options: VueApolloComposable.UseMutationOption
   return VueApolloComposable.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument, options);
 }
 export type LogoutMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<LogoutMutation, LogoutMutationVariables>;
+export const WidgetCoreLocationTreeDocument = gql`
+    query widgetCoreLocationTree($parentId: ID) {
+  core {
+    location {
+      list(parentId: $parentId) {
+        data {
+          id
+          name
+          type
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useWidgetCoreLocationTreeQuery__
+ *
+ * To run a query within a Vue component, call `useWidgetCoreLocationTreeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWidgetCoreLocationTreeQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useWidgetCoreLocationTreeQuery({
+ *   parentId: // value for 'parentId'
+ * });
+ */
+export function useWidgetCoreLocationTreeQuery(variables: WidgetCoreLocationTreeQueryVariables | VueCompositionApi.Ref<WidgetCoreLocationTreeQueryVariables> | ReactiveFunction<WidgetCoreLocationTreeQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables>(WidgetCoreLocationTreeDocument, variables, options);
+}
+export function useWidgetCoreLocationTreeLazyQuery(variables: WidgetCoreLocationTreeQueryVariables | VueCompositionApi.Ref<WidgetCoreLocationTreeQueryVariables> | ReactiveFunction<WidgetCoreLocationTreeQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables>(WidgetCoreLocationTreeDocument, variables, options);
+}
+export type WidgetCoreLocationTreeQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<WidgetCoreLocationTreeQuery, WidgetCoreLocationTreeQueryVariables>;

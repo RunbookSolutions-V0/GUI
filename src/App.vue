@@ -7,7 +7,7 @@ const authStore = useAuthStore();
 
 <template>
   <AuthLayout v-if="authStore.user">
-    <RouterView />
+    <RouterView :key="$route.fullPath" />
   </AuthLayout>
   <template v-else>
     <RouterView />

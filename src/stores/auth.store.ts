@@ -2,8 +2,8 @@ import { defineStore } from 'pinia';
 import { type RouteLocationNormalizedLoaded } from 'vue-router';
 import router from "@/router"
 
-import type { CurrentUser } from "@/graphql/apollo.generated";
-import { useLoginMutation, useRefreshTokenMutation } from "@/graphql/apollo.generated";
+import type { CurrentUser } from "@/graphql";
+import { useLoginMutation, useRefreshTokenMutation } from "@/graphql";
 
 import { apolloClient } from "@/graphql/apollo.client";
 import {
@@ -21,6 +21,7 @@ export const useAuthStore = defineStore({
     persist: true,
     state: () => ({
         user: null as CurrentUser | null,
+        teams: [] as Team[],
         selectedTeam: null as string | null,
         tokenInfo: null as TokenInfo | null,
         refreshTokenTimeout: null as number | null | NodeJS.Timeout
@@ -44,7 +45,13 @@ export const useAuthStore = defineStore({
                     return;
                 }
                 const response = result.data.auth.login;
+                if (!response.user) {
+                    console.error("We didn't recieve the user when logging in!")
+                    this.logout();
+                    return;
+                }
                 this.user = response.user as CurrentUser;
+                this.teams = response.user.teams as Team[]
                 this.selectedTeam = this.user.personal_team.id;
                 this.tokenInfo = {
                     access_token: response.access_token,

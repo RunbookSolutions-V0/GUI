@@ -2,7 +2,7 @@
     <div clas="mx-4 space-y-4">
         <InputTextLabel v-model="formData.name" label="Name"></InputTextLabel>
         <Dropdown 
-            v-model="formData.type" 
+            v-model="selectedLocationType" 
             :options="locationTypes" 
             optionLabel="name" 
             placeholder="Location Type" 
@@ -22,59 +22,76 @@
                 </div>
             </template>
         </Dropdown>
-        <CoreLocationSelect label="Parent Location" class="mb-2"></CoreLocationSelect>
+        <CoreLocationSelect v-model="selectedParentLocation" label="Parent Location" class="mb-2"></CoreLocationSelect>
         <TextAreaLabel v-model="formData.description" label="Description"></TextAreaLabel>
     </div>
-    <Button label="Create Location" @click="createLocation({input: formData})" />
+    <VPButton label="Create Location" @click="createLocation" />
 </template>
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import Button from 'primevue/button';
+<script setup lang="ts">
+import { ref, inject } from 'vue';
+import router from "@/router";
+
+import VPButton from 'primevue/button';
 import Dropdown from 'primevue/dropdown';
 import InputTextLabel from '@/components/Input/InputTextLabel.vue';
 import TextAreaLabel from '@/components/Input/TextAreaLabel.vue';
 import CoreLocationSelect from "@/components/Core/Location/Select.vue";
 
-
+import gql from "graphql-tag";
 import { 
     type CoreLocationCreateInput,
     CoreLocationTypes,
     useCoreLocationCreateMutation 
-} from "@/graphql/apollo.generated";
+} from "@/graphql";
 
-export default defineComponent({
-    name: "LocationCreate",
-    components: {
-        Button,
-        InputTextLabel,
-        TextAreaLabel,
-        Dropdown,
-        CoreLocationSelect
-    },
-    setup() {
-        const locationTypes = ref([
-            { name: "Building", value: CoreLocationTypes.BUILDING },
-            { name: 'Other', value: CoreLocationTypes.OTHER },
-            { name: 'Rack', value: CoreLocationTypes.RACK },
-            { name: 'Room', value: CoreLocationTypes.ROOM },
-        ])
-        const formData = ref<CoreLocationCreateInput>({
-            name: null,
-            description: null,
-            type: null,
-            parent_id: null,
-            address: null
-        });
-        //{name: "", type: building, description: "", parent_id: "", address: ""}
-        const { mutate: createLocation, onDone } = useCoreLocationCreateMutation();
-        onDone((result) => {
-            console.log(result);
-        })
-        return {
-            locationTypes,
-            formData,
-            createLocation
-        };
-    }
+const dialogRef = inject('dialogRef');
+
+// Valid Location types
+const locationTypes = ref([
+    { name: "Building", value: CoreLocationTypes.BUILDING },
+    { name: 'Other', value: CoreLocationTypes.OTHER },
+    { name: 'Rack', value: CoreLocationTypes.RACK },
+    { name: 'Room', value: CoreLocationTypes.ROOM },
+]);
+// Form Data to Submit to Create Location
+const formData = ref<CoreLocationCreateInput>({
+    name: null,
+    description: null,
+    type: null,
+    parent_id: null,
+    address: null
 });
+// The Selected Location Type
+const selectedLocationType = ref<{name: string, value: string}>();
+const selectedParentLocation = ref();
+
+
+// Submission Mutation
+const GraphQLDocument = gql`
+mutation coreLocationCreate($input: CoreLocationCreateInput) {
+    core {
+      location {
+        create(
+          input: $input
+        ) {
+          id
+        }
+      }
+    }
+  }`;
+const { mutate: locationMutation, onDone } = useCoreLocationCreateMutation();
+function createLocation() {
+    if (!selectedLocationType.value) return;
+
+    formData.value.type = selectedLocationType.value.value as string;
+    formData.value.parent_id = selectedParentLocation.value?.id;
+    locationMutation({input: formData.value})
+}
+onDone((result) => {
+    if(!result.data) return;
+    const response = result.data.core.location.create;
+
+    router.push({name: 'core.location.view', params: { id: response.id }});
+    dialogRef.value.close();
+})
 </script>

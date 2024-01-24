@@ -1,7 +1,6 @@
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client/core";
 import { onError } from "@apollo/client/link/error";
 import type { ErrorResponse } from "@apollo/client/link/error";
-import { createApolloProvider } from "@vue/apollo-option";
 import { useAuthStore } from "@/stores";
 // import { useAlertStore } from "@/stores/alert";
 // import { useConfigStore } from "@/stores/config";
@@ -116,8 +115,4 @@ export const apolloClient = new ApolloClient({
       fetchPolicy: "no-cache",
     },
   },
-});
-
-export const apolloProvider = createApolloProvider({
-  defaultClient: apolloClient,
 });

@@ -1,16 +1,11 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
-import * as path from "path";
-import * as glob from "glob";
-
-function getGraphqlDocumentsPaths(baseDir: string): string[] {
-  const pattern = path.join(baseDir, "**/*.graphql.ts");
-  const result = glob.sync(pattern);
-  return result;
-}
 
 const config: CodegenConfig = {
   schema: "http://192.168.1.197/graphql",
-  documents: getGraphqlDocumentsPaths("./src/"),
+  documents: [
+    "./src/**/*.vue",
+    "./src/stores/auth.graphql.ts"
+  ],
   //ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
     // "./src/gql/": {
@@ -19,7 +14,7 @@ const config: CodegenConfig = {
     //     useTypeImports: true,
     //   },
     // },
-    "./src/graphql/apollo.generated.ts": {
+    "./src/graphql/index.ts": {
       plugins: [
         "@graphql-codegen/typescript",
         "@graphql-codegen/typescript-operations",

@@ -10,7 +10,7 @@ export default {
                 'border-x-0 border-b-0',
 
                 // Color
-                'border border-surface-200 dark:border-surface-700',
+                'border border-background-200 dark:border-background-700',
 
                 // State
                 { 'select-none pointer-events-none cursor-default opacity-60': props?.disabled }
@@ -31,7 +31,7 @@ export default {
 
                 // Color
                 'bg-transparent',
-                'text-surface-900 dark:text-surface-0',
+                'text-background-900 dark:text-background-0',
 
                 // States
                 'focus:outline-none focus:outline-offset-0 focus-visible:ring-2 focus-visible:ring-primary-600 ring-inset dark:focus-visible:ring-primary-500', // Focus
@@ -55,7 +55,7 @@ export default {
                 'pr-12 pt-2',
 
                 // Color
-                'text-surface-600 dark:text-surface-0/70'
+                'text-background-600 dark:text-background-0/70'
             ]
         },
         transition: {

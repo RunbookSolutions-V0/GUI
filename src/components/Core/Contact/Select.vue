@@ -2,18 +2,18 @@
     <div class="flex mb-2">
         <span class="relative flex-grow">
             <label 
-                v-if="props.label"
-                :for="($attrs.inputId as string)"
+                v-if="label"
+                :for="$attrs.inputId"
                 class="text-sm text-primary-500 dark:text-primary-400/60 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
             >
-                {{ props.label }}
+                {{ label }}
             </label>
             <AutoComplete
                 v-bind="$attrs"
                 :suggestions="items"
                 @complete="search"
                 optionLabel="name"
-                placeholder="Parent Location"
+                placeholder="Parent Company"
                 forceSelection
                 dropdown
                 dropdownMode="current"
@@ -24,16 +24,14 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import AutoComplete, { type AutoCompleteCompleteEvent } from 'primevue/autocomplete';
+import AutoComplete from 'primevue/autocomplete';
 import gql from "graphql-tag";
 
 import { 
-    useCoreLocationSelectFilteredListQuery,
-    type CoreLocationSelectFilteredListQueryVariables,
-    type CoreLocation,
-    type InputMaybe,
+    useCoreContactSelectFilteredListQuery,
+    type CoreContactSelectFilteredListQueryVariables,
+    CoreContactTypes
 } from "@/graphql";
-
 
 // Props
 const props = defineProps({
@@ -41,21 +39,25 @@ const props = defineProps({
         type: [String || null],
         default: null,
     },
+    type: {
+        type: String as CoreContactTypes,
+        default: null,
+    }
 });
 
-// Define some reactive variables
-// const value = ref("");
-const items = ref<CoreLocation[]>([]);
-const variables = ref<CoreLocationSelectFilteredListQueryVariables>({
-    name: null as InputMaybe<string>
-})
+// Define some reactive variables;
+const items = ref([]);
+const variables = ref<CoreContactSelectFilteredListQueryVariables>({
+    type: props.type,
+    name: null,
+});
 
-// Define our GraphQL Document
+// Define our GraphQL Query
 const GraphQLDocument = gql`
-query coreLocationSelectFilteredList($name: String) {
+query coreContactSelectFilteredList($name: String, $type: CoreContactTypes) {
     core {
-      location {
-        list(name: $name) {
+      contact {
+        list(name: $name, type: $type) {
           data {
             id
             name
@@ -66,14 +68,15 @@ query coreLocationSelectFilteredList($name: String) {
   }`;
 
 // Setup our Query
-const { onResult, loading } = useCoreLocationSelectFilteredListQuery(variables);
+const { onResult, loading } = useCoreContactSelectFilteredListQuery(variables);
 // and what we will do with the data
 onResult((result) => {
     if(!result.data) return;
-    items.value = result.data.core.location.list.data as CoreLocation[];
+    items.value = result.data.core.contact.list.data;
 });
 
-function search(event: AutoCompleteCompleteEvent){
+// Functions
+function search(event) {
     variables.value.name = "%" + event.query + "%";
 }
 </script>
