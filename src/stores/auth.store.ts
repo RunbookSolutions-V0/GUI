@@ -3,7 +3,7 @@ import { type RouteLocationNormalizedLoaded } from 'vue-router'
 import router from '@/router'
 
 import type { CurrentUser, Team } from '@/graphql'
-import { useLoginMutation, useRefreshTokenMutation } from '@/graphql'
+import { useCurrentUserQuery, useLoginMutation, useRefreshTokenMutation } from '@/graphql'
 
 import { apolloClient } from '@/graphql/apollo.client'
 import { provideApolloClient } from '@vue/apollo-composable'
@@ -88,8 +88,19 @@ export const useAuthStore = defineStore({
       })
       router.push({ name: 'auth.login' })
     },
+    refreshUser() {
+      if (!this.tokenInfo) return
+      provideApolloClient(apolloClient)
+      const { onResult } = useCurrentUserQuery()
+      onResult((result) => {
+        if (!result.data || !result.data.user.me) return
+        this.user = result.data.user.me as CurrentUser
+        this.teams = result.data.user.me.teams
+      })
+    },
     refreshToken() {
       if (!this.tokenInfo) return
+      provideApolloClient(apolloClient)
       const { mutate: refresh, onDone } = useRefreshTokenMutation()
       const alertStore = useAlertStore()
       refresh({ input: { refresh_token: this.tokenInfo.refresh_token } })

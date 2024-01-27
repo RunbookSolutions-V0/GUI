@@ -34,6 +34,9 @@ export const LOGIN_QUERY = gql`
             name
             photo
           }
+          invitations {
+            id
+          }
           created_at
           updated_at
         }
@@ -79,6 +82,9 @@ export const REGISTER_QUERY = gql`
               name
               photo
             }
+            invitations {
+              id
+            }
             email
             email_verified_at
           }
@@ -105,6 +111,34 @@ export const LOGOUT_QUERY = gql`
       logout {
         status
         message
+      }
+    }
+  }
+`
+
+export const CURRENT_USER_QUERY = gql`
+  query currentUser {
+    user {
+      me {
+        id
+        email
+        name
+        photo
+        personal_team {
+          id
+          name
+          photo
+        }
+        teams {
+          id
+          name
+          photo
+        }
+        invitations {
+          id
+        }
+        created_at
+        updated_at
       }
     }
   }

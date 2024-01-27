@@ -32,16 +32,22 @@ const preset = {
       'w-full',
       // Font
       'font-sans leading-none',
-      { ' px-3 pb-3 pt-5': instance.$attrs.mode === 'filled' },
-      { ' px-3 pb-4 pt-4': instance.$attrs.mode !== 'filled' },
+
+      // Spacing
+      'm-0',
+      { 'px-3 pb-3 pt-5': instance.$attrs.mode === 'filled' },
+      { 'px-3 pb-4 pt-4': instance.$attrs.mode !== 'filled' },
 
       // Colors
+      'placeholder:text-background-400 dark:placeholder:text-background-500',
+      'bg-background-0 dark:bg-background-900',
+      'shadow-sm',
       {
         'text-primary-600 dark:text-primary-300 bg-primary-50 dark:bg-primary-400/10 border-b-2 border-primary-400 dark:border-primary-400/60 rounded-none':
           instance.$attrs.mode === 'filled'
       },
       {
-        'text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-900 border border-surface-300 dark:border-surface-700 rounded-lg':
+        'text-surface-700 dark:text-surface-300 bg-primary-50 dark:bg-surface-900 border border-surface-300 dark:border-surface-700 rounded-lg':
           instance.$attrs.mode !== 'filled'
       },
 

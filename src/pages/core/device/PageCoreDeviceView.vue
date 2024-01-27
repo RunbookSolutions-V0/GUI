@@ -5,6 +5,9 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
+// PrimeVue
+import { useToast } from 'primevue/usetoast'
+
 // Widgets
 import type { AllTypes as T } from 's7k-widgets-core'
 import { v4 as uuidv4 } from 'uuid'
@@ -20,6 +23,9 @@ const pageContent = ref<{ data: any; update: any }>({
   data: null,
   update: null
 })
+
+// Injects
+const toast = useToast()
 
 // GraphQL
 // Get Data
@@ -41,7 +47,7 @@ const GraphQLDocument1 = gql`
     }
   }
 `
-const { loading, error, onResult } = useCoreDeviceSingleQuery({ id: useRoute().params.id })
+const { loading, error, onResult, refetch } = useCoreDeviceSingleQuery({ id: useRoute().params.id })
 onResult((result) => {
   if (!result.data) return
   const device = result.data.core.device.single as CoreDevice
@@ -67,20 +73,20 @@ onDone((result) => {
   if (!result.data) return
   const device = result.data.core.device.update
   if (!device) return
-  console.log('Mutation Complete. Updated Device:')
-  console.log(device)
+  toast.add({
+    severity: 'success',
+    summary: 'Success Message',
+    detail: 'Device Updated!',
+    life: 3000
+  })
   refetch()
-})
-onError((result) => {
-  console.log('Error Updating Device!')
-  console.log(result)
 })
 
 // Default Widget Page Layouts
 const layouts = [
   {
     id: '0000-000-000-0000',
-    name: 'Default Device View',
+    name: 'Device View',
     default: false,
     grid: {
       id: uuidv4(),
@@ -97,8 +103,47 @@ const layouts = [
         }
       ]
     },
-    hasTabs: false,
-    tabs: []
+    hasTabs: true,
+    tabs: [
+      {
+        name: 'Common Relations',
+        grid: {
+          id: uuidv4(),
+          items: [
+            {
+              name: 'Contacts',
+              widgetID: 'd7ce5981-e799-4d0d-9a63-e205e90c2549',
+              x: 0,
+              y: 0,
+              w: 1,
+              h: 2,
+              i: uuidv4(),
+              moved: false
+            },
+            {
+              name: 'Notes',
+              widgetID: 'c59f7881-05cd-4482-8888-33d553a4723f',
+              x: 1,
+              y: 0,
+              w: 1,
+              h: 2,
+              i: uuidv4(),
+              moved: false
+            },
+            {
+              name: 'Attachments',
+              widgetID: '63832e01-f549-4cb7-8d60-0902afc2c146',
+              x: 2,
+              y: 0,
+              w: 1,
+              h: 2,
+              i: uuidv4(),
+              moved: false
+            }
+          ]
+        }
+      }
+    ]
   } as T.LayoutPage
 ]
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div clas="mx-4 space-y-4">
     <InputTextLabel v-model="form.name" label="Name"></InputTextLabel>
-
+    <FileUpload v-model="photo" :multiple="false"></FileUpload>
     <VPDropdown
       v-model="selectedType"
       :options="types"
@@ -56,6 +56,8 @@ import VPDropdown from 'primevue/dropdown'
 import InputTextLabel from '@/components/Input/InputTextLabel.vue'
 import TextAreaLabel from '@/components/Input/TextAreaLabel.vue'
 import CoreContactSelect from '@/components/core/contact/CoreContactSelect.vue'
+import FileUpload from '@/components/Input/FileUpload.vue'
+import type FileUploadReturn from '@/components/Input/FileUpload.vue'
 
 // Injections
 const dialog = inject('dialogRef')
@@ -63,6 +65,7 @@ const dialog = inject('dialogRef')
 // Props
 
 // Define our Reactive Props
+const photo = ref<FileUploadReturn>({})
 const form = ref<CoreContactCreateInput>({
   name: null,
   type: CoreContactTypes.PERSON,
@@ -101,28 +104,16 @@ onDone((result) => {
   })
 })
 
-// Some Watchers
-watch(
-  () => selectedType,
-  (v) => {
-    form.value.type = v
-  },
-  { deep: true }
-)
-
-watch(
-  () => selectedCompany,
-  (v) => {
-    form.value.company_id = v.value.id
-  },
-  { deep: true }
-)
-
 // Functions
 function createContact() {
   if (!selectedType.value) return
-  form.value.type = selectedType.value as CoreContactTypes
-  createMutation({ input: form.value })
+  const input = {
+    ...form.value,
+    company_id: selectedCompany.value?.id,
+    type: selectedType.value.value,
+    file: photo.value.vapor
+  } as CoreContactCreateInput
+  form.value.type = createMutation({ input: input })
   if (!dialog) return
   ;(dialog as DynamicDialogInstance).close()
 }

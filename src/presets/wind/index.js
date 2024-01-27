@@ -71,6 +71,8 @@ import ripple from './ripple'
 import tag from './tag'
 import terminal from './terminal'
 
+import fileupload from './fileupload'
+
 export default {
   global,
   directives: {
@@ -145,5 +147,7 @@ export default {
   skeleton,
   progressbar,
   tag,
-  terminal
+  terminal,
+
+  fileupload
 }

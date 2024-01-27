@@ -18,8 +18,8 @@ watch(
   () => {
     while (alertStore.alerts.length > 0) {
       const alert = {
-        ...alertStore.alerts.pop(),
-        life: 3000
+        life: 5000,
+        ...alertStore.alerts.pop()
       } as ToastMessageOptions
       toast.add(alert)
     }

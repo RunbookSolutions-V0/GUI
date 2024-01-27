@@ -1,8 +1,17 @@
+import LocationList from './WidgetCoreLocationList.vue'
 import BasicWidget from './WidgetCoreLocationBasic.vue'
 import MapWidget from './WidgetCoreLocationMap.vue'
 import TreeWidget from './WidgetCoreLocationTree.vue'
 
 const widgets = [
+  {
+    name: 'Location List',
+    id: 'adb7c547-597b-4f4f-9de8-8abbf426e6d3',
+    as: LocationList,
+    height: 2,
+    width: 1,
+    pages: ['core-(?!location).*-view']
+  },
   {
     name: 'Location Details',
     id: 'e5adbb57-66c1-4e15-8729-139da67792d1',
@@ -19,7 +28,7 @@ const widgets = [
     defaultProps: {},
     height: 2,
     width: 2,
-    pages: ['.*']
+    pages: ['core-location-view']
   },
   {
     name: 'Location Tree Chart',
@@ -28,7 +37,7 @@ const widgets = [
     defaultProps: {},
     height: 2,
     width: 2,
-    pages: ['.*']
+    pages: ['core-location-view']
   }
 ]
 

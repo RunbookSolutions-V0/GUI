@@ -5,6 +5,9 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
+// PrimeVue
+import { useToast } from 'primevue/usetoast'
+
 // Widgets
 import type { AllTypes as T } from 's7k-widgets-core'
 import { v4 as uuidv4 } from 'uuid'
@@ -21,6 +24,9 @@ const pageContent = ref<{ data: any; update: any }>({
   update: null
 })
 
+// Injects
+const toast = useToast()
+
 // GraphQL
 // Get Data
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -29,20 +35,55 @@ const GraphQLDocument1 = gql`
     core {
       network {
         single(id: $id) {
-          created_at
-          description
           id
-          mask
           name
+          description
           network
+          mask
+
           parent_id
+          parent_network {
+            id
+            name
+            network
+          }
+
+          subnets {
+            id
+            name
+            network
+          }
+
+          contacts {
+            id
+          }
+
+          notes {
+            id
+          }
+
+          attachments {
+            id
+          }
+
+          locations {
+            id
+          }
+
+          devices {
+            id
+          }
+
+          created_at
           updated_at
         }
       }
     }
   }
 `
-const { loading, error, onResult } = useCoreNetworkSingleQuery({ id: useRoute().params.id })
+const { loading, error, onResult, refetch } = useCoreNetworkSingleQuery({
+  id: useRoute().params.id
+})
 onResult((result) => {
   if (!result.data) return
   const network = result.data.core.network.single as CoreNetwork
@@ -62,43 +103,93 @@ const GraphQLDocument2 = gql`
     }
   }
 `
-const { mutate, onDone, onError } = useCoreNetworkUpdateMutation()
+const { mutate, onDone } = useCoreNetworkUpdateMutation()
 pageContent.value.update = mutate
 onDone((result) => {
   if (!result.data) return
   const network = result.data.core.network.update
   if (!network) return
-  console.log('Mutation Complete. Updated Network:')
-  console.log(network)
-})
-onError((result) => {
-  console.log('Error Updating Network!')
-  console.log(result)
+  toast.add({
+    severity: 'success',
+    summary: 'Success Message',
+    detail: 'Network Updated!',
+    life: 3000
+  })
+  refetch()
 })
 
 // Default Widget Page Layouts
 const layouts = [
   {
     id: '0000-000-000-0000',
-    name: 'Default Network View',
+    name: 'Network View',
     default: false,
     grid: {
       id: uuidv4(),
       items: [
         {
-          name: 'Empty Widget',
-          widgetID: 'd287d3bc-94e9-4b6d-91ce-ef4bfced75ff',
+          name: 'Locations',
+          widgetID: 'adb7c547-597b-4f4f-9de8-8abbf426e6d3',
           x: 0,
           y: 0,
           w: 1,
-          h: 1,
+          h: 2,
+          i: uuidv4(),
+          moved: false
+        },
+        {
+          name: 'Devices',
+          widgetID: '2949948f-f488-42d3-ba43-757f484bf98a',
+          x: 1,
+          y: 0,
+          w: 1,
+          h: 2,
           i: uuidv4(),
           moved: false
         }
       ]
     },
-    hasTabs: false,
-    tabs: []
+    hasTabs: true,
+    tabs: [
+      {
+        name: 'Common Relations',
+        grid: {
+          id: uuidv4(),
+          items: [
+            {
+              name: 'Contacts',
+              widgetID: 'd7ce5981-e799-4d0d-9a63-e205e90c2549',
+              x: 0,
+              y: 0,
+              w: 1,
+              h: 2,
+              i: uuidv4(),
+              moved: false
+            },
+            {
+              name: 'Notes',
+              widgetID: 'c59f7881-05cd-4482-8888-33d553a4723f',
+              x: 1,
+              y: 0,
+              w: 1,
+              h: 2,
+              i: uuidv4(),
+              moved: false
+            },
+            {
+              name: 'Attachments',
+              widgetID: '63832e01-f549-4cb7-8d60-0902afc2c146',
+              x: 2,
+              y: 0,
+              w: 1,
+              h: 2,
+              i: uuidv4(),
+              moved: false
+            }
+          ]
+        }
+      }
+    ]
   } as T.LayoutPage
 ]
 </script>

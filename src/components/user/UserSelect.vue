@@ -8,12 +8,12 @@
       >
         {{ label }}
       </label>
-      <AutoComplete
+      <PVAutoComplete
         v-bind="$attrs"
         :suggestions="items"
         @complete="search"
         optionLabel="name"
-        placeholder="Select a Contact"
+        placeholder="Select User"
         forceSelection
         dropdown
         dropdownMode="current"
@@ -24,57 +24,54 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import AutoComplete from 'primevue/autocomplete'
-import gql from 'graphql-tag'
+// PrimeVue
+import PVAutoComplete from 'primevue/autocomplete'
 
+// GraphQL
+import gql from 'graphql-tag'
 import {
-  useCoreContactSelectFilteredListQuery,
-  type CoreContactSelectFilteredListQueryVariables,
-  CoreContactTypes
+  useUserSelectFilteredListQuery,
+  type useUserSelectFilteredListQueryVariables
 } from '@/graphql'
 
+// Define our Props
 // Props
 const props = defineProps({
   label: {
     type: [String || null],
     default: null
-  },
-  type: {
-    type: String as CoreContactTypes,
-    default: null
   }
 })
 
-// Define some reactive variables;
+// Define some Reactive Variables
 const items = ref([])
-const variables = ref<CoreContactSelectFilteredListQueryVariables>({
-  type: props.type,
+const variables = ref<useUserSelectFilteredListQueryVariables>({
+  email: null,
   name: null
 })
 
-// Define our GraphQL
+// GraphQL
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument = gql`
-  query coreContactSelectFilteredList($name: String, $type: CoreContactTypes) {
-    core {
-      contact {
-        list(name: $name, type: $type) {
-          data {
-            id
-            name
-          }
+  query UserSelectFilteredList($email: String, $name: String) {
+    user {
+      list(email: $email, name: $name) {
+        data {
+          id
+          email
+          name
+          photo
         }
       }
     }
   }
 `
-
 // Setup our Query
-const { onResult, loading } = useCoreContactSelectFilteredListQuery(variables)
+const { onResult, loading } = useUserSelectFilteredListQuery(variables)
 // and what we will do with the data
 onResult((result) => {
   if (!result.data) return
-  items.value = result.data.core.contact.list.data
+  items.value = result.data.user.list.data
 })
 
 // Functions

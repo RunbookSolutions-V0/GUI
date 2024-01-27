@@ -36,6 +36,7 @@ const preset = {
       { ' px-3 pb-4 pt-4': instance.$attrs.mode !== 'filled' },
 
       // Colors
+      'bg-background-0 dark:bg-background-900',
       {
         'text-primary-600 dark:text-primary-300 bg-primary-50 dark:bg-primary-400/10 border-b-2 border-primary-400 dark:border-primary-400/60 rounded-none':
           instance.$attrs.mode === 'filled'

@@ -1,5 +1,5 @@
 <template>
-  <div class="card flex justify-center">
+  <div class="card flex justify-center mx-auto my-auto">
     <Button
       :pt="{ root: 'w-full flex' }"
       :ptOptions="{ mergeProps: false }"
@@ -8,29 +8,32 @@
       aria-controls="overlay_menu"
       text
     >
-      <Avatar
-        class="dark:text-white"
+      <PVAvatar
         :label="
-          authStore.user?.name
-            .split(' ')
-            .map((word) => word.charAt(0).toUpperCase())
-            .join('')
+          authStore.user?.photo
+            ? null
+            : authStore.user?.name
+                .split(' ')
+                .map((word) => word.charAt(0).toUpperCase())
+                .join('')
         "
-        :image="authStore.user?.photo as string"
+        :image="authStore.user?.photo"
       />
-      <!-- <span class="flex flex-col">
-                <span class="truncate w-20 font-semibold tracking-wide leading-none">{{ authStore.user?.name }}</span>
-                <span class="truncate w-20 text-gray-500 text-xs leading-none mt-1">Manager</span>
-              </span> -->
+      <span class="flex flex-col mx-auto my-auto">
+        <span class="truncate w-20 font-semibold tracking-wide leading-none">{{
+          authStore.user?.name
+        }}</span>
+      </span>
     </Button>
     <Menu ref="menu" id="overlay_menu" :model="items" :popup="true">
       <template #item="{ item, props }">
-        <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+        <RouterLink v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
           <a :href="href" v-bind="props.action" @click="navigate">
             <span :class="item.icon" />
             <span class="ml-2">{{ item.label }}</span>
+            <Badge v-if="item.badge" class="ml-2" v-bind="item.badge" />
           </a>
-        </router-link>
+        </RouterLink>
         <a v-else :href="item.url" :target="item.target" v-bind="props.action">
           <span :class="item.icon" />
           <span class="ml-2">{{ item.label }}</span>
@@ -41,13 +44,35 @@
 </template>
 
 <script setup lang="ts">
-import Avatar from 'primevue/avatar'
+import { ref, watch } from 'vue'
+// PrimeVue
+import PVAvatar from 'primevue/avatar'
 import Menu from 'primevue/menu'
 import Button from 'primevue/button'
+import Badge from 'primevue/badge'
+
+// Dynamic Dyalog
+import { useDialog } from 'primevue/usedialog'
+const dialog = useDialog()
+
+// Stores
 import { useAuthStore } from '@/stores'
 const authStore = useAuthStore()
 
-import { ref } from 'vue'
+// Application Components
+import CreateInviation from '@/components/invitation/InvitationCreate.vue'
+import CreateTeam from '@/components/team/TeamCreate.vue'
+import EditProfile from '@/components/user/UserEdit.vue'
+
+const invitationCount = ref(authStore.user?.invitations?.length || 0)
+watch(
+  authStore,
+  (na, oa) => {
+    if (!na.user || !na.user.invitations) return
+    invitationCount.value = na.user.invitations.length
+  },
+  { deep: true }
+)
 
 const menu = ref()
 const items = ref([
@@ -65,13 +90,34 @@ const items = ref([
     label: 'Teams',
     items: [
       {
-        label: 'Create Team'
+        label: 'View Team',
+        route: { name: 'team.view', params: { id: authStore.selectedTeam } }
       },
       {
-        label: 'My Invitations'
+        label: 'Create Team',
+        command: () => {
+          dialog.open(CreateTeam, { props: { header: 'Create Team', modal: true } })
+        }
+      }
+    ]
+  },
+  {
+    label: 'Invitations',
+    items: [
+      {
+        label: 'My Invitations',
+        route: { name: 'invitation.list' },
+        badge: {
+          value: authStore.user?.invitations?.length || 0
+        }
       },
       {
-        label: 'Invite To Team'
+        label: 'Create Invitation',
+        command: () => {
+          dialog.open(CreateInviation, {
+            props: { header: 'Create Invitation To Team', modal: true }
+          })
+        }
       }
     ]
   },
@@ -79,7 +125,10 @@ const items = ref([
     label: 'User',
     items: [
       {
-        label: 'Edit Profile'
+        label: 'Edit Profile',
+        command: () => {
+          dialog.open(EditProfile, { props: { header: 'Edit Profile', modal: true } })
+        }
       },
       {
         label: 'Logout',

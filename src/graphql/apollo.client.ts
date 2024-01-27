@@ -63,35 +63,70 @@ function processError(error: GraphQLError) {
   const alertStore = useAlertStore()
   const authStore = useAuthStore()
   const message: string = error.message
+
+  // Unauthenticated Errors
   if (['Not Authenticated', 'Unauthenticated.'].indexOf(message) > -1) {
     authStore.logout()
     alertStore.add({
       severity: 'error',
-      summary: 'Error Message',
+      summary: 'Unauthenticated',
       detail: 'You need to be signed-in to do that.',
-      life: 3000
+      life: 10000
     })
-  } else if (['Internal server error'].indexOf(message) > -1) {
-    alertStore.add({ severity: 'error', summary: 'Error Message', detail: message, life: 3000 })
-  } else if ('extensions' in error) {
-    // Laravel Validation Errors
-    if ('validation' in error.extensions) {
-      handleValidationErrors(error.extensions.validation as Array<ValidationError>)
-    } else if ('reason' in error.extensions) {
-      alertStore.add({
-        severity: 'error',
-        summary: 'Error Message',
-        detail: error.extensions.reason,
-        life: 3000
-      })
-    } else if ('errors' in error.extensions) {
-      handleValidationErrors(error.extensions.errors as Array<ValidationError>)
-    } else {
-      alertStore.add({ severity: 'error', summary: 'Error Message', detail: message, life: 3000 })
-    }
-  } else {
-    alertStore.add({ severity: 'error', summary: 'Error Message', detail: message, life: 3000 })
+    return
   }
+
+  // Internal Server Error
+  if (['Internal server error'].indexOf(message) > -1) {
+    alertStore.add({
+      severity: 'error',
+      summary: 'Internal Server Error',
+      detail: message,
+      life: 10000
+    })
+    return
+  }
+
+  if (message.includes('Duplicate Entry')) {
+    alertStore.add({
+      severity: 'warn',
+      summary: 'That apears to already exist!',
+      detail: message,
+      life: 10000
+    })
+    return
+  }
+
+  // A GraphQL Extension?
+  if (!('extensions' in error)) {
+    console.error('UNKNOWN ERROR!')
+    console.error(error)
+    return
+  }
+
+  // Laravel Validation Errors
+  if ('validation' in error.extensions || 'errors' in error.extensions) {
+    let validationErrors: Array<ValidationError>
+    if ('validation' in error.extensions)
+      validationErrors = error.extensions.validation as Array<ValidationError>
+    else validationErrors = error.extensions.errors as Array<ValidationError>
+
+    handleValidationErrors(validationErrors)
+    return
+  }
+
+  // We have a Reason!
+  if ('reason' in error.extensions) {
+    alertStore.add({
+      severity: 'error',
+      summary: 'Reasonable Error',
+      detail: error.extensions.reason,
+      life: 10000
+    })
+    return
+  }
+
+  alertStore.add({ severity: 'error', summary: 'Error Message', detail: message })
 }
 
 function handleValidationErrors(validationErrors: Array<ValidationError>) {
@@ -100,9 +135,9 @@ function handleValidationErrors(validationErrors: Array<ValidationError>) {
   for (const [key, value] of entries) {
     alertStore.add({
       severity: 'error',
-      summary: 'Error Message',
+      summary: 'Validation Error',
       detail: key + ': ' + value,
-      life: 3000
+      life: 10000
     })
   }
 }
@@ -117,10 +152,12 @@ export const apolloClient = new ApolloClient({
   defaultOptions: {
     watchQuery: {
       errorPolicy: 'all',
-      pollInterval: 600 * 1000
+      fetchPolicy: 'no-cache',
+      pollInterval: 600 * 1000 //5 Min
     },
     query: {
-      errorPolicy: 'all'
+      errorPolicy: 'all',
+      fetchPolicy: 'no-cache'
     },
     mutate: {
       errorPolicy: 'all',

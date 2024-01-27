@@ -18,7 +18,7 @@
 
       <PVColumn field="photo" header="Photo" :showFilterMenu="false">
         <template #body="{ data }">
-          {{ data.photo }}
+          <img v-if="data.photo" class="h-12 w-12 rounded-full" :src="data.photo" />
         </template>
       </PVColumn>
 

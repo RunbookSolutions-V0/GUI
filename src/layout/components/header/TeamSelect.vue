@@ -1,4 +1,10 @@
 <template>
+  <img
+    v-if="selectedTeam && selectedTeam.photo"
+    :alt="selectedTeam.name"
+    :src="selectedTeam.photo"
+    class="mr-2 w-8 h-8 mx-auto my-auto"
+  />
   <PVAutoComplete
     dropdown
     :model-value="selectedTeam"
@@ -9,12 +15,18 @@
     @complete="search"
     :force-selection="true"
   >
-    <!-- <template #option="slotProps">
-            <div class="flex align-options-center">
-                <img :alt="slotProps.option.name" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png" :class="`flag flag-${slotProps.option.code.toLowerCase()} mr-2`" style="width: 18px" />
-                <div>{{ slotProps.option.name }}</div>
-            </div>
-        </template> -->
+    <template #option="slotProps">
+      <div class="flex align-options-center">
+        <img
+          v-if="slotProps.option.photo"
+          :alt="slotProps.option.name"
+          :src="slotProps.option.photo"
+          class="mr-2"
+          style="width: 18px"
+        />
+        <div>{{ slotProps.option.name }}</div>
+      </div>
+    </template>
   </PVAutoComplete>
 </template>
 <script setup lang="ts">
@@ -42,7 +54,7 @@ filteredTeams.value = filteredResults
 setSelectedFromAuth()
 
 function setSelectedTeam(selected: { id: number | string; name: string; photo: string | null }) {
-  authStore.selectedTeam = selected.id as string
+  if (selected && selected.id != null) authStore.selectedTeam = selected.id as string
   selectedTeam.value = selected
 }
 
@@ -51,7 +63,6 @@ function setSelectedFromAuth() {
     return item.id == authStore.selectedTeam
   })
   if (selectedIndex == -1) {
-    console.log(authStore)
     console.error('Unable to find selected - Default')
     return
   }

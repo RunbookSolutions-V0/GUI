@@ -8,16 +8,28 @@
     >
       <template #empty> No Locations found. </template>
       <template #loading> Loading location data. Please wait. </template>
-      <PVColumn field="id" header="ID">
+      <!-- <PVColumn field="id" header="ID">
         <template #body="slotProps">
-          <RouterLink :to="{ name: 'core.location.view', params: { id: slotProps.data.id } }">{{
-            slotProps.data.id
-          }}</RouterLink>
+          <RouterLink
+            :to="{ 
+              name: 'core.location.view', 
+              params: { id: slotProps.data.id } 
+            }"
+          >
+            {{ slotProps.data.id }}
+          </RouterLink>
         </template>
-      </PVColumn>
+      </PVColumn> -->
       <PVColumn field="name" header="Name" :showFilterMenu="false">
         <template #body="{ data }">
-          {{ data.name }}
+          <RouterLink
+            :to="{
+              name: 'core.location.view',
+              params: { id: data.id }
+            }"
+          >
+            {{ data.name }}
+          </RouterLink>
         </template>
         <template #filter="{}">
           <PVInputText
