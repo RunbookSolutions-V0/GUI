@@ -2,7 +2,7 @@
   <WidgetInterface v-bind="$props">
     <PVCard
       v-if="location"
-      class="h-full w-full"
+      class="h-full w-full overflow-auto"
       :pt-options="{ mergeProps: false, mergeSections: true }"
       :pt="{
         body: 'py-5 h-full flex flex-col',

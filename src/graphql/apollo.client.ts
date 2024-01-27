@@ -97,6 +97,15 @@ function processError(error: GraphQLError) {
     return
   }
 
+  if (message) {
+    alertStore.add({
+      severity: 'warn',
+      summary: 'Message Provided!',
+      detail: message,
+      life: 10000
+    })
+  }
+
   // A GraphQL Extension?
   if (!('extensions' in error)) {
     console.error('UNKNOWN ERROR!')
@@ -118,7 +127,7 @@ function processError(error: GraphQLError) {
   // We have a Reason!
   if ('reason' in error.extensions) {
     alertStore.add({
-      severity: 'error',
+      severity: 'warn',
       summary: 'Reasonable Error',
       detail: error.extensions.reason,
       life: 10000

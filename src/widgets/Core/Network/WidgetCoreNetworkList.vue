@@ -12,6 +12,7 @@
         <div class="flex">
           <div class="flex-grow">Networks</div>
           <PVButton
+            v-if="displayAttachLink"
             label="Attach Networks"
             @click="
               () => {
@@ -76,6 +77,7 @@ import NetworkSelect from '@/components/core/network/CoreNetworkSelect.vue'
 const props = defineProps({ ...defaultWidgetComponent.props })
 
 // Reactive Variables
+const displayAttachLink = ref(false)
 const showAttachDialog = ref(false)
 const networksToAttach = ref([])
 const networks = ref([])
@@ -94,6 +96,8 @@ watch(props, (v) => {
   variables.value.includeIds = networks.value.map((item) => {
     return item.id
   })
+
+  displayAttachLink.value = v.content.data.__typename != 'CoreDevice'
 })
 
 // GraphQL

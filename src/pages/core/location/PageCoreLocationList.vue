@@ -1,6 +1,11 @@
+<!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <template>
   <div class="card">
     <PVDataTable
+      v-model:editingRows="editingRows" 
+      editMode="row"
+      dataKey="id" 
+      @row-edit-save="onRowEditSave"
       :value="locations"
       :loading="loading"
       filterDisplay="row"
@@ -21,6 +26,9 @@
         </template>
       </PVColumn> -->
       <PVColumn field="name" header="Name" :showFilterMenu="false">
+        <template #editor="{ data, field }">
+          <PVInputText v-model="data[field]" />
+        </template>
         <template #body="{ data }">
           <RouterLink
             :to="{
@@ -41,6 +49,12 @@
         </template>
       </PVColumn>
       <PVColumn field="parent_id" header="Parent ID">
+        <template #editor="{ data, field }">
+          <CoreLocationSelect
+            v-model="data[field]"
+            class="mb-2"
+          ></CoreLocationSelect>
+        </template>
         <template #body="slotProps">
           <RouterLink
             v-if="slotProps.data.parent_id"
@@ -51,11 +65,35 @@
               }
             }"
           >
-            {{ slotProps.data.parent_location.name }}
+            {{ slotProps.data.parent_location ? slotProps.data.parent_location.name : 'Changed...' }}
           </RouterLink>
         </template>
       </PVColumn>
       <PVColumn field="type" header="Type" :showFilterMenu="false">
+        <template #editor="{ data, field }">
+          <PVDropdown
+            v-model="data[field]"
+            :options="types"
+            optionLabel="name"
+            optionValue="value"
+            placeholder="Location Type"
+            class="w-full mb-2"
+          >
+            <template #value="slotProps">
+              <div v-if="slotProps.value" class="flex items-center">
+                <div>{{ slotProps.value }}</div>
+              </div>
+              <div v-else class="flex items-center">
+                <div>{{ slotProps.placeholder }}</div>
+              </div>
+            </template>
+            <template #option="slotProps">
+              <div class="flex items-center">
+                <div>{{ slotProps.option.name }}</div>
+              </div>
+            </template>
+          </PVDropdown>
+        </template>
         <template #filter="{}">
           <PVDropdown
             v-model="filter.type"
@@ -67,8 +105,29 @@
           />
         </template>
       </PVColumn>
-      <PVColumn field="description" header="Description"></PVColumn>
-      <PVColumn field="address" header="Address"></PVColumn>
+      <PVColumn field="description" header="Description">
+        <template #editor="{ data, field }">
+          <PVTextArea class="w-full" v-model="data[field]" />
+        </template>
+      </PVColumn>
+      <PVColumn field="address" header="Address">
+        <template #editor="{ data, field }">
+          <PVInputText v-model="data[field]" />
+        </template>
+      </PVColumn>
+      <PVColumn :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></PVColumn>
+      <PVColumn :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center">
+        <template #body="{ data }">
+          <PVButton 
+            @click="deleteRow({id: data.id});"
+            icon="pi pi-trash"
+            aria-label="Delete"
+            severity="danger"
+            rounded
+            text
+          />
+        </template>
+      </PVColumn>
     </PVDataTable>
   </div>
 
@@ -82,6 +141,8 @@ import { ref, watch } from 'vue'
 // GraphQL
 import gql from 'graphql-tag'
 import {
+  useCoreLocationDeleteMutation,
+  useCoreLocationUpdateMutation,
   useCoreLocationListQuery,
   type CoreLocationQueriesListArgs,
   type CoreLocation,
@@ -93,12 +154,14 @@ import PVButton from 'primevue/button'
 import PVDataTable from 'primevue/datatable'
 import PVColumn from 'primevue/column'
 import PVInputText from 'primevue/inputtext'
+import PVTextArea from 'primevue/textarea'
 import PVDropdown from 'primevue/dropdown'
 import { useDialog } from 'primevue/usedialog'
 
 // Our Components
 import Create from '@/components/core/location/CoreLocationCreate.vue'
 import GraphQLPaginator from '@/components/GraphQLPaginator.vue'
+import CoreLocationSelect from '@/components/core/location/CoreLocationSelect.vue'
 
 // Dialog
 const dialog = useDialog()
@@ -128,9 +191,11 @@ const variables = ref<CoreLocationQueriesListArgs>({
 const locations = ref<CoreLocation[]>([])
 const paginator = ref({})
 
+const editingRows=ref([]);
+
 // GraphQL
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const GraphQLDocument = gql`
+const GraphQLDocument1 = gql`
   query coreLocationList($first: Int, $page: Int, $name: String, $type: CoreLocationTypes) {
     core {
       location {
@@ -163,12 +228,48 @@ const GraphQLDocument = gql`
     }
   }
 `
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const GraphQLDocument2 = gql`
+mutation coreLocationDelete($id: ID!) {
+  core {
+    location {
+      delete(id: $id) {
+        id
+      }
+    }
+  }
+}
+`
+
+// Edit Rows
+const { mutate, onDone } = useCoreLocationUpdateMutation();
+onDone((result) => {
+  if(!result.data) return;
+  console.info("Location Updated")
+})
+
+// Load our List
 const { loading, error, onResult } = useCoreLocationListQuery(variables)
 onResult((result) => {
   if (!result.data) return
   const response = result.data.core.location.list
   locations.value = response.data as CoreLocation[]
   paginator.value = response.paginatorInfo
+})
+
+// Delete Rows
+const { mutate: deleteRow, onDone: rowDeleted } = useCoreLocationDeleteMutation();
+rowDeleted((result) => {
+  if(!result.data || !result.data.core.location.delete) return;
+  console.info("Location Deleted")
+
+  if(!result.data.core.location.delete.id) return;
+  const deletedID = result.data.core.location.delete.id;
+
+  locations.value.forEach( (location, index) => {
+     if(location.id === deletedID) locations.value.splice(index,1);
+   });
+
 })
 
 // Some Watchers
@@ -194,5 +295,27 @@ function showCreate() {
       modal: true
     }
   })
+}
+
+const onRowEditSave = (event) => {
+  let { newData, index } = event;
+
+  mutate({
+    input: {
+      id: newData.id,
+      name: newData.name,
+      parent_id: newData.parent_id,
+      type: newData.type,
+      description: newData.description,
+      address: newData.address
+    }
+  });
+
+  if (newData.parent_location && newData.parent_id != newData.parent_location.id) {
+    newData.parent_location = null
+  }
+    
+
+  locations.value[index] = newData;
 }
 </script>

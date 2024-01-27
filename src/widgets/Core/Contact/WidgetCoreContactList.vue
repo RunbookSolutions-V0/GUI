@@ -1,7 +1,7 @@
 <template>
   <WidgetInterface v-bind="$props">
     <PVCard
-      class="h-full w-full"
+      class="h-full w-full overflow-auto"
       :pt-options="{ mergeProps: false, mergeSections: true }"
       :pt="{
         body: 'py-5 h-full flex flex-col',
@@ -27,7 +27,7 @@
           <div class="w-full">
             <PVDataTable :value="displayContacts">
               <PVColumn field="name" header="Name"></PVColumn>
-              <PVColumn field="company" header="Company"></PVColumn>
+              <PVColumn field="company.name" header="Company"></PVColumn>
               <PVColumn field="email" header="Email"></PVColumn>
               <PVColumn field="phone" header="Phone"></PVColumn>
             </PVDataTable>

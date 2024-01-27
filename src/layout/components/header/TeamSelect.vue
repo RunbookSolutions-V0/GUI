@@ -31,12 +31,17 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router';
 
 // Stores
 import { useAuthStore } from '@/stores'
 
 // PrimeVue
 import PVAutoComplete, { type AutoCompleteCompleteEvent } from 'primevue/autocomplete'
+
+
+//
+const router = useRouter();
 
 // Our Auth Store
 const authStore = useAuthStore()
@@ -55,7 +60,9 @@ setSelectedFromAuth()
 
 function setSelectedTeam(selected: { id: number | string; name: string; photo: string | null }) {
   if (selected && selected.id != null) authStore.selectedTeam = selected.id as string
-  selectedTeam.value = selected
+  selectedTeam.value = selected;
+
+  router.push({name: 'dashboard'});
 }
 
 function setSelectedFromAuth() {

@@ -68,6 +68,10 @@ const GraphQLDocument1 = gql`
             id
           }
 
+          audits {
+            id
+          }
+
           created_at
           updated_at
         }
@@ -201,6 +205,23 @@ const layouts = [
               y: 0,
               w: 1,
               h: 2,
+              i: uuidv4(),
+              moved: false
+            }
+          ]
+        }
+      },
+      {
+        name: 'Audit History',
+        grid: {
+          items: [
+            {
+              name: 'Location Audits',
+              widgetID: 'f3f81521-a911-40c6-b4b6-9caba2d44dc0',
+              x: 0,
+              y: 0,
+              w: 3,
+              h: 4,
               i: uuidv4(),
               moved: false
             }

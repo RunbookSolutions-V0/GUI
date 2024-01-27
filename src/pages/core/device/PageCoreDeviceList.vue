@@ -1,6 +1,10 @@
 <template>
   <div class="card">
     <PVDataTable
+      v-model:editingRows="editingRows" 
+      editMode="row"
+      dataKey="id" 
+      @row-edit-save="onRowEditSave"
       :value="devices"
       :loading="loading"
       filterDisplay="row"
@@ -8,17 +12,23 @@
     >
       <template #empty> No Devices found. </template>
       <template #loading> Loading device data. Please wait. </template>
-      <PVColumn field="id" header="ID">
+      <!-- <PVColumn field="id" header="ID">
         <template #body="slotProps">
           <RouterLink :to="{ name: 'core.device.view', params: { id: slotProps.data.id } }">{{
             slotProps.data.id
           }}</RouterLink>
         </template>
-      </PVColumn>
+      </PVColumn> -->
 
       <PVColumn field="name" header="Name" :showFilterMenu="false">
+        <template #editor="{ data, field }">
+          <PVInputText v-model="data[field]" />
+        </template>
         <template #body="{ data }">
-          {{ data.name }}
+          <RouterLink :to="{ name: 'core.device.view', params: { id: data.id } }">
+            {{ data.name }}
+          </RouterLink>
+          
         </template>
         <template #filter="{}">
           <PVInputText
@@ -31,6 +41,9 @@
       </PVColumn>
 
       <PVColumn field="hostname" header="Hostname" :showFilterMenu="false">
+        <template #editor="{ data, field }">
+          <PVInputText v-model="data[field]" />
+        </template>
         <template #body="{ data }">
           {{ data.hostname }}
         </template>
@@ -45,6 +58,30 @@
       </PVColumn>
 
       <PVColumn field="type" header="Type" :showFilterMenu="false">
+        <template #editor="{ data, field }">
+          <PVDropdown
+            v-model="data[field]"
+            :options="types"
+            optionLabel="name"
+            optionValue="value"
+            placeholder="Location Type"
+            class="w-full mb-2"
+          >
+            <template #value="slotProps">
+              <div v-if="slotProps.value" class="flex items-center">
+                <div>{{ slotProps.value }}</div>
+              </div>
+              <div v-else class="flex items-center">
+                <div>{{ slotProps.placeholder }}</div>
+              </div>
+            </template>
+            <template #option="slotProps">
+              <div class="flex items-center">
+                <div>{{ slotProps.option.name }}</div>
+              </div>
+            </template>
+          </PVDropdown>
+        </template>
         <template #filter="{}">
           <PVDropdown
             v-model="filter.type"
@@ -57,7 +94,24 @@
         </template>
       </PVColumn>
 
-      <PVColumn field="description" header="Description"></PVColumn>
+      <PVColumn field="description" header="Description">
+        <template #editor="{ data, field }">
+          <PVTextArea class="w-full" v-model="data[field]" />
+        </template>
+      </PVColumn>
+      <PVColumn :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></PVColumn>
+      <PVColumn :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center">
+        <template #body="{ data }">
+          <PVButton 
+            @click="deleteRow({id: data.id});"
+            icon="pi pi-trash"
+            aria-label="Delete"
+            severity="danger"
+            rounded
+            text
+          />
+        </template>
+      </PVColumn>
     </PVDataTable>
   </div>
   <GraphQLPaginator :variables="variables" :paginator="paginator"></GraphQLPaginator>
@@ -70,6 +124,8 @@ import { ref, watch } from 'vue'
 // GraphQL
 import gql from 'graphql-tag'
 import {
+  useCoreDeviceDeleteMutation,
+  useCoreDeviceUpdateMutation,
   useCoreDeviceListQuery,
   type CoreDeviceQueriesListArgs,
   type CoreDevice,
@@ -81,6 +137,7 @@ import PVButton from 'primevue/button'
 import PVDataTable from 'primevue/datatable'
 import PVColumn from 'primevue/column'
 import PVInputText from 'primevue/inputtext'
+import PVTextArea from 'primevue/textarea'
 import PVDropdown from 'primevue/dropdown'
 import { useDialog } from 'primevue/usedialog'
 
@@ -102,6 +159,14 @@ const filter = ref<{
   hostname: null
 })
 
+const types = [
+  { name: 'Laptop', value: CoreDeviceTypes.LAPTOP },
+  { name: 'Other', value: CoreDeviceTypes.OTHER },
+  { name: 'Printer', value: CoreDeviceTypes.PRINTER },
+  { name: 'Server', value: CoreDeviceTypes.SERVER },
+  { name: 'Workstation', value: CoreDeviceTypes.WORKSTATION }
+]
+
 const variables = ref<CoreDeviceQueriesListArgs>({
   first: 10,
   page: 1,
@@ -112,17 +177,11 @@ const variables = ref<CoreDeviceQueriesListArgs>({
 const devices = ref<CoreDevice[]>([])
 const paginator = ref({})
 
-const types = [
-  { name: 'Laptop', value: CoreDeviceTypes.LAPTOP },
-  { name: 'Other', value: CoreDeviceTypes.OTHER },
-  { name: 'Printer', value: CoreDeviceTypes.PRINTER },
-  { name: 'Server', value: CoreDeviceTypes.SERVER },
-  { name: 'Workstation', value: CoreDeviceTypes.WORKSTATION }
-]
+const editingRows=ref([]);
 
 // GraphQL
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const GraphQLDocument = gql`
+const GraphQLDocument1 = gql`
   query coreDeviceList(
     $first: Int
     $page: Int
@@ -157,6 +216,42 @@ const GraphQLDocument = gql`
     }
   }
 `
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const GraphQLDocument2 = gql`
+mutation coreDeviceDelete($id: ID!) {
+  core {
+    device {
+      delete(id: $id) {
+        id
+      }
+    }
+  }
+}
+`
+
+// Edit Rows
+const { mutate, onDone } = useCoreDeviceUpdateMutation();
+onDone((result) => {
+  if(!result.data) return;
+  console.info("Device Updated")
+})
+
+// Delete Rows
+const { mutate: deleteRow, onDone: rowDeleted } = useCoreDeviceDeleteMutation();
+rowDeleted((result) => {
+  if(!result.data || !result.data.core.device.delete) return;
+  console.info("Device Deleted")
+
+  if(!result.data.core.device.delete.id) return;
+  const deletedID = result.data.core.device.delete.id;
+
+  devices.value.forEach( (device, index) => {
+     if(device.id === deletedID) devices.value.splice(index,1);
+   });
+
+})
+
+// Load our List
 const { loading, error, onResult } = useCoreDeviceListQuery(variables)
 onResult((result) => {
   if (!result.data) return
@@ -193,5 +288,21 @@ function showCreate() {
       modal: true
     }
   })
+}
+
+const onRowEditSave = (event) => {
+  let { newData, index } = event;
+
+  mutate({
+    input: {
+      id: newData.id,
+      name: newData.name,
+      hostname: newData.hostname,
+      type: newData.type,
+      description: newData.description,
+    }
+  });
+
+  devices.value[index] = newData;
 }
 </script>

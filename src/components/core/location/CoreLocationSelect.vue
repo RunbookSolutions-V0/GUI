@@ -10,10 +10,12 @@
       </label>
       <AutoComplete
         v-bind="$attrs"
+        :modelValue="value"
+        @update:modelValue="updateSelectedLocation"
         :suggestions="items"
         @complete="search"
         optionLabel="name"
-        placeholder="Parent Location"
+        placeholder="Select a Location"
         forceSelection
         dropdown
         dropdownMode="current"
@@ -28,6 +30,7 @@ import AutoComplete, { type AutoCompleteCompleteEvent } from 'primevue/autocompl
 import gql from 'graphql-tag'
 
 import {
+  useCoreLocationSelectFilteredSingleQuery,
   useCoreLocationSelectFilteredListQuery,
   type CoreLocationSelectFilteredListQueryVariables,
   type CoreLocation,
@@ -36,14 +39,20 @@ import {
 
 // Props
 const props = defineProps({
+  modelValue: {
+
+  },
   label: {
     type: [String || null],
     default: null
   }
-})
+});
+
+const $emits = defineEmits(['update:modelValue']);
+
 
 // Define some reactive variables
-// const value = ref("");
+const value = ref<CoreLocation>();
 const items = ref<CoreLocation[]>([])
 const variables = ref<CoreLocationSelectFilteredListQueryVariables>({
   name: null as InputMaybe<string>
@@ -51,7 +60,20 @@ const variables = ref<CoreLocationSelectFilteredListQueryVariables>({
 
 // Define our GraphQL Document
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const GraphQLDocument = gql`
+const GraphQLDocument1 = gql`
+query coreLocationSelectFilteredSingle($id: ID!) {
+    core {
+      location {
+        single(id: $id) {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const GraphQLDocument2 = gql`
   query coreLocationSelectFilteredList($name: String) {
     core {
       location {
@@ -66,6 +88,15 @@ const GraphQLDocument = gql`
   }
 `
 
+// We were provided with a default value; we need to look it up.
+if (props.modelValue != null) {
+  const { onResult: ValueLoaded } = useCoreLocationSelectFilteredSingleQuery({id: props.modelValue});
+  ValueLoaded((result) => {
+    if(!result.data || !result.data.core.location.single) return
+    value.value = result.data.core.location.single as CoreLocation
+  })
+}
+
 // Setup our Query
 const { onResult, loading } = useCoreLocationSelectFilteredListQuery(variables)
 // and what we will do with the data
@@ -76,5 +107,12 @@ onResult((result) => {
 
 function search(event: AutoCompleteCompleteEvent) {
   variables.value.name = '%' + event.query + '%'
+}
+
+function updateSelectedLocation(newSelection) {
+  value.value = newSelection;
+  if(typeof newSelection === 'string') return;
+
+  $emits("update:modelValue", newSelection == null ? null : newSelection.id);
 }
 </script>

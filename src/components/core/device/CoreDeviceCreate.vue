@@ -46,7 +46,7 @@ import InputTextLabel from '@/components/Input/InputTextLabel.vue'
 import TextAreaLabel from '@/components/Input/TextAreaLabel.vue'
 
 // Injections
-const dialog = inject('dialogRef')
+const dialogRef = inject('dialogRef')
 
 // Define some reactive variables
 const form = ref<CoreDeviceCreateInput>({
@@ -88,6 +88,14 @@ onDone((result) => {
       id: result.data.core.device.create.id
     }
   })
+  form.value = {
+    name: '',
+    type: CoreDeviceTypes.OTHER,
+    hostname: null,
+    description: null
+  }
+
+  dialogRef.value.close()
 })
 
 // Our Functions
@@ -97,8 +105,5 @@ function createDevice() {
   form.value.type = selectedType.value.value as CoreDeviceTypes
 
   createMutation({ input: form.value })
-
-  if (!dialog) return
-  ;(dialog as DynamicDialogInstance).close()
 }
 </script>

@@ -2,7 +2,7 @@
   <div clas="mx-4 space-y-4">
     <InputTextLabel v-model="formData.name" label="Name"></InputTextLabel>
     <CoreNetworkSelect
-      v-model="selectedParentNetwork"
+      v-model="formData.parent_id"
       label="Parent Network"
       class="mb-2"
     ></CoreNetworkSelect>
@@ -36,8 +36,6 @@ const formData = ref<CoreNetworkCreateInput>({
   description: null
 })
 
-const selectedParentNetwork = ref()
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument = gql`
   mutation coreNetworkCreate($input: CoreNetworkCreateInput) {
@@ -54,8 +52,6 @@ const GraphQLDocument = gql`
 // Submission Mutation
 const { mutate: networkMutation, onDone } = useCoreNetworkCreateMutation()
 function createNetwork() {
-  if (selectedParentNetwork.value);
-  formData.value.parent_id = selectedParentNetwork.value?.id
 
   networkMutation({ input: formData.value })
 }

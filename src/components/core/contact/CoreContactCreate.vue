@@ -60,7 +60,7 @@ import FileUpload from '@/components/Input/FileUpload.vue'
 import type FileUploadReturn from '@/components/Input/FileUpload.vue'
 
 // Injections
-const dialog = inject('dialogRef')
+const dialogRef = inject('dialogRef')
 
 // Props
 
@@ -102,6 +102,7 @@ onDone((result) => {
       id: result.data.core.contact.create.id
     }
   })
+  dialogRef.value.close()
 })
 
 // Functions
@@ -114,7 +115,5 @@ function createContact() {
     file: photo.value.vapor
   } as CoreContactCreateInput
   form.value.type = createMutation({ input: input })
-  if (!dialog) return
-  ;(dialog as DynamicDialogInstance).close()
 }
 </script>

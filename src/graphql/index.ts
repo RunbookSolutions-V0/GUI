@@ -24,6 +24,8 @@ export type Scalars = {
 /** Represents an agent in the system, associated with a team, capable of performing tasks and using plugins. */
 export type Agent = {
   __typename?: 'Agent';
+  /** The audit history for the location. */
+  audits: Array<Maybe<Audit>>;
   /** Unique primary key for the agent. */
   id: Scalars['ID']['output'];
   /** Timestamp of the last time the agent was seen. */
@@ -689,6 +691,7 @@ export type AuditQueriesListArgs = {
   auditable_id?: InputMaybe<Scalars['ID']['input']>;
   auditable_type?: InputMaybe<Scalars['String']['input']>;
   first?: Scalars['Int']['input'];
+  includeIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   page?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -770,6 +773,8 @@ export type AuthPayload = {
 /** Represents an attachment in the Core module. */
 export type CoreAttachment = {
   __typename?: 'CoreAttachment';
+  /** The audit history for the location. */
+  audits: Array<Maybe<Audit>>;
   /** The content type of the attachment. */
   content_type?: Maybe<Scalars['String']['output']>;
   /** Timestamp when the attachment was created. */
@@ -867,6 +872,8 @@ export type CoreContact = {
   __typename?: 'CoreContact';
   /** The attachments for the contact. */
   attachments: Array<Maybe<CoreAttachment>>;
+  /** The audit history for the location. */
+  audits: Array<Maybe<Audit>>;
   /** The company to which the contact belongs. */
   company?: Maybe<CoreContact>;
   /** The ID of the company to which the contact belongs. */
@@ -875,13 +882,19 @@ export type CoreContact = {
   created_at: Scalars['DateTime']['output'];
   /** Optional description for the contact. */
   description?: Maybe<Scalars['String']['output']>;
+  /** The devices associated with the contact. */
+  devices: Array<Maybe<CoreDevice>>;
   /** The email address of the contact. */
   email?: Maybe<Scalars['String']['output']>;
   /** Employees associated with the contact. */
   employees?: Maybe<Array<CoreContact>>;
   id: Scalars['ID']['output'];
+  /** The locations associated with the contact. */
+  locations: Array<Maybe<CoreLocation>>;
   /** The name of the contact. */
   name: Scalars['String']['output'];
+  /** The networks associated with the contact. */
+  networks: Array<Maybe<CoreNetwork>>;
   /** The notes for the contact. */
   notes: Array<Maybe<CoreNote>>;
   /** The phone number of the contact. */
@@ -914,12 +927,15 @@ export type CoreContactCreateInput = {
   company_id?: InputMaybe<Scalars['ID']['input']>;
   /** Optional description for the contact. */
   description?: InputMaybe<Scalars['String']['input']>;
+  devices?: InputMaybe<CoreDeviceCreateBelongsToMany>;
   /** The email address of the contact. */
   email?: InputMaybe<Scalars['String']['input']>;
   /** The file to upload as the contact's profile photo. */
   file?: InputMaybe<VaporFileUpload>;
+  locations?: InputMaybe<CoreLocationCreateBelongsToMany>;
   /** The name of the contact. */
   name: Scalars['String']['input'];
+  networks?: InputMaybe<CoreNetworkCreateBelongsToMany>;
   /** Notes associated with the contact. */
   notes?: InputMaybe<CoreNoteCreateBelongsToMany>;
   /** The phone number of the contact. */
@@ -1009,14 +1025,17 @@ export type CoreContactUpdateInput = {
   company_id?: InputMaybe<Scalars['ID']['input']>;
   /** The new description for the contact. */
   description?: InputMaybe<Scalars['String']['input']>;
+  devices?: InputMaybe<CoreDeviceCreateBelongsToMany>;
   /** The new email address of the contact. */
   email?: InputMaybe<Scalars['String']['input']>;
   /** The new file to upload as the contact's profile photo. */
   file?: InputMaybe<VaporFileUpload>;
   /** Unique identifier of the contact. */
   id: Scalars['ID']['input'];
+  locations?: InputMaybe<CoreLocationCreateBelongsToMany>;
   /** The new name of the contact. */
   name?: InputMaybe<Scalars['String']['input']>;
+  networks?: InputMaybe<CoreNetworkCreateBelongsToMany>;
   /** New notes associated with the contact. */
   notes?: InputMaybe<CoreNoteCreateBelongsToMany>;
   /** The new phone number of the contact. */
@@ -1033,14 +1052,17 @@ export type CoreContactUpsertInput = {
   company_id?: InputMaybe<Scalars['ID']['input']>;
   /** The new description for the contact. */
   description?: InputMaybe<Scalars['String']['input']>;
+  devices?: InputMaybe<CoreDeviceCreateBelongsToMany>;
   /** The new email address of the contact. */
   email?: InputMaybe<Scalars['String']['input']>;
   /** The new file to upload as the contact's profile photo. */
   file?: InputMaybe<VaporFileUpload>;
   /** Unique identifier of the contact. */
   id?: InputMaybe<Scalars['ID']['input']>;
+  locations?: InputMaybe<CoreLocationCreateBelongsToMany>;
   /** The new name of the contact. */
   name?: InputMaybe<Scalars['String']['input']>;
+  networks?: InputMaybe<CoreNetworkCreateBelongsToMany>;
   /** New notes associated with the contact. */
   notes?: InputMaybe<CoreNoteCreateBelongsToMany>;
   /** The new phone number of the contact. */
@@ -1056,6 +1078,8 @@ export type CoreDevice = {
   addresses: Array<Maybe<CoreNetworksAddress>>;
   /** The attachments associated with the device. */
   attachments: Array<Maybe<CoreAttachment>>;
+  /** The audit history for the location. */
+  audits: Array<Maybe<Audit>>;
   /** The contacts associated with the device. */
   contacts: Array<Maybe<CoreContact>>;
   /** Timestamp when the device was created. */
@@ -1239,6 +1263,8 @@ export type CoreLocation = {
   address?: Maybe<Scalars['String']['output']>;
   /** The attachments associated with the location. */
   attachments: Array<Maybe<CoreAttachment>>;
+  /** The audit history for the location. */
+  audits: Array<Maybe<Audit>>;
   /** The children locations of this location. */
   children_locations: Array<Maybe<CoreLocation>>;
   /** The contacts associated with the location. */
@@ -1442,6 +1468,8 @@ export type CoreNetwork = {
   addresses: Array<Maybe<CoreNetworksAddress>>;
   /** The attachments associated with the network. */
   attachments: Array<Maybe<CoreAttachment>>;
+  /** The audit history for the location. */
+  audits: Array<Maybe<Audit>>;
   /** The contacts associated with the network. */
   contacts: Array<Maybe<CoreContact>>;
   /** Timestamp when the network was created. */
@@ -1717,6 +1745,8 @@ export type CoreNetworksQueries = {
 /** Represents a note in Core, containing content and associated user information. */
 export type CoreNote = {
   __typename?: 'CoreNote';
+  /** The audit history for the location. */
+  audits: Array<Maybe<Audit>>;
   /** The content of the note. */
   content: Scalars['String']['output'];
   /** Timestamp when the note was created. */
@@ -2003,7 +2033,7 @@ export type Query = {
   __typename?: 'Query';
   agent: AgentQueries;
   agents: AgentsQueries;
-  audits: AuditQueries;
+  audit: AuditQueries;
   core: CoreQueries;
   team: TeamQueries;
   user: UserQueries;
@@ -2063,6 +2093,8 @@ export type Team = {
   __typename?: 'Team';
   /** List of agents associated with the team. */
   agents?: Maybe<Array<Maybe<Agent>>>;
+  /** The audit history for the location. */
+  audits: Array<Maybe<Audit>>;
   /** When the team was created. */
   created_at: Scalars['DateTime']['output'];
   /** Description of the team. */
@@ -2305,6 +2337,13 @@ export type CoreContactCreateMutationVariables = Exact<{
 
 export type CoreContactCreateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', contact: { __typename?: 'CoreContactMutations', create: { __typename?: 'CoreContact', id: string } } } };
 
+export type CoreContactSelectFilteredSingleQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type CoreContactSelectFilteredSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', contact: { __typename?: 'CoreContactQueries', single?: { __typename?: 'CoreContact', id: string, name: string } | null } } };
+
 export type CoreContactSelectFilteredListQueryVariables = Exact<{
   name?: InputMaybe<Scalars['String']['input']>;
   type?: InputMaybe<CoreContactTypes>;
@@ -2334,6 +2373,13 @@ export type CoreLocationCreateMutationVariables = Exact<{
 
 export type CoreLocationCreateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', location: { __typename?: 'CoreLocationMutations', create: { __typename?: 'CoreLocation', id: string } } } };
 
+export type CoreLocationSelectFilteredSingleQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type CoreLocationSelectFilteredSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', location: { __typename?: 'CoreLocationQueries', single?: { __typename?: 'CoreLocation', id: string, name: string } | null } } };
+
 export type CoreLocationSelectFilteredListQueryVariables = Exact<{
   name?: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -2347,6 +2393,13 @@ export type CoreNetworkCreateMutationVariables = Exact<{
 
 
 export type CoreNetworkCreateMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', network: { __typename?: 'CoreNetworkMutations', create: { __typename?: 'CoreNetwork', id: string } } } };
+
+export type CoreNetworkSelectFilteredSingleQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type CoreNetworkSelectFilteredSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', network: { __typename?: 'CoreNetworkQueries', single?: { __typename?: 'CoreNetwork', id: string, name: string } | null } } };
 
 export type CoreNetworkSelectFilteredListQueryVariables = Exact<{
   name?: InputMaybe<Scalars['String']['input']>;
@@ -2396,12 +2449,19 @@ export type CoreContactListQueryVariables = Exact<{
 
 export type CoreContactListQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', contact: { __typename?: 'CoreContactQueries', list: { __typename?: 'CoreContactPaginator', paginatorInfo: { __typename?: 'PaginatorInfo', count: number, currentPage: number, firstItem?: number | null, hasMorePages: boolean, lastItem?: number | null, lastPage: number, perPage: number, total: number }, data: Array<{ __typename?: 'CoreContact', company_id?: string | null, created_at: Date, description?: string | null, email?: string | null, id: string, name: string, phone?: string | null, photo?: string | null, type: CoreContactTypes, updated_at: Date, company?: { __typename?: 'CoreContact', id: string, name: string } | null }> } } } };
 
+export type CoreContactDeleteMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type CoreContactDeleteMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', contact: { __typename?: 'CoreContactMutations', delete?: { __typename?: 'CoreContact', id: string } | null } } };
+
 export type CoreContactSingleQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
 }>;
 
 
-export type CoreContactSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', contact: { __typename?: 'CoreContactQueries', single?: { __typename?: 'CoreContact', company_id?: string | null, created_at: Date, description?: string | null, email?: string | null, id: string, name: string, phone?: string | null, photo?: string | null, type: CoreContactTypes, updated_at: Date } | null } } };
+export type CoreContactSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', contact: { __typename?: 'CoreContactQueries', single?: { __typename?: 'CoreContact', id: string, name: string, photo?: string | null, type: CoreContactTypes, phone?: string | null, email?: string | null, description?: string | null, company_id?: string | null, company?: { __typename?: 'CoreContact', id: string, name: string } | null, contacts?: Array<{ __typename?: 'CoreContact', id: string }> | null, notes: Array<{ __typename?: 'CoreNote', id: string } | null>, attachments: Array<{ __typename?: 'CoreAttachment', id: string } | null>, locations: Array<{ __typename?: 'CoreLocation', id: string } | null>, networks: Array<{ __typename?: 'CoreNetwork', id: string } | null>, devices: Array<{ __typename?: 'CoreDevice', id: string } | null>, audits: Array<{ __typename?: 'Audit', id: string } | null> } | null } } };
 
 export type CoreContactUpdateMutationVariables = Exact<{
   input: CoreContactUpdateInput;
@@ -2421,12 +2481,19 @@ export type CoreDeviceListQueryVariables = Exact<{
 
 export type CoreDeviceListQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', device: { __typename?: 'CoreDeviceQueries', list: { __typename?: 'CoreDevicePaginator', paginatorInfo: { __typename?: 'PaginatorInfo', count: number, currentPage: number, firstItem?: number | null, hasMorePages: boolean, lastItem?: number | null, lastPage: number, perPage: number, total: number }, data: Array<{ __typename?: 'CoreDevice', created_at: Date, description?: string | null, hostname?: string | null, id: string, name: string, type: CoreDeviceTypes, updated_at: Date }> } } } };
 
+export type CoreDeviceDeleteMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type CoreDeviceDeleteMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', device: { __typename?: 'CoreDeviceMutations', delete?: { __typename?: 'CoreDevice', id: string } | null } } };
+
 export type CoreDeviceSingleQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
 }>;
 
 
-export type CoreDeviceSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', device: { __typename?: 'CoreDeviceQueries', single?: { __typename?: 'CoreDevice', created_at: Date, description?: string | null, hostname?: string | null, id: string, name: string, type: CoreDeviceTypes, updated_at: Date } | null } } };
+export type CoreDeviceSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', device: { __typename?: 'CoreDeviceQueries', single?: { __typename?: 'CoreDevice', id: string, name: string, hostname?: string | null, type: CoreDeviceTypes, description?: string | null, created_at: Date, updated_at: Date, contacts: Array<{ __typename?: 'CoreContact', id: string } | null>, attachments: Array<{ __typename?: 'CoreAttachment', id: string } | null>, notes: Array<{ __typename?: 'CoreNote', id: string } | null>, audits: Array<{ __typename?: 'Audit', id: string } | null>, addresses: Array<{ __typename?: 'CoreNetworksAddress', id: string } | null>, networks: Array<{ __typename?: 'CoreNetwork', id: string } | null>, locations: Array<{ __typename?: 'CoreLocation', id: string } | null> } | null } } };
 
 export type CoreDeviceUpdateMutationVariables = Exact<{
   input: CoreDeviceUpdateInput;
@@ -2445,12 +2512,19 @@ export type CoreLocationListQueryVariables = Exact<{
 
 export type CoreLocationListQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', location: { __typename?: 'CoreLocationQueries', list: { __typename?: 'CoreLocationPaginator', data: Array<{ __typename?: 'CoreLocation', id: string, name: string, parent_id?: string | null, type: CoreLocationTypes, description?: string | null, created_at: Date, address?: string | null, parent_location?: { __typename?: 'CoreLocation', id: string, name: string } | null }>, paginatorInfo: { __typename?: 'PaginatorInfo', firstItem?: number | null, lastItem?: number | null, count: number, currentPage: number, hasMorePages: boolean, lastPage: number, perPage: number, total: number } } } } };
 
+export type CoreLocationDeleteMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type CoreLocationDeleteMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', location: { __typename?: 'CoreLocationMutations', delete?: { __typename?: 'CoreLocation', id: string } | null } } };
+
 export type CoreLocationSingleQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
 }>;
 
 
-export type CoreLocationSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', location: { __typename?: 'CoreLocationQueries', single?: { __typename?: 'CoreLocation', id: string, name: string, type: CoreLocationTypes, description?: string | null, address?: string | null, parent_id?: string | null, created_at: Date, updated_at: Date, parent_location?: { __typename?: 'CoreLocation', id: string, name: string, type: CoreLocationTypes } | null, contacts: Array<{ __typename?: 'CoreContact', id: string } | null>, notes: Array<{ __typename?: 'CoreNote', id: string } | null>, attachments: Array<{ __typename?: 'CoreAttachment', id: string } | null>, networks: Array<{ __typename?: 'CoreNetwork', id: string } | null>, devices: Array<{ __typename?: 'CoreDevice', id: string } | null> } | null } } };
+export type CoreLocationSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', location: { __typename?: 'CoreLocationQueries', single?: { __typename?: 'CoreLocation', id: string, name: string, type: CoreLocationTypes, description?: string | null, address?: string | null, parent_id?: string | null, created_at: Date, updated_at: Date, parent_location?: { __typename?: 'CoreLocation', id: string, name: string, type: CoreLocationTypes } | null, contacts: Array<{ __typename?: 'CoreContact', id: string } | null>, notes: Array<{ __typename?: 'CoreNote', id: string } | null>, attachments: Array<{ __typename?: 'CoreAttachment', id: string } | null>, networks: Array<{ __typename?: 'CoreNetwork', id: string } | null>, devices: Array<{ __typename?: 'CoreDevice', id: string } | null>, audits: Array<{ __typename?: 'Audit', id: string } | null> } | null } } };
 
 export type CoreLocationUpdateMutationVariables = Exact<{
   input: CoreLocationUpdateInput;
@@ -2469,12 +2543,19 @@ export type CoreNetworkListQueryVariables = Exact<{
 
 export type CoreNetworkListQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', network: { __typename?: 'CoreNetworkQueries', list: { __typename?: 'CoreNetworkPaginator', data: Array<{ __typename?: 'CoreNetwork', id: string, name: string, parent_id?: string | null, description?: string | null, created_at: Date, network: string, mask?: string | null, updated_at: Date, parent_network?: { __typename?: 'CoreNetwork', id: string, name: string } | null }>, paginatorInfo: { __typename?: 'PaginatorInfo', firstItem?: number | null, lastItem?: number | null, count: number, currentPage: number, hasMorePages: boolean, lastPage: number, perPage: number, total: number } } } } };
 
+export type CoreNetworkDeleteMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type CoreNetworkDeleteMutation = { __typename?: 'Mutation', core: { __typename?: 'CoreMutations', network: { __typename?: 'CoreNetworkMutations', delete?: { __typename?: 'CoreNetwork', id: string } | null } } };
+
 export type CoreNetworkSingleQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
 }>;
 
 
-export type CoreNetworkSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', network: { __typename?: 'CoreNetworkQueries', single?: { __typename?: 'CoreNetwork', id: string, name: string, description?: string | null, network: string, mask?: string | null, parent_id?: string | null, created_at: Date, updated_at: Date, parent_network?: { __typename?: 'CoreNetwork', id: string, name: string, network: string } | null, subnets?: Array<{ __typename?: 'CoreNetwork', id: string, name: string, network: string } | null> | null, contacts: Array<{ __typename?: 'CoreContact', id: string } | null>, notes: Array<{ __typename?: 'CoreNote', id: string } | null>, attachments: Array<{ __typename?: 'CoreAttachment', id: string } | null>, locations: Array<{ __typename?: 'CoreLocation', id: string } | null>, devices: Array<{ __typename?: 'CoreDevice', id: string } | null> } | null } } };
+export type CoreNetworkSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', network: { __typename?: 'CoreNetworkQueries', single?: { __typename?: 'CoreNetwork', id: string, name: string, description?: string | null, network: string, mask?: string | null, parent_id?: string | null, created_at: Date, updated_at: Date, parent_network?: { __typename?: 'CoreNetwork', id: string, name: string, network: string } | null, subnets?: Array<{ __typename?: 'CoreNetwork', id: string, name: string, network: string } | null> | null, contacts: Array<{ __typename?: 'CoreContact', id: string } | null>, notes: Array<{ __typename?: 'CoreNote', id: string } | null>, attachments: Array<{ __typename?: 'CoreAttachment', id: string } | null>, locations: Array<{ __typename?: 'CoreLocation', id: string } | null>, devices: Array<{ __typename?: 'CoreDevice', id: string } | null>, audits: Array<{ __typename?: 'Audit', id: string } | null> } | null } } };
 
 export type CoreNetworkUpdateMutationVariables = Exact<{
   input: CoreNetworkUpdateInput;
@@ -2539,6 +2620,15 @@ export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CurrentUserQuery = { __typename?: 'Query', user: { __typename?: 'UserQueries', me: { __typename?: 'CurrentUser', id: string, email: string, name: string, photo?: string | null, created_at: Date, updated_at: Date, personal_team: { __typename?: 'Team', id: string, name: string, photo?: string | null }, teams?: Array<{ __typename?: 'Team', id: string, name: string, photo?: string | null }> | null, invitations?: Array<{ __typename?: 'Invitation', id: string }> | null } } };
+
+export type WidgetAuditListQueryVariables = Exact<{
+  includeIds?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type WidgetAuditListQuery = { __typename?: 'Query', audit: { __typename?: 'AuditQueries', list: { __typename?: 'AuditPaginator', data: Array<{ __typename?: 'Audit', auditable_id: string, auditable_type: string, created_at: Date, event: string, id: string, ip_address: string, new_values: { [key: string]: any }, old_values: { [key: string]: any }, tags?: string | null, url?: string | null, user_agent: string, user: { __typename?: 'Agent', id: string, name: string } | { __typename?: 'User', id: string, name: string, photo?: string | null } }>, paginatorInfo: { __typename?: 'PaginatorInfo', count: number, currentPage: number, firstItem?: number | null, hasMorePages: boolean, lastItem?: number | null, lastPage: number, perPage: number, total: number } } } };
 
 export type WidgetCoreAttachmentListQueryVariables = Exact<{
   includeIds?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
@@ -2623,6 +2713,41 @@ export function useCoreContactCreateMutation(options: VueApolloComposable.UseMut
   return VueApolloComposable.useMutation<CoreContactCreateMutation, CoreContactCreateMutationVariables>(CoreContactCreateDocument, options);
 }
 export type CoreContactCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreContactCreateMutation, CoreContactCreateMutationVariables>;
+export const CoreContactSelectFilteredSingleDocument = gql`
+    query coreContactSelectFilteredSingle($id: ID!) {
+  core {
+    contact {
+      single(id: $id) {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreContactSelectFilteredSingleQuery__
+ *
+ * To run a query within a Vue component, call `useCoreContactSelectFilteredSingleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCoreContactSelectFilteredSingleQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCoreContactSelectFilteredSingleQuery({
+ *   id: // value for 'id'
+ * });
+ */
+export function useCoreContactSelectFilteredSingleQuery(variables: CoreContactSelectFilteredSingleQueryVariables | VueCompositionApi.Ref<CoreContactSelectFilteredSingleQueryVariables> | ReactiveFunction<CoreContactSelectFilteredSingleQueryVariables>, options: VueApolloComposable.UseQueryOptions<CoreContactSelectFilteredSingleQuery, CoreContactSelectFilteredSingleQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreContactSelectFilteredSingleQuery, CoreContactSelectFilteredSingleQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreContactSelectFilteredSingleQuery, CoreContactSelectFilteredSingleQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<CoreContactSelectFilteredSingleQuery, CoreContactSelectFilteredSingleQueryVariables>(CoreContactSelectFilteredSingleDocument, variables, options);
+}
+export function useCoreContactSelectFilteredSingleLazyQuery(variables: CoreContactSelectFilteredSingleQueryVariables | VueCompositionApi.Ref<CoreContactSelectFilteredSingleQueryVariables> | ReactiveFunction<CoreContactSelectFilteredSingleQueryVariables>, options: VueApolloComposable.UseQueryOptions<CoreContactSelectFilteredSingleQuery, CoreContactSelectFilteredSingleQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreContactSelectFilteredSingleQuery, CoreContactSelectFilteredSingleQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreContactSelectFilteredSingleQuery, CoreContactSelectFilteredSingleQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<CoreContactSelectFilteredSingleQuery, CoreContactSelectFilteredSingleQueryVariables>(CoreContactSelectFilteredSingleDocument, variables, options);
+}
+export type CoreContactSelectFilteredSingleQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreContactSelectFilteredSingleQuery, CoreContactSelectFilteredSingleQueryVariables>;
 export const CoreContactSelectFilteredListDocument = gql`
     query coreContactSelectFilteredList($name: String, $type: CoreContactTypes) {
   core {
@@ -2764,6 +2889,41 @@ export function useCoreLocationCreateMutation(options: VueApolloComposable.UseMu
   return VueApolloComposable.useMutation<CoreLocationCreateMutation, CoreLocationCreateMutationVariables>(CoreLocationCreateDocument, options);
 }
 export type CoreLocationCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreLocationCreateMutation, CoreLocationCreateMutationVariables>;
+export const CoreLocationSelectFilteredSingleDocument = gql`
+    query coreLocationSelectFilteredSingle($id: ID!) {
+  core {
+    location {
+      single(id: $id) {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreLocationSelectFilteredSingleQuery__
+ *
+ * To run a query within a Vue component, call `useCoreLocationSelectFilteredSingleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCoreLocationSelectFilteredSingleQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCoreLocationSelectFilteredSingleQuery({
+ *   id: // value for 'id'
+ * });
+ */
+export function useCoreLocationSelectFilteredSingleQuery(variables: CoreLocationSelectFilteredSingleQueryVariables | VueCompositionApi.Ref<CoreLocationSelectFilteredSingleQueryVariables> | ReactiveFunction<CoreLocationSelectFilteredSingleQueryVariables>, options: VueApolloComposable.UseQueryOptions<CoreLocationSelectFilteredSingleQuery, CoreLocationSelectFilteredSingleQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreLocationSelectFilteredSingleQuery, CoreLocationSelectFilteredSingleQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreLocationSelectFilteredSingleQuery, CoreLocationSelectFilteredSingleQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<CoreLocationSelectFilteredSingleQuery, CoreLocationSelectFilteredSingleQueryVariables>(CoreLocationSelectFilteredSingleDocument, variables, options);
+}
+export function useCoreLocationSelectFilteredSingleLazyQuery(variables: CoreLocationSelectFilteredSingleQueryVariables | VueCompositionApi.Ref<CoreLocationSelectFilteredSingleQueryVariables> | ReactiveFunction<CoreLocationSelectFilteredSingleQueryVariables>, options: VueApolloComposable.UseQueryOptions<CoreLocationSelectFilteredSingleQuery, CoreLocationSelectFilteredSingleQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreLocationSelectFilteredSingleQuery, CoreLocationSelectFilteredSingleQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreLocationSelectFilteredSingleQuery, CoreLocationSelectFilteredSingleQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<CoreLocationSelectFilteredSingleQuery, CoreLocationSelectFilteredSingleQueryVariables>(CoreLocationSelectFilteredSingleDocument, variables, options);
+}
+export type CoreLocationSelectFilteredSingleQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreLocationSelectFilteredSingleQuery, CoreLocationSelectFilteredSingleQueryVariables>;
 export const CoreLocationSelectFilteredListDocument = gql`
     query coreLocationSelectFilteredList($name: String) {
   core {
@@ -2834,6 +2994,41 @@ export function useCoreNetworkCreateMutation(options: VueApolloComposable.UseMut
   return VueApolloComposable.useMutation<CoreNetworkCreateMutation, CoreNetworkCreateMutationVariables>(CoreNetworkCreateDocument, options);
 }
 export type CoreNetworkCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreNetworkCreateMutation, CoreNetworkCreateMutationVariables>;
+export const CoreNetworkSelectFilteredSingleDocument = gql`
+    query coreNetworkSelectFilteredSingle($id: ID!) {
+  core {
+    network {
+      single(id: $id) {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreNetworkSelectFilteredSingleQuery__
+ *
+ * To run a query within a Vue component, call `useCoreNetworkSelectFilteredSingleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCoreNetworkSelectFilteredSingleQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCoreNetworkSelectFilteredSingleQuery({
+ *   id: // value for 'id'
+ * });
+ */
+export function useCoreNetworkSelectFilteredSingleQuery(variables: CoreNetworkSelectFilteredSingleQueryVariables | VueCompositionApi.Ref<CoreNetworkSelectFilteredSingleQueryVariables> | ReactiveFunction<CoreNetworkSelectFilteredSingleQueryVariables>, options: VueApolloComposable.UseQueryOptions<CoreNetworkSelectFilteredSingleQuery, CoreNetworkSelectFilteredSingleQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreNetworkSelectFilteredSingleQuery, CoreNetworkSelectFilteredSingleQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreNetworkSelectFilteredSingleQuery, CoreNetworkSelectFilteredSingleQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<CoreNetworkSelectFilteredSingleQuery, CoreNetworkSelectFilteredSingleQueryVariables>(CoreNetworkSelectFilteredSingleDocument, variables, options);
+}
+export function useCoreNetworkSelectFilteredSingleLazyQuery(variables: CoreNetworkSelectFilteredSingleQueryVariables | VueCompositionApi.Ref<CoreNetworkSelectFilteredSingleQueryVariables> | ReactiveFunction<CoreNetworkSelectFilteredSingleQueryVariables>, options: VueApolloComposable.UseQueryOptions<CoreNetworkSelectFilteredSingleQuery, CoreNetworkSelectFilteredSingleQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CoreNetworkSelectFilteredSingleQuery, CoreNetworkSelectFilteredSingleQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CoreNetworkSelectFilteredSingleQuery, CoreNetworkSelectFilteredSingleQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<CoreNetworkSelectFilteredSingleQuery, CoreNetworkSelectFilteredSingleQueryVariables>(CoreNetworkSelectFilteredSingleDocument, variables, options);
+}
+export type CoreNetworkSelectFilteredSingleQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreNetworkSelectFilteredSingleQuery, CoreNetworkSelectFilteredSingleQueryVariables>;
 export const CoreNetworkSelectFilteredListDocument = gql`
     query coreNetworkSelectFilteredList($name: String) {
   core {
@@ -3073,21 +3268,77 @@ export function useCoreContactListLazyQuery(variables: CoreContactListQueryVaria
   return VueApolloComposable.useLazyQuery<CoreContactListQuery, CoreContactListQueryVariables>(CoreContactListDocument, variables, options);
 }
 export type CoreContactListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreContactListQuery, CoreContactListQueryVariables>;
+export const CoreContactDeleteDocument = gql`
+    mutation coreContactDelete($id: ID!) {
+  core {
+    contact {
+      delete(id: $id) {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreContactDeleteMutation__
+ *
+ * To run a mutation, you first call `useCoreContactDeleteMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCoreContactDeleteMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCoreContactDeleteMutation({
+ *   variables: {
+ *     id: // value for 'id'
+ *   },
+ * });
+ */
+export function useCoreContactDeleteMutation(options: VueApolloComposable.UseMutationOptions<CoreContactDeleteMutation, CoreContactDeleteMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreContactDeleteMutation, CoreContactDeleteMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CoreContactDeleteMutation, CoreContactDeleteMutationVariables>(CoreContactDeleteDocument, options);
+}
+export type CoreContactDeleteMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreContactDeleteMutation, CoreContactDeleteMutationVariables>;
 export const CoreContactSingleDocument = gql`
     query coreContactSingle($id: ID) {
   core {
     contact {
       single(id: $id) {
-        company_id
-        created_at
-        description
-        email
         id
         name
-        phone
         photo
         type
-        updated_at
+        phone
+        email
+        description
+        company_id
+        company {
+          id
+          name
+        }
+        contacts: employees {
+          id
+        }
+        notes {
+          id
+        }
+        attachments {
+          id
+        }
+        locations {
+          id
+        }
+        networks {
+          id
+        }
+        devices {
+          id
+        }
+        audits {
+          id
+        }
       }
     }
   }
@@ -3205,17 +3456,71 @@ export function useCoreDeviceListLazyQuery(variables: CoreDeviceListQueryVariabl
   return VueApolloComposable.useLazyQuery<CoreDeviceListQuery, CoreDeviceListQueryVariables>(CoreDeviceListDocument, variables, options);
 }
 export type CoreDeviceListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreDeviceListQuery, CoreDeviceListQueryVariables>;
+export const CoreDeviceDeleteDocument = gql`
+    mutation coreDeviceDelete($id: ID!) {
+  core {
+    device {
+      delete(id: $id) {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreDeviceDeleteMutation__
+ *
+ * To run a mutation, you first call `useCoreDeviceDeleteMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCoreDeviceDeleteMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCoreDeviceDeleteMutation({
+ *   variables: {
+ *     id: // value for 'id'
+ *   },
+ * });
+ */
+export function useCoreDeviceDeleteMutation(options: VueApolloComposable.UseMutationOptions<CoreDeviceDeleteMutation, CoreDeviceDeleteMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreDeviceDeleteMutation, CoreDeviceDeleteMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CoreDeviceDeleteMutation, CoreDeviceDeleteMutationVariables>(CoreDeviceDeleteDocument, options);
+}
+export type CoreDeviceDeleteMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreDeviceDeleteMutation, CoreDeviceDeleteMutationVariables>;
 export const CoreDeviceSingleDocument = gql`
     query coreDeviceSingle($id: ID) {
   core {
     device {
       single(id: $id) {
-        created_at
-        description
-        hostname
         id
         name
+        hostname
         type
+        description
+        contacts {
+          id
+        }
+        attachments {
+          id
+        }
+        notes {
+          id
+        }
+        audits {
+          id
+        }
+        addresses {
+          id
+        }
+        networks {
+          id
+        }
+        locations {
+          id
+        }
+        created_at
         updated_at
       }
     }
@@ -3337,6 +3642,39 @@ export function useCoreLocationListLazyQuery(variables: CoreLocationListQueryVar
   return VueApolloComposable.useLazyQuery<CoreLocationListQuery, CoreLocationListQueryVariables>(CoreLocationListDocument, variables, options);
 }
 export type CoreLocationListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreLocationListQuery, CoreLocationListQueryVariables>;
+export const CoreLocationDeleteDocument = gql`
+    mutation coreLocationDelete($id: ID!) {
+  core {
+    location {
+      delete(id: $id) {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreLocationDeleteMutation__
+ *
+ * To run a mutation, you first call `useCoreLocationDeleteMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCoreLocationDeleteMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCoreLocationDeleteMutation({
+ *   variables: {
+ *     id: // value for 'id'
+ *   },
+ * });
+ */
+export function useCoreLocationDeleteMutation(options: VueApolloComposable.UseMutationOptions<CoreLocationDeleteMutation, CoreLocationDeleteMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreLocationDeleteMutation, CoreLocationDeleteMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CoreLocationDeleteMutation, CoreLocationDeleteMutationVariables>(CoreLocationDeleteDocument, options);
+}
+export type CoreLocationDeleteMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreLocationDeleteMutation, CoreLocationDeleteMutationVariables>;
 export const CoreLocationSingleDocument = gql`
     query coreLocationSingle($id: ID) {
   core {
@@ -3366,6 +3704,9 @@ export const CoreLocationSingleDocument = gql`
           id
         }
         devices {
+          id
+        }
+        audits {
           id
         }
         created_at
@@ -3491,6 +3832,39 @@ export function useCoreNetworkListLazyQuery(variables: CoreNetworkListQueryVaria
   return VueApolloComposable.useLazyQuery<CoreNetworkListQuery, CoreNetworkListQueryVariables>(CoreNetworkListDocument, variables, options);
 }
 export type CoreNetworkListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CoreNetworkListQuery, CoreNetworkListQueryVariables>;
+export const CoreNetworkDeleteDocument = gql`
+    mutation coreNetworkDelete($id: ID!) {
+  core {
+    network {
+      delete(id: $id) {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCoreNetworkDeleteMutation__
+ *
+ * To run a mutation, you first call `useCoreNetworkDeleteMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCoreNetworkDeleteMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCoreNetworkDeleteMutation({
+ *   variables: {
+ *     id: // value for 'id'
+ *   },
+ * });
+ */
+export function useCoreNetworkDeleteMutation(options: VueApolloComposable.UseMutationOptions<CoreNetworkDeleteMutation, CoreNetworkDeleteMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CoreNetworkDeleteMutation, CoreNetworkDeleteMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CoreNetworkDeleteMutation, CoreNetworkDeleteMutationVariables>(CoreNetworkDeleteDocument, options);
+}
+export type CoreNetworkDeleteMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CoreNetworkDeleteMutation, CoreNetworkDeleteMutationVariables>;
 export const CoreNetworkSingleDocument = gql`
     query coreNetworkSingle($id: ID) {
   core {
@@ -3525,6 +3899,9 @@ export const CoreNetworkSingleDocument = gql`
           id
         }
         devices {
+          id
+        }
+        audits {
           id
         }
         created_at
@@ -3984,6 +4361,73 @@ export function useCurrentUserLazyQuery(options: VueApolloComposable.UseQueryOpt
   return VueApolloComposable.useLazyQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, {}, options);
 }
 export type CurrentUserQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CurrentUserQuery, CurrentUserQueryVariables>;
+export const WidgetAuditListDocument = gql`
+    query widgetAuditList($includeIds: [ID!], $first: Int, $page: Int) {
+  audit {
+    list(includeIds: $includeIds, page: $page, first: $first) {
+      data {
+        auditable_id
+        auditable_type
+        created_at
+        event
+        id
+        ip_address
+        new_values
+        old_values
+        tags
+        url
+        user {
+          ... on User {
+            id
+            name
+            photo
+          }
+          ... on Agent {
+            id
+            name
+          }
+        }
+        user_agent
+      }
+      paginatorInfo {
+        count
+        currentPage
+        firstItem
+        hasMorePages
+        lastItem
+        lastPage
+        perPage
+        total
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useWidgetAuditListQuery__
+ *
+ * To run a query within a Vue component, call `useWidgetAuditListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWidgetAuditListQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useWidgetAuditListQuery({
+ *   includeIds: // value for 'includeIds'
+ *   first: // value for 'first'
+ *   page: // value for 'page'
+ * });
+ */
+export function useWidgetAuditListQuery(variables: WidgetAuditListQueryVariables | VueCompositionApi.Ref<WidgetAuditListQueryVariables> | ReactiveFunction<WidgetAuditListQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<WidgetAuditListQuery, WidgetAuditListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<WidgetAuditListQuery, WidgetAuditListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<WidgetAuditListQuery, WidgetAuditListQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<WidgetAuditListQuery, WidgetAuditListQueryVariables>(WidgetAuditListDocument, variables, options);
+}
+export function useWidgetAuditListLazyQuery(variables: WidgetAuditListQueryVariables | VueCompositionApi.Ref<WidgetAuditListQueryVariables> | ReactiveFunction<WidgetAuditListQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<WidgetAuditListQuery, WidgetAuditListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<WidgetAuditListQuery, WidgetAuditListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<WidgetAuditListQuery, WidgetAuditListQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<WidgetAuditListQuery, WidgetAuditListQueryVariables>(WidgetAuditListDocument, variables, options);
+}
+export type WidgetAuditListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<WidgetAuditListQuery, WidgetAuditListQueryVariables>;
 export const WidgetCoreAttachmentListDocument = gql`
     query widgetCoreAttachmentList($includeIds: [ID!]) {
   core {

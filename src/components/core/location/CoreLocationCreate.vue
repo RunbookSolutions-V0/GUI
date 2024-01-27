@@ -23,7 +23,7 @@
       </template>
     </Dropdown>
     <CoreLocationSelect
-      v-model="selectedParentLocation"
+      v-model="formData.parent_id"
       label="Parent Location"
       class="mb-2"
     ></CoreLocationSelect>
@@ -35,8 +35,11 @@
 import { ref, inject } from 'vue'
 import router from '@/router'
 
+// PrimeVue
 import VPButton from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
+
+// Our Components
 import InputTextLabel from '@/components/Input/InputTextLabel.vue'
 import TextAreaLabel from '@/components/Input/TextAreaLabel.vue'
 import CoreLocationSelect from '@/components/core/location/CoreLocationSelect.vue'
@@ -51,12 +54,12 @@ import {
 const dialogRef = inject('dialogRef')
 
 // Valid Location types
-const locationTypes = ref([
+const locationTypes = [
   { name: 'Building', value: CoreLocationTypes.BUILDING },
   { name: 'Other', value: CoreLocationTypes.OTHER },
   { name: 'Rack', value: CoreLocationTypes.RACK },
   { name: 'Room', value: CoreLocationTypes.ROOM }
-])
+];
 // Form Data to Submit to Create Location
 const formData = ref<CoreLocationCreateInput>({
   name: null,
@@ -67,7 +70,6 @@ const formData = ref<CoreLocationCreateInput>({
 })
 // The Selected Location Type
 const selectedLocationType = ref<{ name: string; value: string }>()
-const selectedParentLocation = ref()
 
 // Submission Mutation
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -85,9 +87,8 @@ const GraphQLDocument = gql`
 const { mutate: locationMutation, onDone } = useCoreLocationCreateMutation()
 function createLocation() {
   if (!selectedLocationType.value) return
+  formData.value.type = selectedLocationType.value.value as CoreLocationTypes
 
-  formData.value.type = selectedLocationType.value.value as string
-  formData.value.parent_id = selectedParentLocation.value?.id
   locationMutation({ input: formData.value })
 }
 onDone((result) => {
