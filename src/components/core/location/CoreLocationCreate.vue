@@ -59,7 +59,7 @@ const locationTypes = [
   { name: 'Other', value: CoreLocationTypes.OTHER },
   { name: 'Rack', value: CoreLocationTypes.RACK },
   { name: 'Room', value: CoreLocationTypes.ROOM }
-];
+]
 // Form Data to Submit to Create Location
 const formData = ref<CoreLocationCreateInput>({
   name: null,

@@ -3,13 +3,13 @@ import { type RouteLocationNormalizedLoaded } from 'vue-router'
 import router from '@/router'
 
 import type { CurrentUser, Team, RegisterInput, NewPasswordWithCodeInput } from '@/graphql'
-import { 
-  useCurrentUserQuery, 
+import {
+  useCurrentUserQuery,
   useLoginMutation,
   useRegisterMutation,
   useForgotPasswordMutation,
   useUpdateForgottenPasswordMutation,
-  useRefreshTokenMutation 
+  useRefreshTokenMutation
 } from '@/graphql'
 
 import { apolloClient } from '@/graphql/apollo.client'
@@ -85,14 +85,14 @@ export const useAuthStore = defineStore({
     register(input: RegisterInput): void {
       provideApolloClient(apolloClient)
       const { mutate: register, onDone } = useRegisterMutation()
-      register({ input: input});
+      register({ input: input })
       const alertStore = useAlertStore()
       onDone((result) => {
-        if (!result.data || !result.data.auth.register) return;
-        console.debug(result.data.auth.register);
+        if (!result.data || !result.data.auth.register) return
+        console.debug(result.data.auth.register)
         const response = result.data.auth.register.tokens
 
-        if(!response) return;
+        if (!response) return
 
         if (!response.user) {
           alertStore.add({
@@ -120,17 +120,16 @@ export const useAuthStore = defineStore({
           detail: 'Welcome!',
           life: 3000
         })
-        router.push({name: 'dashboard'})
-
+        router.push({ name: 'dashboard' })
       })
     },
-    forgot_password(email: String) : void {
+    forgot_password(email: String): void {
       provideApolloClient(apolloClient)
       const { mutate: forgotPassword, onDone } = useForgotPasswordMutation()
-      forgotPassword({ input: { email: email }});
+      forgotPassword({ input: { email: email } })
       const alertStore = useAlertStore()
       onDone((result) => {
-        if(!result.data || !result.data.auth.forgotPassword) return;
+        if (!result.data || !result.data.auth.forgotPassword) return
 
         alertStore.add({
           severity: 'success',
@@ -138,17 +137,16 @@ export const useAuthStore = defineStore({
           detail: result.data.auth.forgotPassword.message,
           life: 3000
         })
-        router.push({name: 'auth.reset'})
-
+        router.push({ name: 'auth.reset' })
       })
     },
-    reset_password(input: NewPasswordWithCodeInput) : void {
+    reset_password(input: NewPasswordWithCodeInput): void {
       provideApolloClient(apolloClient)
       const { mutate: updateForgottenPassword, onDone } = useUpdateForgottenPasswordMutation()
-      updateForgottenPassword({input: input})
+      updateForgottenPassword({ input: input })
       const alertStore = useAlertStore()
       onDone((result) => {
-        if(!result.data || !result.data.auth.updateForgottenPassword) return;
+        if (!result.data || !result.data.auth.updateForgottenPassword) return
 
         alertStore.add({
           severity: 'success',
@@ -156,7 +154,7 @@ export const useAuthStore = defineStore({
           detail: result.data.auth.updateForgottenPassword.message,
           life: 3000
         })
-        router.push({name: 'auth.login'})
+        router.push({ name: 'auth.login' })
       })
     },
     logout() {

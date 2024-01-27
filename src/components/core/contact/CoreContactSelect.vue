@@ -34,14 +34,12 @@ import {
   useCoreContactSelectFilteredListQuery,
   type CoreContactSelectFilteredListQueryVariables,
   type CoreContact,
-  CoreContactTypes,
+  CoreContactTypes
 } from '@/graphql'
 
 // Props
 const props = defineProps({
-  modelValue: {
-
-  },
+  modelValue: {},
   label: {
     type: [String || null],
     default: null
@@ -52,10 +50,10 @@ const props = defineProps({
   }
 })
 
-const $emits = defineEmits(['update:modelValue']);
+const $emits = defineEmits(['update:modelValue'])
 
 // Define some reactive variables;
-const value = ref<CoreContact>();
+const value = ref<CoreContact>()
 const items = ref<CoreContact[]>([])
 const variables = ref<CoreContactSelectFilteredListQueryVariables>({
   type: props.type as CoreContactTypes,
@@ -65,7 +63,7 @@ const variables = ref<CoreContactSelectFilteredListQueryVariables>({
 // Define our GraphQL
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument1 = gql`
-query coreContactSelectFilteredSingle($id: ID!) {
+  query coreContactSelectFilteredSingle($id: ID!) {
     core {
       contact {
         single(id: $id) {
@@ -75,7 +73,7 @@ query coreContactSelectFilteredSingle($id: ID!) {
       }
     }
   }
-`;
+`
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument2 = gql`
   query coreContactSelectFilteredList($name: String, $type: CoreContactTypes) {
@@ -95,9 +93,11 @@ const GraphQLDocument2 = gql`
 // We were provided with a default value; we need to look it up.
 if (props.modelValue != null) {
   console.log(props.modelValue)
-  const { onResult: ValueLoaded } = useCoreContactSelectFilteredSingleQuery({id: props.modelValue});
+  const { onResult: ValueLoaded } = useCoreContactSelectFilteredSingleQuery({
+    id: props.modelValue
+  })
   ValueLoaded((result) => {
-    if(!result.data || !result.data.core.contact.single) return
+    if (!result.data || !result.data.core.contact.single) return
     value.value = result.data.core.contact.single as CoreContact
   })
 }
@@ -116,9 +116,9 @@ function search(event: AutoCompleteCompleteEvent) {
 }
 
 function updateSelectedContact(newSelection) {
-  value.value = newSelection;
-  if(typeof newSelection === 'string') return;
+  value.value = newSelection
+  if (typeof newSelection === 'string') return
 
-  $emits("update:modelValue", newSelection == null ? null : newSelection.id);
+  $emits('update:modelValue', newSelection == null ? null : newSelection.id)
 }
 </script>

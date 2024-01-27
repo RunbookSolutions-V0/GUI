@@ -40,19 +40,19 @@ const GraphQLDocument1 = gql`
           hostname
           type
           description
-          
+
           contacts {
             id
           }
-          
+
           attachments {
             id
           }
-          
+
           notes {
             id
           }
-          
+
           audits {
             id
           }
@@ -60,19 +60,17 @@ const GraphQLDocument1 = gql`
           addresses {
             id
           }
-          
+
           networks {
             id
           }
-          
+
           locations {
             id
           }
 
           created_at
           updated_at
-
-          
         }
       }
     }

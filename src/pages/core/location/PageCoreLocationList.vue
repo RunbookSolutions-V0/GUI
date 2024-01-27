@@ -2,9 +2,9 @@
 <template>
   <div class="card">
     <PVDataTable
-      v-model:editingRows="editingRows" 
+      v-model:editingRows="editingRows"
       editMode="row"
-      dataKey="id" 
+      dataKey="id"
       @row-edit-save="onRowEditSave"
       :value="locations"
       :loading="loading"
@@ -50,10 +50,7 @@
       </PVColumn>
       <PVColumn field="parent_id" header="Parent ID">
         <template #editor="{ data, field }">
-          <CoreLocationSelect
-            v-model="data[field]"
-            class="mb-2"
-          ></CoreLocationSelect>
+          <CoreLocationSelect v-model="data[field]" class="mb-2"></CoreLocationSelect>
         </template>
         <template #body="slotProps">
           <RouterLink
@@ -65,7 +62,9 @@
               }
             }"
           >
-            {{ slotProps.data.parent_location ? slotProps.data.parent_location.name : 'Changed...' }}
+            {{
+              slotProps.data.parent_location ? slotProps.data.parent_location.name : 'Changed...'
+            }}
           </RouterLink>
         </template>
       </PVColumn>
@@ -115,11 +114,15 @@
           <PVInputText v-model="data[field]" />
         </template>
       </PVColumn>
-      <PVColumn :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></PVColumn>
+      <PVColumn
+        :rowEditor="true"
+        style="width: 10%; min-width: 8rem"
+        bodyStyle="text-align:center"
+      ></PVColumn>
       <PVColumn :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center">
         <template #body="{ data }">
-          <PVButton 
-            @click="deleteRow({id: data.id});"
+          <PVButton
+            @click="deleteRow({ id: data.id })"
             icon="pi pi-trash"
             aria-label="Delete"
             severity="danger"
@@ -191,7 +194,7 @@ const variables = ref<CoreLocationQueriesListArgs>({
 const locations = ref<CoreLocation[]>([])
 const paginator = ref({})
 
-const editingRows=ref([]);
+const editingRows = ref([])
 
 // GraphQL
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -230,22 +233,22 @@ const GraphQLDocument1 = gql`
 `
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument2 = gql`
-mutation coreLocationDelete($id: ID!) {
-  core {
-    location {
-      delete(id: $id) {
-        id
+  mutation coreLocationDelete($id: ID!) {
+    core {
+      location {
+        delete(id: $id) {
+          id
+        }
       }
     }
   }
-}
 `
 
 // Edit Rows
-const { mutate, onDone } = useCoreLocationUpdateMutation();
+const { mutate, onDone } = useCoreLocationUpdateMutation()
 onDone((result) => {
-  if(!result.data) return;
-  console.info("Location Updated")
+  if (!result.data) return
+  console.info('Location Updated')
 })
 
 // Load our List
@@ -258,18 +261,17 @@ onResult((result) => {
 })
 
 // Delete Rows
-const { mutate: deleteRow, onDone: rowDeleted } = useCoreLocationDeleteMutation();
+const { mutate: deleteRow, onDone: rowDeleted } = useCoreLocationDeleteMutation()
 rowDeleted((result) => {
-  if(!result.data || !result.data.core.location.delete) return;
-  console.info("Location Deleted")
+  if (!result.data || !result.data.core.location.delete) return
+  console.info('Location Deleted')
 
-  if(!result.data.core.location.delete.id) return;
-  const deletedID = result.data.core.location.delete.id;
+  if (!result.data.core.location.delete.id) return
+  const deletedID = result.data.core.location.delete.id
 
-  locations.value.forEach( (location, index) => {
-     if(location.id === deletedID) locations.value.splice(index,1);
-   });
-
+  locations.value.forEach((location, index) => {
+    if (location.id === deletedID) locations.value.splice(index, 1)
+  })
 })
 
 // Some Watchers
@@ -298,7 +300,7 @@ function showCreate() {
 }
 
 const onRowEditSave = (event) => {
-  let { newData, index } = event;
+  let { newData, index } = event
 
   mutate({
     input: {
@@ -309,13 +311,12 @@ const onRowEditSave = (event) => {
       description: newData.description,
       address: newData.address
     }
-  });
+  })
 
   if (newData.parent_location && newData.parent_id != newData.parent_location.id) {
     newData.parent_location = null
   }
-    
 
-  locations.value[index] = newData;
+  locations.value[index] = newData
 }
 </script>

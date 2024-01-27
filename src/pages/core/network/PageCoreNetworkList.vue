@@ -1,9 +1,9 @@
 <template>
   <div class="card">
     <PVDataTable
-      v-model:editingRows="editingRows" 
+      v-model:editingRows="editingRows"
       editMode="row"
-      dataKey="id" 
+      dataKey="id"
       @row-edit-save="onRowEditSave"
       :value="networks"
       :loading="loading"
@@ -44,10 +44,7 @@
       </PVColumn>
       <PVColumn field="parent_id" header="Parent ID">
         <template #editor="{ data, field }">
-          <CoreNetworkSelect
-            v-model="data[field]"
-            class="mb-2"
-          ></CoreNetworkSelect>
+          <CoreNetworkSelect v-model="data[field]" class="mb-2"></CoreNetworkSelect>
         </template>
         <template #body="slotProps">
           <RouterLink
@@ -59,12 +56,14 @@
               }
             }"
           >
-            {{ slotProps.data.parent_network.name ? slotProps.data.parent_network.name : 'Changed...' }}
+            {{
+              slotProps.data.parent_network.name ? slotProps.data.parent_network.name : 'Changed...'
+            }}
           </RouterLink>
         </template>
       </PVColumn>
       <PVColumn field="network" header="Network" :showFilterMenu="false">
-        <template #editor=" { data, field }">
+        <template #editor="{ data, field }">
           <IPInput v-model="data[field]" />
         </template>
         <template #body="{ data }">
@@ -84,11 +83,15 @@
           <PVTextArea class="w-full" v-model="data[field]" />
         </template>
       </PVColumn>
-      <PVColumn :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></PVColumn>
+      <PVColumn
+        :rowEditor="true"
+        style="width: 10%; min-width: 8rem"
+        bodyStyle="text-align:center"
+      ></PVColumn>
       <PVColumn :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center">
         <template #body="{ data }">
-          <PVButton 
-            @click="deleteRow({id: data.id});"
+          <PVButton
+            @click="deleteRow({ id: data.id })"
             icon="pi pi-trash"
             aria-label="Delete"
             severity="danger"
@@ -152,7 +155,7 @@ const variables = ref<CoreNetworkQueriesListArgs>({
 const networks = ref<CoreNetwork[]>([])
 const paginator = ref({})
 
-const editingRows=ref([]);
+const editingRows = ref([])
 
 // GraphQL
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -192,36 +195,35 @@ const GraphQLDocument1 = gql`
 `
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument2 = gql`
-mutation coreNetworkDelete($id: ID!) {
-  core {
-    network {
-      delete(id: $id) {
-        id
+  mutation coreNetworkDelete($id: ID!) {
+    core {
+      network {
+        delete(id: $id) {
+          id
+        }
       }
     }
   }
-}
 `
 // Edit Rows
-const { mutate, onDone } = useCoreNetworkUpdateMutation();
+const { mutate, onDone } = useCoreNetworkUpdateMutation()
 onDone((result) => {
-  if(!result.data) return;
-  console.info("Network Updated")
+  if (!result.data) return
+  console.info('Network Updated')
 })
 
 // Delete Rows
-const { mutate: deleteRow, onDone: rowDeleted } = useCoreNetworkDeleteMutation();
+const { mutate: deleteRow, onDone: rowDeleted } = useCoreNetworkDeleteMutation()
 rowDeleted((result) => {
-  if(!result.data || !result.data.core.network.delete) return;
-  console.info("Network Deleted")
+  if (!result.data || !result.data.core.network.delete) return
+  console.info('Network Deleted')
 
-  if(!result.data.core.network.delete.id) return;
-  const deletedID = result.data.core.network.delete.id;
+  if (!result.data.core.network.delete.id) return
+  const deletedID = result.data.core.network.delete.id
 
-  networks.value.forEach( (network, index) => {
-     if(network.id === deletedID) networks.value.splice(index,1);
-   });
-
+  networks.value.forEach((network, index) => {
+    if (network.id === deletedID) networks.value.splice(index, 1)
+  })
 })
 
 // Load our List
@@ -260,7 +262,7 @@ function showCreate() {
 }
 
 const onRowEditSave = (event) => {
-  let { newData, index } = event;
+  let { newData, index } = event
 
   mutate({
     input: {
@@ -268,15 +270,14 @@ const onRowEditSave = (event) => {
       name: newData.name,
       parent_id: newData.parent_id,
       network: newData.netowkr,
-      description: newData.description,
+      description: newData.description
     }
-  });
+  })
 
   if (newData.parent_network && newData.parent_id != newData.parent_network.id) {
     newData.parent_network = null
   }
-    
 
-  networks.value[index] = newData;
+  networks.value[index] = newData
 }
 </script>

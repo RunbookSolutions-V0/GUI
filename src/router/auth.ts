@@ -1,9 +1,9 @@
 import { type RouteRecordRaw } from 'vue-router'
 
 import LoginView from '@/pages/auth/PageAuthLogin.vue'
-import RegisterView from "@/pages/auth/PageAuthRegister.vue"
-import ForgotView from "@/pages/auth/PageAuthForgot.vue"
-import ResetView from "@/pages/auth/PageAuthReset.vue"
+import RegisterView from '@/pages/auth/PageAuthRegister.vue'
+import ForgotView from '@/pages/auth/PageAuthForgot.vue'
+import ResetView from '@/pages/auth/PageAuthReset.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -19,7 +19,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/auth/forgot_password',
     name: 'auth.forgot',
-    component: ForgotView,
+    component: ForgotView
   },
   {
     path: '/auth/reset_password',

@@ -71,8 +71,6 @@ const GraphQLDocument1 = gql`
             id
           }
 
-
-
           audits {
             id
           }

@@ -47,12 +47,24 @@
             </PVColumn>
             <PVColumn field="new_values" header="New Values">
               <template #body="slotProps">
-                <pre>{{ slotProps.data.new_values.replaceAll("{","{\n").replaceAll("}","\n}").replaceAll(",",",\n").replaceAll(":",": ") }}</pre>
+                <pre>{{
+                  slotProps.data.new_values
+                    .replaceAll('{', '{\n')
+                    .replaceAll('}', '\n}')
+                    .replaceAll(',', ',\n')
+                    .replaceAll(':', ': ')
+                }}</pre>
               </template>
             </PVColumn>
             <PVColumn field="old_values" header="Old Values">
               <template #body="slotProps">
-                <pre>{{ slotProps.data.old_values.replaceAll("{","{\n").replaceAll("}","\n}").replaceAll(",",",\n").replaceAll(":",": ") }}</pre>
+                <pre>{{
+                  slotProps.data.old_values
+                    .replaceAll('{', '{\n')
+                    .replaceAll('}', '\n}')
+                    .replaceAll(',', ',\n')
+                    .replaceAll(':', ': ')
+                }}</pre>
               </template>
             </PVColumn>
             <PVColumn field="user_agent" header="User Agent" />
@@ -78,11 +90,7 @@ import { WidgetInterface, defaultWidgetComponent } from 's7k-widgets-core'
 
 // GraphQL
 import gql from 'graphql-tag'
-import {
-  useWidgetAuditListQuery,
-  type WidgetAuditListQueryVariables,
-  type Audit
-} from '@/graphql'
+import { useWidgetAuditListQuery, type WidgetAuditListQueryVariables, type Audit } from '@/graphql'
 
 // Props
 const props = defineProps({ ...defaultWidgetComponent.props })
@@ -112,46 +120,46 @@ watch(props, (v) => {
 // GraphQL
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument = gql`
-query widgetAuditList($includeIds: [ID!], $first: Int, $page: Int) {
-  audit {
-    list(includeIds: $includeIds, page: $page, first: $first) {
-      data {
-        auditable_id
-        auditable_type
-        created_at
-        event
-        id
-        ip_address
-        new_values
-        old_values
-        tags
-        url
-        user {
-          ... on User {
-            id
-            name
-            photo
+  query widgetAuditList($includeIds: [ID!], $first: Int, $page: Int) {
+    audit {
+      list(includeIds: $includeIds, page: $page, first: $first) {
+        data {
+          auditable_id
+          auditable_type
+          created_at
+          event
+          id
+          ip_address
+          new_values
+          old_values
+          tags
+          url
+          user {
+            ... on User {
+              id
+              name
+              photo
+            }
+            ... on Agent {
+              id
+              name
+            }
           }
-          ... on Agent {
-            id
-            name
-          }
+          user_agent
         }
-        user_agent
-      }
-      paginatorInfo {
-        count
-        currentPage
-        firstItem
-        hasMorePages
-        lastItem
-        lastPage
-        perPage
-        total
+        paginatorInfo {
+          count
+          currentPage
+          firstItem
+          hasMorePages
+          lastItem
+          lastPage
+          perPage
+          total
+        }
       }
     }
   }
-}
 `
 const { onResult, loading } = useWidgetAuditListQuery(variables)
 onResult((result) => {
@@ -160,5 +168,4 @@ onResult((result) => {
   const paginatorInfo = result.data.audit.list.paginatorInfo
   displayAudits.value = data
 })
-
 </script>

@@ -1,22 +1,24 @@
 <template>
   <div class="card">
     <PVDataTable
-      v-model:editingRows="editingRows" 
+      v-model:editingRows="editingRows"
       editMode="row"
-      dataKey="id" 
+      dataKey="id"
       @row-edit-save="onRowEditSave"
       :value="contacts"
       :loading="loading"
       filterDisplay="row"
       tableStyle="min-width: 50rem"
     >
-
       <template #empty> No Contacts found. </template>
       <template #loading> Loading contact data. Please wait. </template>
 
       <PVColumn field="photo" header="Photo" :showFilterMenu="false">
         <template #body="{ data }">
-          <RouterLink v-if="data.photo" :to="{ name: 'core.contact.view', params: { id: data.id } }">
+          <RouterLink
+            v-if="data.photo"
+            :to="{ name: 'core.contact.view', params: { id: data.id } }"
+          >
             <img class="h-12 w-12 rounded-full" :src="data.photo" />
           </RouterLink>
         </template>
@@ -43,10 +45,7 @@
 
       <PVColumn field="company_id" header="Company" :showFilterMenu="false">
         <template #editor="{ data, field }">
-          <CoreContactSelect
-            v-model="data[field]"
-            class="mb-2"
-          ></CoreContactSelect>
+          <CoreContactSelect v-model="data[field]" class="mb-2"></CoreContactSelect>
         </template>
         <template #body="{ data }">
           <RouterLink
@@ -128,11 +127,15 @@
           />
         </template>
       </PVColumn>
-      <PVColumn :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></PVColumn>
+      <PVColumn
+        :rowEditor="true"
+        style="width: 10%; min-width: 8rem"
+        bodyStyle="text-align:center"
+      ></PVColumn>
       <PVColumn :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center">
         <template #body="{ data }">
-          <PVButton 
-            @click="deleteRow({id: data.id});"
+          <PVButton
+            @click="deleteRow({ id: data.id })"
             icon="pi pi-trash"
             aria-label="Delete"
             severity="danger"
@@ -207,7 +210,7 @@ const variables = ref<CoreContactQueriesListArgs>({
 const contacts = ref<CoreContact[]>([])
 const paginator = ref({})
 
-const editingRows=ref([]);
+const editingRows = ref([])
 
 // GraphQL
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -256,37 +259,36 @@ const GraphQLDocument1 = gql`
 `
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument2 = gql`
-mutation coreContactDelete($id: ID!) {
-  core {
-    contact {
-      delete(id: $id) {
-        id
+  mutation coreContactDelete($id: ID!) {
+    core {
+      contact {
+        delete(id: $id) {
+          id
+        }
       }
     }
   }
-}
 `
 
 // Edit Rows
-const { mutate, onDone } = useCoreContactUpdateMutation();
+const { mutate, onDone } = useCoreContactUpdateMutation()
 onDone((result) => {
-  if(!result.data) return;
-  console.info("Contact Updated")
+  if (!result.data) return
+  console.info('Contact Updated')
 })
 
 // Delete Rows
-const { mutate: deleteRow, onDone: rowDeleted } = useCoreContactDeleteMutation();
+const { mutate: deleteRow, onDone: rowDeleted } = useCoreContactDeleteMutation()
 rowDeleted((result) => {
-  if(!result.data || !result.data.core.contact.delete) return;
-  console.info("Contact Deleted")
+  if (!result.data || !result.data.core.contact.delete) return
+  console.info('Contact Deleted')
 
-  if(!result.data.core.contact.delete.id) return;
-  const deletedID = result.data.core.contact.delete.id;
+  if (!result.data.core.contact.delete.id) return
+  const deletedID = result.data.core.contact.delete.id
 
-  contacts.value.forEach( (contact, index) => {
-     if(contact.id === deletedID) contacts.value.splice(index,1);
-   });
-
+  contacts.value.forEach((contact, index) => {
+    if (contact.id === deletedID) contacts.value.splice(index, 1)
+  })
 })
 
 // Load our List
@@ -333,7 +335,7 @@ function showCreate() {
 }
 
 const onRowEditSave = (event) => {
-  let { newData, index } = event;
+  let { newData, index } = event
 
   mutate({
     input: {
@@ -344,14 +346,12 @@ const onRowEditSave = (event) => {
       description: newData.description,
       address: newData.address
     }
-  });
+  })
 
   if (newData.company && newData.company_id != newData.company.id) {
     newData.company = null
   }
-    
 
-  contacts.value[index] = newData;
+  contacts.value[index] = newData
 }
-
 </script>

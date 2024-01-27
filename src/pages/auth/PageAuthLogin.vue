@@ -3,11 +3,25 @@
     <Card class="m-auto min-w-96">
       <template #header>
         <div class="text-center mb-5">
-          <img v-if="settings.darkMode" src="../../assets/logo-dark.svg" class="h-24 m-auto p-2" alt="Logo" />
-          <img v-if="!settings.darkMode" src="../../assets/logo.svg" class="h-24 m-auto p-2" alt="Logo" />
+          <img
+            v-if="settings.darkMode"
+            src="../../assets/logo-dark.svg"
+            class="h-24 m-auto p-2"
+            alt="Logo"
+          />
+          <img
+            v-if="!settings.darkMode"
+            src="../../assets/logo.svg"
+            class="h-24 m-auto p-2"
+            alt="Logo"
+          />
           <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
           <span class="text-600 font-medium line-height-3">Don't have an account?</span>
-          <RouterLink :to="{name:'auth.register'}" class="font-medium no-underline ml-2 text-primary-500 cursor-pointer">Create today!</RouterLink>
+          <RouterLink
+            :to="{ name: 'auth.register' }"
+            class="font-medium no-underline ml-2 text-primary-500 cursor-pointer"
+            >Create today!</RouterLink
+          >
         </div>
       </template>
       <template #content>
@@ -19,8 +33,8 @@
           <InputText v-model:="input.password" id="password1" type="password" class="w-full mb-3" />
 
           <div class="flex align-items-center justify-content-between mb-6">
-            <RouterLink 
-              :to="{name:'auth.forgot'}" 
+            <RouterLink
+              :to="{ name: 'auth.forgot' }"
               class="font-medium no-underline ml-2 text-primary-500 text-right cursor-pointer"
             >
               Forgot password?

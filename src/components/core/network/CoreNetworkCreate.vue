@@ -52,7 +52,6 @@ const GraphQLDocument = gql`
 // Submission Mutation
 const { mutate: networkMutation, onDone } = useCoreNetworkCreateMutation()
 function createNetwork() {
-
   networkMutation({ input: formData.value })
 }
 onDone((result) => {

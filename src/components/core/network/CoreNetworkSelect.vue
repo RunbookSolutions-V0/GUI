@@ -39,19 +39,17 @@ import {
 
 // Props
 const props = defineProps({
-  modelValue: {
-
-  },
+  modelValue: {},
   label: {
     type: [String || null],
     default: null
   }
-});
+})
 
-const $emits = defineEmits(['update:modelValue']);
+const $emits = defineEmits(['update:modelValue'])
 
 // Define some reactive variables
-const value = ref<CoreNetwork>();
+const value = ref<CoreNetwork>()
 const items = ref<CoreNetwork[]>([])
 const variables = ref<CoreNetworkSelectFilteredListQueryVariables>({
   name: null as InputMaybe<string>
@@ -60,7 +58,7 @@ const variables = ref<CoreNetworkSelectFilteredListQueryVariables>({
 // Define our GraphQL Document
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument1 = gql`
-query coreNetworkSelectFilteredSingle($id: ID!) {
+  query coreNetworkSelectFilteredSingle($id: ID!) {
     core {
       network {
         single(id: $id) {
@@ -70,7 +68,7 @@ query coreNetworkSelectFilteredSingle($id: ID!) {
       }
     }
   }
-`;
+`
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument2 = gql`
   query coreNetworkSelectFilteredList($name: String) {
@@ -89,9 +87,11 @@ const GraphQLDocument2 = gql`
 
 // We were provided with a default value; we need to look it up.
 if (props.modelValue != null) {
-  const { onResult: ValueLoaded } = useCoreNetworkSelectFilteredSingleQuery({id: props.modelValue});
+  const { onResult: ValueLoaded } = useCoreNetworkSelectFilteredSingleQuery({
+    id: props.modelValue
+  })
   ValueLoaded((result) => {
-    if(!result.data || !result.data.core.network.single) return
+    if (!result.data || !result.data.core.network.single) return
     value.value = result.data.core.network.single as CoreNetwork
   })
 }
@@ -109,9 +109,9 @@ function search(event: AutoCompleteCompleteEvent) {
 }
 
 function updateSelectedNetwork(newSelection) {
-  value.value = newSelection;
-  if(typeof newSelection === 'string') return;
+  value.value = newSelection
+  if (typeof newSelection === 'string') return
 
-  $emits("update:modelValue", newSelection == null ? null : newSelection.id);
+  $emits('update:modelValue', newSelection == null ? null : newSelection.id)
 }
 </script>

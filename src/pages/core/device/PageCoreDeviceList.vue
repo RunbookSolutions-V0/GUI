@@ -1,9 +1,9 @@
 <template>
   <div class="card">
     <PVDataTable
-      v-model:editingRows="editingRows" 
+      v-model:editingRows="editingRows"
       editMode="row"
-      dataKey="id" 
+      dataKey="id"
       @row-edit-save="onRowEditSave"
       :value="devices"
       :loading="loading"
@@ -28,7 +28,6 @@
           <RouterLink :to="{ name: 'core.device.view', params: { id: data.id } }">
             {{ data.name }}
           </RouterLink>
-          
         </template>
         <template #filter="{}">
           <PVInputText
@@ -99,11 +98,15 @@
           <PVTextArea class="w-full" v-model="data[field]" />
         </template>
       </PVColumn>
-      <PVColumn :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></PVColumn>
+      <PVColumn
+        :rowEditor="true"
+        style="width: 10%; min-width: 8rem"
+        bodyStyle="text-align:center"
+      ></PVColumn>
       <PVColumn :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center">
         <template #body="{ data }">
-          <PVButton 
-            @click="deleteRow({id: data.id});"
+          <PVButton
+            @click="deleteRow({ id: data.id })"
             icon="pi pi-trash"
             aria-label="Delete"
             severity="danger"
@@ -177,7 +180,7 @@ const variables = ref<CoreDeviceQueriesListArgs>({
 const devices = ref<CoreDevice[]>([])
 const paginator = ref({})
 
-const editingRows=ref([]);
+const editingRows = ref([])
 
 // GraphQL
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -218,37 +221,36 @@ const GraphQLDocument1 = gql`
 `
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GraphQLDocument2 = gql`
-mutation coreDeviceDelete($id: ID!) {
-  core {
-    device {
-      delete(id: $id) {
-        id
+  mutation coreDeviceDelete($id: ID!) {
+    core {
+      device {
+        delete(id: $id) {
+          id
+        }
       }
     }
   }
-}
 `
 
 // Edit Rows
-const { mutate, onDone } = useCoreDeviceUpdateMutation();
+const { mutate, onDone } = useCoreDeviceUpdateMutation()
 onDone((result) => {
-  if(!result.data) return;
-  console.info("Device Updated")
+  if (!result.data) return
+  console.info('Device Updated')
 })
 
 // Delete Rows
-const { mutate: deleteRow, onDone: rowDeleted } = useCoreDeviceDeleteMutation();
+const { mutate: deleteRow, onDone: rowDeleted } = useCoreDeviceDeleteMutation()
 rowDeleted((result) => {
-  if(!result.data || !result.data.core.device.delete) return;
-  console.info("Device Deleted")
+  if (!result.data || !result.data.core.device.delete) return
+  console.info('Device Deleted')
 
-  if(!result.data.core.device.delete.id) return;
-  const deletedID = result.data.core.device.delete.id;
+  if (!result.data.core.device.delete.id) return
+  const deletedID = result.data.core.device.delete.id
 
-  devices.value.forEach( (device, index) => {
-     if(device.id === deletedID) devices.value.splice(index,1);
-   });
-
+  devices.value.forEach((device, index) => {
+    if (device.id === deletedID) devices.value.splice(index, 1)
+  })
 })
 
 // Load our List
@@ -291,7 +293,7 @@ function showCreate() {
 }
 
 const onRowEditSave = (event) => {
-  let { newData, index } = event;
+  let { newData, index } = event
 
   mutate({
     input: {
@@ -299,10 +301,10 @@ const onRowEditSave = (event) => {
       name: newData.name,
       hostname: newData.hostname,
       type: newData.type,
-      description: newData.description,
+      description: newData.description
     }
-  });
+  })
 
-  devices.value[index] = newData;
+  devices.value[index] = newData
 }
 </script>

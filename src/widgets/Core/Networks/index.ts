@@ -1,7 +1,5 @@
 import AddressWidgets from './Address'
 
-const widgets = [
-    ...AddressWidgets,
-];
+const widgets = [...AddressWidgets]
 
-export default widgets;
+export default widgets
