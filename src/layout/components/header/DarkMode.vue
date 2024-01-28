@@ -17,19 +17,7 @@
 
 <script setup lang="ts">
 import Button from 'primevue/button'
-import { onMounted, watch } from 'vue'
 
 import { useSettingsStore } from '@/stores'
 const settings = useSettingsStore()
-
-onMounted(() => {
-  document.body.classList.toggle('dark', settings.darkMode)
-})
-
-watch(
-  () => settings.darkMode,
-  () => {
-    document.body.classList.toggle('dark', settings.darkMode)
-  }
-)
 </script>

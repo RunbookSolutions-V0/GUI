@@ -85,7 +85,7 @@ export const REGISTER_QUERY = gql`
               name
               photo
               pivot {
-                roles
+                role
               }
             }
             invitations {

@@ -2154,6 +2154,8 @@ export type TeamMutations = {
   __typename?: 'TeamMutations';
   /** Create a new team. */
   create?: Maybe<Team>;
+  /** Delete a Team */
+  delete?: Maybe<Team>;
   /** Update an existing team. */
   update?: Maybe<Team>;
 };
@@ -2162,6 +2164,12 @@ export type TeamMutations = {
 /** Mutations for updating teams. */
 export type TeamMutationsCreateArgs = {
   input?: InputMaybe<TeamCreateInput>;
+};
+
+
+/** Mutations for updating teams. */
+export type TeamMutationsDeleteArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -2262,6 +2270,12 @@ export type User = {
 /** Input for creating relationships between users and teams. */
 export type UserCreateBelongsToMany = {
   disconnect?: InputMaybe<Array<Scalars['ID']['input']>>;
+  syncWithoutDetaching?: InputMaybe<Array<UserIdWithPivot>>;
+};
+
+export type UserIdWithPivot = {
+  id: Scalars['ID']['input'];
+  role?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Mutations for updating users. */
@@ -2315,6 +2329,8 @@ export type UserQueriesSingleArgs = {
 
 /** Input for updating a user. */
 export type UserUpdateInput = {
+  /** The Email of the user. */
+  email?: InputMaybe<Scalars['String']['input']>;
   /** Updated profile photo of the user. */
   file?: InputMaybe<VaporFileUpload>;
   /** ID of the user to update. */
@@ -2429,6 +2445,21 @@ export type TeamCreateMutationVariables = Exact<{
 
 
 export type TeamCreateMutation = { __typename?: 'Mutation', team: { __typename?: 'TeamMutations', create?: { __typename?: 'Team', id: string } | null } };
+
+export type UpdateTeamUserRoleMutationVariables = Exact<{
+  input?: InputMaybe<TeamUpdateInput>;
+}>;
+
+
+export type UpdateTeamUserRoleMutation = { __typename?: 'Mutation', team: { __typename?: 'TeamMutations', update?: { __typename?: 'Team', id: string } | null } };
+
+export type RemoveUserFromTeamMutationVariables = Exact<{
+  teamID: Scalars['ID']['input'];
+  userID: Scalars['ID']['input'];
+}>;
+
+
+export type RemoveUserFromTeamMutation = { __typename?: 'Mutation', team: { __typename?: 'TeamMutations', update?: { __typename?: 'Team', id: string } | null } };
 
 export type EditProfileMutationVariables = Exact<{
   input?: InputMaybe<UserUpdateInput>;
@@ -2599,6 +2630,13 @@ export type TeamViewCurrentQueryVariables = Exact<{
 
 export type TeamViewCurrentQuery = { __typename?: 'Query', team: { __typename?: 'TeamQueries', single?: { __typename?: 'Team', id: string, name: string, personal: boolean, description?: string | null, photo?: string | null, updated_at: Date, created_at: Date, agents?: Array<{ __typename?: 'Agent', id: string, name: string } | null> | null, invitations?: Array<{ __typename?: 'Invitation', id: string, accepted?: boolean | null, email: string, inviter: { __typename?: 'User', id: string, name: string, photo?: string | null }, user?: { __typename?: 'User', id: string, name: string, photo?: string | null } | null }> | null, users: Array<{ __typename?: 'User', id: string, name: string, photo?: string | null, pivot?: { __typename?: 'TeamPivot', role?: string | null } | null }> } | null } };
 
+export type DeleteTeamMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteTeamMutation = { __typename?: 'Mutation', team: { __typename?: 'TeamMutations', delete?: { __typename?: 'Team', id: string } | null } };
+
 export type ForgotPasswordMutationVariables = Exact<{
   input: ForgotPasswordInput;
 }>;
@@ -2625,7 +2663,7 @@ export type RegisterMutationVariables = Exact<{
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', auth: { __typename?: 'AuthMutations', register: { __typename?: 'RegisterResponse', status: RegisterStatuses, tokens?: { __typename?: 'AuthPayload', access_token?: string | null, refresh_token?: string | null, expires_in?: number | null, token_type?: string | null, user?: { __typename?: 'CurrentUser', id: string, name: string, photo?: string | null, email: string, email_verified_at?: Date | null, personal_team: { __typename?: 'Team', id: string, name: string, photo?: string | null }, teams?: Array<{ __typename?: 'Team', id: string, name: string, photo?: string | null }> | null, invitations?: Array<{ __typename?: 'Invitation', id: string }> | null } | null } | null } } };
+export type RegisterMutation = { __typename?: 'Mutation', auth: { __typename?: 'AuthMutations', register: { __typename?: 'RegisterResponse', status: RegisterStatuses, tokens?: { __typename?: 'AuthPayload', access_token?: string | null, refresh_token?: string | null, expires_in?: number | null, token_type?: string | null, user?: { __typename?: 'CurrentUser', id: string, name: string, photo?: string | null, email: string, email_verified_at?: Date | null, personal_team: { __typename?: 'Team', id: string, name: string, photo?: string | null }, teams?: Array<{ __typename?: 'Team', id: string, name: string, photo?: string | null, pivot?: { __typename?: 'TeamPivot', role?: string | null } | null }> | null, invitations?: Array<{ __typename?: 'Invitation', id: string }> | null } | null } | null } } };
 
 export type UpdateForgottenPasswordMutationVariables = Exact<{
   input: NewPasswordWithCodeInput;
@@ -3151,6 +3189,69 @@ export function useTeamCreateMutation(options: VueApolloComposable.UseMutationOp
   return VueApolloComposable.useMutation<TeamCreateMutation, TeamCreateMutationVariables>(TeamCreateDocument, options);
 }
 export type TeamCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<TeamCreateMutation, TeamCreateMutationVariables>;
+export const UpdateTeamUserRoleDocument = gql`
+    mutation updateTeamUserRole($input: TeamUpdateInput) {
+  team {
+    update(input: $input) {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useUpdateTeamUserRoleMutation__
+ *
+ * To run a mutation, you first call `useUpdateTeamUserRoleMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateTeamUserRoleMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useUpdateTeamUserRoleMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateTeamUserRoleMutation(options: VueApolloComposable.UseMutationOptions<UpdateTeamUserRoleMutation, UpdateTeamUserRoleMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<UpdateTeamUserRoleMutation, UpdateTeamUserRoleMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<UpdateTeamUserRoleMutation, UpdateTeamUserRoleMutationVariables>(UpdateTeamUserRoleDocument, options);
+}
+export type UpdateTeamUserRoleMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateTeamUserRoleMutation, UpdateTeamUserRoleMutationVariables>;
+export const RemoveUserFromTeamDocument = gql`
+    mutation removeUserFromTeam($teamID: ID!, $userID: ID!) {
+  team {
+    update(input: {id: $teamID, users: {disconnect: [$userID]}}) {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useRemoveUserFromTeamMutation__
+ *
+ * To run a mutation, you first call `useRemoveUserFromTeamMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveUserFromTeamMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useRemoveUserFromTeamMutation({
+ *   variables: {
+ *     teamID: // value for 'teamID'
+ *     userID: // value for 'userID'
+ *   },
+ * });
+ */
+export function useRemoveUserFromTeamMutation(options: VueApolloComposable.UseMutationOptions<RemoveUserFromTeamMutation, RemoveUserFromTeamMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<RemoveUserFromTeamMutation, RemoveUserFromTeamMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<RemoveUserFromTeamMutation, RemoveUserFromTeamMutationVariables>(RemoveUserFromTeamDocument, options);
+}
+export type RemoveUserFromTeamMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<RemoveUserFromTeamMutation, RemoveUserFromTeamMutationVariables>;
 export const EditProfileDocument = gql`
     mutation editProfile($input: UserUpdateInput) {
   user {
@@ -4164,6 +4265,37 @@ export function useTeamViewCurrentLazyQuery(variables: TeamViewCurrentQueryVaria
   return VueApolloComposable.useLazyQuery<TeamViewCurrentQuery, TeamViewCurrentQueryVariables>(TeamViewCurrentDocument, variables, options);
 }
 export type TeamViewCurrentQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<TeamViewCurrentQuery, TeamViewCurrentQueryVariables>;
+export const DeleteTeamDocument = gql`
+    mutation deleteTeam($id: ID!) {
+  team {
+    delete(id: $id) {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useDeleteTeamMutation__
+ *
+ * To run a mutation, you first call `useDeleteTeamMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteTeamMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useDeleteTeamMutation({
+ *   variables: {
+ *     id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteTeamMutation(options: VueApolloComposable.UseMutationOptions<DeleteTeamMutation, DeleteTeamMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteTeamMutation, DeleteTeamMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<DeleteTeamMutation, DeleteTeamMutationVariables>(DeleteTeamDocument, options);
+}
+export type DeleteTeamMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteTeamMutation, DeleteTeamMutationVariables>;
 export const ForgotPasswordDocument = gql`
     mutation forgotPassword($input: ForgotPasswordInput!) {
   auth {
@@ -4311,6 +4443,9 @@ export const RegisterDocument = gql`
             id
             name
             photo
+            pivot {
+              role
+            }
           }
           invitations {
             id

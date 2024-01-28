@@ -50,13 +50,20 @@
       />
     </label>
   </div>
-  <ul class="">
+  <ul v-if="multiple">
     <li v-for="file in value" :key="file.file?.name">
       <PVProgressBar :value="file.progress ? file.progress : 0"></PVProgressBar>
       {{ file.file?.name }}
       {{ file.progress }}%
     </li>
   </ul>
+  <template v-else>
+    <div v-if="value[0].file">
+      <PVProgressBar :value="value[0].progress ? value[0].progress : 0"></PVProgressBar>
+      {{ value[0].file?.name }}
+      {{ value[0].progress }}%
+    </div>
+  </template>
 </template>
 <script setup lang="ts">
 import { ref, watch } from 'vue'

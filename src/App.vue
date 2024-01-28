@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 // Vue
-import { watch } from 'vue'
+import { onMounted, watch } from 'vue'
 import { RouterView } from 'vue-router'
 
 // PrimeVue
@@ -28,6 +28,20 @@ const alertStore = useAlertStore()
 
 // Our Components
 import AuthLayout from './layout/AuthLayout.vue'
+
+import { useSettingsStore } from '@/stores'
+const settings = useSettingsStore()
+
+onMounted(() => {
+  document.body.classList.toggle('dark', settings.darkMode)
+})
+
+watch(
+  () => settings.darkMode,
+  () => {
+    document.body.classList.toggle('dark', settings.darkMode)
+  }
+)
 
 // Watchers
 watch(

@@ -1,6 +1,27 @@
 <template>
-  <h2>Edit User</h2>
-  <FileUpload v-model="photo" :multiple="false"></FileUpload>
+  <InputTextLabel v-model="form.name" label="Username" />
+  <InputTextLabel v-model="form.email" label="Email" />
+  <label class="font-bold">Profile Icon</label>
+  <div class="flex p-2 gap-x-2">
+    <div class="">
+      <PVAvatar
+        size="xlarge"
+        :label="
+          authStore.user?.photo
+            ? undefined
+            : authStore.user?.name
+                .split(' ')
+                .map((word) => word.charAt(0).toUpperCase())
+                .join('')
+        "
+        :image="authStore.user?.photo || undefined"
+      />
+    </div>
+    <div class="flex-grow mx-auto my-auto">
+      <FileUpload v-model="photo" :multiple="false"></FileUpload>
+    </div>
+    
+  </div>
   <PVButton @click="saveChanges" label="Update Profile" />
 </template>
 <script setup lang="ts">
@@ -9,6 +30,7 @@ import { ref, inject } from 'vue'
 
 // PrimeVue
 import PVButton from 'primevue/button'
+import PVAvatar from 'primevue/avatar'
 import { useToast } from 'primevue/usetoast'
 import type { DynamicDialogInstance } from 'primevue/dynamicdialogoptions'
 
@@ -19,12 +41,12 @@ import { useAuthStore } from '@/stores'
 import gql from 'graphql-tag'
 import {
   useEditProfileMutation,
-  type EditProfileMutationVariables,
   type UserUpdateInput
 } from '@/graphql'
 
 // Our Components
 import FileUpload, { type FileUploadReturn } from '@/components/Input/FileUpload.vue'
+import InputTextLabel from "@/components/Input/InputTextLabel.vue"
 
 // Stores
 const authStore = useAuthStore()
@@ -41,6 +63,7 @@ const photo = ref<FileUploadReturn>({
 })
 const form = ref<UserUpdateInput>({
   name: authStore.user?.name,
+  email: authStore.user?.email,
   id: ''
 })
 
@@ -76,16 +99,18 @@ onDone((result) => {
 
 // Functions
 function saveChanges() {
-  while (photo.value.progress < 100) {
-    // No Op
-    // Wait for Photo to be uploaded
-  }
+  if (photo.value.file && photo.value.progress < 100)
+    while (photo.value.progress < 100) {
+      // No Op
+      // Wait for Photo to be uploaded
+    }
   if (!authStore.user) return
   mutate({
     input: {
       id: authStore.user.id,
       name: form.value.name,
-      file: photo.value.vapor
+      email: form.value.email,
+      file: photo.value.vapor || undefined
     }
   })
 }

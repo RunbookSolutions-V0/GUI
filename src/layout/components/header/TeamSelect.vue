@@ -30,7 +30,7 @@
   </PVAutoComplete>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 // Stores
@@ -89,4 +89,14 @@ function search(event: AutoCompleteCompleteEvent) {
     })
   filteredTeams.value = filteredResults
 }
+
+watch(() => authStore.selectedTeam, (v) => {
+  console.log("Selected Team Changed");
+  if(v == selectedTeam.value?.id) return
+  const found = filteredTeams.value.find((team) => {
+    return team.id == v;
+  });
+  if (!found) return;
+  selectedTeam.value = found
+}, {deep: true});
 </script>

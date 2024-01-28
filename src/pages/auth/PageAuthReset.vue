@@ -2,7 +2,7 @@
   <div class="flex h-screen">
     <Card class="m-auto min-w-96">
       <template #header>
-        <div class="text-center mb-5">
+        <div class="text-center mb-5 pt-5">
           <img
             v-if="settings.darkMode"
             src="../../assets/logo-dark.svg"

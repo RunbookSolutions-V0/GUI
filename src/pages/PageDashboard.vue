@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid'
 const layouts = [
   {
     id: '0000-000-000-0000',
-    name: 'Default Network View',
+    name: 'Dashboard',
     default: false,
     grid: {
       id: uuidv4(),

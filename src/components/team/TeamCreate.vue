@@ -80,7 +80,7 @@ function createTeam() {
   mutate({
     input: {
       ...form.value,
-      file: photo.value.vapor
+      file: photo.value.vapor || undefined
     }
   })
 }
