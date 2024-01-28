@@ -17,7 +17,7 @@ import Wind from '@/presets/wind'
 import WidgetsPlugin from 's7k-widgets-core'
 import 's7k-widgets-core/dist/widgets-core.css'
 
-import applicationWidgets from '@/widgets'
+import applicationWidgets from '@/modules/widgets'
 
 // Application
 import './assets/main.css'

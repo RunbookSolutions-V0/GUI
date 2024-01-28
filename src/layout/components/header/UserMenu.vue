@@ -63,9 +63,9 @@ import { useAuthStore } from '@/stores'
 const authStore = useAuthStore()
 
 // Application Components
-import CreateInviation from '@/components/invitation/InvitationCreate.vue'
-import CreateTeam from '@/components/team/TeamCreate.vue'
-import EditProfile from '@/components/user/UserEdit.vue'
+import CreateInviation from '@/modules/invitation/components/InvitationCreate.vue'
+import CreateTeam from '@/modules/team/components/TeamCreate.vue'
+import EditProfile from '@/modules/user/components/UserEdit.vue'
 
 const invitationCount = ref(authStore.user?.invitations?.length || 0)
 

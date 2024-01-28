@@ -12,11 +12,9 @@ let routes: Array<RouteRecordRaw> = [
 ]
 
 import authRoutes from './auth'
-import teamRoutes from './team'
-import invitationRoutes from './invitation'
-import moduleRoutes from './modules'
+import moduleRoutes from '@/modules/routes'
 
-routes = routes.concat(authRoutes).concat(moduleRoutes).concat(teamRoutes).concat(invitationRoutes)
+routes = routes.concat(authRoutes).concat(moduleRoutes)
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
