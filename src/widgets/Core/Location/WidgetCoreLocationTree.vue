@@ -63,7 +63,7 @@ import type { CoreLocation } from '@/graphql'
 
 // Props
 type ExpectedContent = Record<string, any> & {
-  data: CoreLocation,
+  data: CoreLocation
   update: any
 }
 const props = defineProps({

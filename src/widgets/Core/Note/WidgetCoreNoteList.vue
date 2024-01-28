@@ -73,7 +73,7 @@ import TextAreaLabel from '@/components/Input/TextAreaLabel.vue'
 // Props
 type ExpectedContent = Record<string, any> & {
   data: {
-    id: String,
+    id: String
     notes: CoreNote[]
   }
   update: any

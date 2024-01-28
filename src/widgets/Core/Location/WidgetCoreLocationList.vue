@@ -75,7 +75,7 @@ import LocationSelect from '@/components/core/location/CoreLocationSelect.vue'
 // Props
 type ExpectedContent = Record<string, any> & {
   data: {
-    id: String,
+    id: String
     locations: CoreLocation[]
   }
   update: any

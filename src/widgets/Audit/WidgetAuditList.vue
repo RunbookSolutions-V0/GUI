@@ -95,7 +95,7 @@ import { useWidgetAuditListQuery, type WidgetAuditListQueryVariables, type Audit
 // Props
 type ExpectedContent = Record<string, any> & {
   data: {
-    id: String,
+    id: String
     audits: Audit[]
   }
   update: any

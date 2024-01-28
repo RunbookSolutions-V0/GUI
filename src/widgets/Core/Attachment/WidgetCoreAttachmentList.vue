@@ -86,7 +86,7 @@ import FileUpload, { type FileUploadReturn } from '@/components/Input/FileUpload
 // Props
 type ExpectedContent = Record<string, any> & {
   data: {
-    id: String,
+    id: String
     attachments: CoreAttachment[]
   }
   update: any

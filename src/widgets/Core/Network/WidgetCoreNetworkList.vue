@@ -76,8 +76,8 @@ import NetworkSelect from '@/components/core/network/CoreNetworkSelect.vue'
 // Props
 type ExpectedContent = Record<string, any> & {
   data: {
-    id: String,
-    networks: CoreNetwork[],
+    id: String
+    networks: CoreNetwork[]
     __typename: String
   }
   update: any

@@ -76,7 +76,7 @@ import ContactSelect from '@/components/core/contact/CoreContactSelect.vue'
 // Props
 type ExpectedContent = Record<string, any> & {
   data: {
-    id: String,
+    id: String
     contacts: CoreContact[]
   }
   update: any
