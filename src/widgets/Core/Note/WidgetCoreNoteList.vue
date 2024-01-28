@@ -164,7 +164,6 @@ onResult((result) => {
 
 // Functions
 function createNote() {
-  const id = props.content.data.id
   // TODO: Filter the notes already listed.
 
   props.content.update({
