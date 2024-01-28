@@ -1919,6 +1919,8 @@ export type InvitationMutations = {
   __typename?: 'InvitationMutations';
   /** Create a new invitation. */
   create: Invitation;
+  /** Delete an invitation. */
+  delete: Invitation;
   /** Update an existing invitation. */
   update: Invitation;
 };
@@ -1927,6 +1929,12 @@ export type InvitationMutations = {
 /** Mutations for creating and updating invitations. */
 export type InvitationMutationsCreateArgs = {
   input?: InputMaybe<InvitationCreateInput>;
+};
+
+
+/** Mutations for creating and updating invitations. */
+export type InvitationMutationsDeleteArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -2568,6 +2576,21 @@ export type InvitationListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type InvitationListQuery = { __typename?: 'Query', user: { __typename?: 'UserQueries', me: { __typename?: 'CurrentUser', invitations?: Array<{ __typename?: 'Invitation', id: string, inviter: { __typename?: 'User', id: string, email: string, name: string, photo?: string | null }, team: { __typename?: 'Team', id: string, name: string, photo?: string | null, personal: boolean, description?: string | null } }> | null } } };
+
+export type RespondToInvitationMutationVariables = Exact<{
+  accepted: Scalars['Boolean']['input'];
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type RespondToInvitationMutation = { __typename?: 'Mutation', invitation: { __typename?: 'InvitationMutations', update: { __typename?: 'Invitation', id: string, accepted?: boolean | null } } };
+
+export type DeleteInvitationMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteInvitationMutation = { __typename?: 'Mutation', invitation: { __typename?: 'InvitationMutations', delete: { __typename?: 'Invitation', id: string, accepted?: boolean | null } } };
 
 export type TeamViewCurrentQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
@@ -4011,6 +4034,71 @@ export function useInvitationListLazyQuery(options: VueApolloComposable.UseQuery
   return VueApolloComposable.useLazyQuery<InvitationListQuery, InvitationListQueryVariables>(InvitationListDocument, {}, options);
 }
 export type InvitationListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<InvitationListQuery, InvitationListQueryVariables>;
+export const RespondToInvitationDocument = gql`
+    mutation respondToInvitation($accepted: Boolean!, $id: ID!) {
+  invitation {
+    update(input: {id: $id, accepted: $accepted}) {
+      id
+      accepted
+    }
+  }
+}
+    `;
+
+/**
+ * __useRespondToInvitationMutation__
+ *
+ * To run a mutation, you first call `useRespondToInvitationMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useRespondToInvitationMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useRespondToInvitationMutation({
+ *   variables: {
+ *     accepted: // value for 'accepted'
+ *     id: // value for 'id'
+ *   },
+ * });
+ */
+export function useRespondToInvitationMutation(options: VueApolloComposable.UseMutationOptions<RespondToInvitationMutation, RespondToInvitationMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<RespondToInvitationMutation, RespondToInvitationMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<RespondToInvitationMutation, RespondToInvitationMutationVariables>(RespondToInvitationDocument, options);
+}
+export type RespondToInvitationMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<RespondToInvitationMutation, RespondToInvitationMutationVariables>;
+export const DeleteInvitationDocument = gql`
+    mutation deleteInvitation($id: ID!) {
+  invitation {
+    delete(id: $id) {
+      id
+      accepted
+    }
+  }
+}
+    `;
+
+/**
+ * __useDeleteInvitationMutation__
+ *
+ * To run a mutation, you first call `useDeleteInvitationMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteInvitationMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useDeleteInvitationMutation({
+ *   variables: {
+ *     id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteInvitationMutation(options: VueApolloComposable.UseMutationOptions<DeleteInvitationMutation, DeleteInvitationMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteInvitationMutation, DeleteInvitationMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<DeleteInvitationMutation, DeleteInvitationMutationVariables>(DeleteInvitationDocument, options);
+}
+export type DeleteInvitationMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteInvitationMutation, DeleteInvitationMutationVariables>;
 export const TeamViewCurrentDocument = gql`
     query teamViewCurrent($id: ID) {
   team {

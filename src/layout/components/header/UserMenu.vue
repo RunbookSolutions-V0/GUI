@@ -31,7 +31,7 @@
           <a :href="href" v-bind="props.action" @click="navigate">
             <span :class="item.icon" />
             <span class="ml-2">{{ item.label }}</span>
-            <Badge v-if="item.badge" class="ml-2" v-bind="item.badge" />
+            <Badge v-if="item.badge && item.badge.value > 0" class="ml-2" v-bind="item.badge" />
           </a>
         </RouterLink>
         <a v-else :href="item.url" :target="item.target" v-bind="props.action">
@@ -108,7 +108,7 @@ const items = ref([
         label: 'My Invitations',
         route: { name: 'invitation.list' },
         badge: {
-          value: authStore.user?.invitations?.length || 0
+          value: invitationCount
         }
       },
       {

@@ -11,12 +11,8 @@
       <FooterBar></FooterBar>
     </main>
   </div>
-  <PVDynamicDialog />
 </template>
 <script setup lang="ts">
-// PrimeVue
-import PVDynamicDialog from 'primevue/dynamicdialog'
-
 // Our Components
 import SideBar from './components/SideBar.vue'
 import HeaderBar from './components/HeaderBar.vue'
