@@ -65,9 +65,9 @@ const dialogRef = inject<Ref<DynamicDialogInstance>>('dialogRef')
 
 // Define our Reactive Props
 const photo = ref<FileUploadReturn>({
-file: undefined,
-vapor: null,
-progress: 0
+  file: undefined,
+  vapor: null,
+  progress: 0
 })
 const form = ref<CoreContactCreateInput>({
   name: '',
@@ -104,7 +104,7 @@ onDone((result) => {
       id: result.data.core.contact.create.id
     }
   })
-  if(!dialogRef) return;
+  if (!dialogRef) return
   dialogRef.value.close()
 })
 

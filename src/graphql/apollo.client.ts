@@ -45,7 +45,6 @@ interface ValidationError extends GraphQLErrorExtensions {
 
 // Handle errors
 const errorLink = onError((errorInput: ErrorResponse) => {
-
   if ('response' in errorInput) {
     if (errorInput.response && 'errors' in errorInput.response) {
       const errors = errorInput.response.errors

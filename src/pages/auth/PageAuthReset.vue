@@ -72,7 +72,7 @@ import type { NewPasswordWithCodeInput } from '@/graphql'
 const route = useRoute()
 
 const input = ref<NewPasswordWithCodeInput>({
-  token: route.query.token ? route.query.token as string : '',
+  token: route.query.token ? (route.query.token as string) : '',
   email: '',
   password: '',
   password_confirmation: ''

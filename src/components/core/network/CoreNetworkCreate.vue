@@ -60,7 +60,7 @@ onDone((result) => {
   const response = result.data.core.network.create
 
   router.push({ name: 'core.network.view', params: { id: response.id } })
-  if(!dialogRef) return;
+  if (!dialogRef) return
   dialogRef.value.close()
 })
 </script>

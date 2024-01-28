@@ -26,7 +26,6 @@ import {
 // Our Components
 import FileUpload, { type FileUploadReturn } from '@/components/Input/FileUpload.vue'
 
-
 // Stores
 const authStore = useAuthStore()
 
@@ -77,11 +76,11 @@ onDone((result) => {
 
 // Functions
 function saveChanges() {
-  while (photo.value.progress < 100) { 
+  while (photo.value.progress < 100) {
     // No Op
     // Wait for Photo to be uploaded
   }
-  if (!authStore.user) return;
+  if (!authStore.user) return
   mutate({
     input: {
       id: authStore.user.id,

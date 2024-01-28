@@ -20,10 +20,7 @@ import PVButton from 'primevue/button'
 import { useToast } from 'primevue/usetoast'
 
 // GraphQL
-import {
-  useInvitationCreateMutation,
-  type User
-} from '@/graphql'
+import { useInvitationCreateMutation, type User } from '@/graphql'
 import gql from 'graphql-tag'
 
 // Our Components

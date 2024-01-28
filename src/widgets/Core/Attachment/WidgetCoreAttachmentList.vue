@@ -74,8 +74,8 @@ import {
   useWidgetCoreAttachmentListQuery,
   type WidgetCoreAttachmentListQueryVariables,
   type CoreAttachment,
-type CoreAttachmentCreateInput,
-type VaporFileUpload
+  type CoreAttachmentCreateInput,
+  type VaporFileUpload
 } from '@/graphql'
 
 import { formatBytes } from '@/helpers'
@@ -173,7 +173,7 @@ onResult((result) => {
 function attachAttachments() {
   const attachments: CoreAttachmentCreateInput[] = []
   attachmentsToAttach.value.forEach((attachment) => {
-    if(!attachment.file) return;
+    if (!attachment.file) return
     attachments.push({
       name: attachment.file.name,
       size: attachment.file.size,

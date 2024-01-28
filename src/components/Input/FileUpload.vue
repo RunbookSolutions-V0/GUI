@@ -90,7 +90,9 @@ const props = defineProps({
 
 const isDragging = ref(false)
 
-const value = ref<FileUploadReturn[]>(Array.isArray(props.modelValue) ? props.modelValue : [props.modelValue])
+const value = ref<FileUploadReturn[]>(
+  Array.isArray(props.modelValue) ? props.modelValue : [props.modelValue]
+)
 
 // Emits
 const $emit = defineEmits(['update:modelValue'])

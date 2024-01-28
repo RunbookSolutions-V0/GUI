@@ -343,7 +343,7 @@ const onRowEditSave = (event: DataTableRowEditSaveEvent) => {
       name: newData.name,
       company_id: newData.parent_id,
       type: newData.type,
-      description: newData.description,
+      description: newData.description
     }
   })
 

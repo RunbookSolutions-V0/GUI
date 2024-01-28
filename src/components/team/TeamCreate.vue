@@ -29,9 +29,9 @@ import type { DynamicDialogInstance } from 'primevue/dynamicdialogoptions'
 const authStore = useAuthStore()
 
 const photo = ref<FileUploadReturn>({
-file: undefined,
-vapor: null,
-progress: 0
+  file: undefined,
+  vapor: null,
+  progress: 0
 })
 
 const form = ref<TeamCreateInput>({

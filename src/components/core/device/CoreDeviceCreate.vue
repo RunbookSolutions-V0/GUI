@@ -95,7 +95,7 @@ onDone((result) => {
     description: null
   }
 
-  if(!dialogRef) return;
+  if (!dialogRef) return
   dialogRef.value.close()
 })
 

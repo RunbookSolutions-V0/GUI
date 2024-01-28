@@ -67,11 +67,7 @@ import { useAuthStore } from '@/stores'
 
 // GraphQL
 import gql from 'graphql-tag'
-import {
-  type Team,
-  useTeamViewCurrentQuery,
-  type TeamViewCurrentQueryVariables
-} from '@/graphql'
+import { type Team, useTeamViewCurrentQuery, type TeamViewCurrentQueryVariables } from '@/graphql'
 
 // Define our Store
 const authStore = useAuthStore()

@@ -97,7 +97,7 @@ onDone((result) => {
   const response = result.data.core.location.create
 
   router.push({ name: 'core.location.view', params: { id: response.id } })
-  if(!dialogRef) return;
+  if (!dialogRef) return
   dialogRef.value.close()
 })
 </script>

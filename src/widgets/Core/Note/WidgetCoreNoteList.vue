@@ -74,7 +74,7 @@ import TextAreaLabel from '@/components/Input/TextAreaLabel.vue'
 //const props = defineProps({ ...defaultWidgetComponent.props })
 const props = defineProps({
   ...defaultWidgetComponent.props
-});
+})
 
 // Reactive Variables
 const showCreateDialog = ref(false)
@@ -154,7 +154,7 @@ onResult((result) => {
 
 // Functions
 function createNote() {
-  if(!props.content) return
+  if (!props.content) return
   const id = props.content.data.id
   // TODO: Filter the notes already listed.
 

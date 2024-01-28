@@ -9,7 +9,10 @@
       text
     >
       <PVAvatar
-        :label="authStore.user?.photo ? undefined : authStore.user?.name
+        :label="
+          authStore.user?.photo
+            ? undefined
+            : authStore.user?.name
                 .split(' ')
                 .map((word) => word.charAt(0).toUpperCase())
                 .join('')
