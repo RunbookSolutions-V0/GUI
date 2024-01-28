@@ -46,7 +46,7 @@
   </WidgetInterface>
 </template>
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 // PrimeVue
 import PVButton from 'primevue/button'
@@ -71,14 +71,17 @@ import {
 import TextAreaLabel from '@/components/Input/TextAreaLabel.vue'
 
 // Props
-const props = defineProps({ ...defaultWidgetComponent.props })
+//const props = defineProps({ ...defaultWidgetComponent.props })
+const props = defineProps({
+  ...defaultWidgetComponent.props
+});
 
 // Reactive Variables
 const showCreateDialog = ref(false)
 const form = ref<CoreNoteCreateInput>({
-  content: null
+  content: ''
 })
-const notes = ref([])
+const notes = ref<CoreNote[]>([])
 const displayNotes = ref<CoreNote[]>([])
 const variables = ref<WidgetCoreNoteListQueryVariables>({
   includeIds: []
@@ -136,7 +139,7 @@ const GraphQLDocument = gql`
 const { onResult, loading } = useWidgetCoreNoteListQuery(variables)
 onResult((result) => {
   if (!result.data) return
-  const data = result.data.core.note.list.data
+  const data = result.data.core.note.list.data as CoreNote[]
   const paginatorInfo = result.data.core.note.list.paginatorInfo
   displayNotes.value = data
 })
@@ -151,6 +154,7 @@ onResult((result) => {
 
 // Functions
 function createNote() {
+  if(!props.content) return
   const id = props.content.data.id
   // TODO: Filter the notes already listed.
 
@@ -163,6 +167,8 @@ function createNote() {
     }
   })
   showCreateDialog.value = false
-  form.value = {}
+  form.value = {
+    content: ''
+  }
 }
 </script>

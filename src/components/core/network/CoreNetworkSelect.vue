@@ -88,7 +88,7 @@ const GraphQLDocument2 = gql`
 // We were provided with a default value; we need to look it up.
 if (props.modelValue != null) {
   const { onResult: ValueLoaded } = useCoreNetworkSelectFilteredSingleQuery({
-    id: props.modelValue
+    id: props.modelValue as string
   })
   ValueLoaded((result) => {
     if (!result.data || !result.data.core.network.single) return
@@ -101,14 +101,13 @@ const { onResult, loading } = useCoreNetworkSelectFilteredListQuery(variables)
 onResult((result) => {
   if (!result.data) return
   items.value = result.data.core.network.list.data as CoreNetwork[]
-  console.log('OK')
 })
 
 function search(event: AutoCompleteCompleteEvent) {
   variables.value.name = '%' + event.query + '%'
 }
 
-function updateSelectedNetwork(newSelection) {
+function updateSelectedNetwork(newSelection: CoreNetwork) {
   value.value = newSelection
   if (typeof newSelection === 'string') return
 

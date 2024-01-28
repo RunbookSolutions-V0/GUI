@@ -32,7 +32,7 @@
   <VPButton label="Create Location" @click="createLocation" />
 </template>
 <script setup lang="ts">
-import { ref, inject } from 'vue'
+import { ref, inject, type Ref } from 'vue'
 import router from '@/router'
 
 // PrimeVue
@@ -50,8 +50,9 @@ import {
   CoreLocationTypes,
   useCoreLocationCreateMutation
 } from '@/graphql'
+import type { DynamicDialogInstance } from 'primevue/dynamicdialogoptions'
 
-const dialogRef = inject('dialogRef')
+const dialogRef = inject<Ref<DynamicDialogInstance>>('dialogRef')
 
 // Valid Location types
 const locationTypes = [
@@ -62,9 +63,9 @@ const locationTypes = [
 ]
 // Form Data to Submit to Create Location
 const formData = ref<CoreLocationCreateInput>({
-  name: null,
+  name: '',
   description: null,
-  type: null,
+  type: CoreLocationTypes.OTHER,
   parent_id: null,
   address: null
 })
@@ -96,6 +97,7 @@ onDone((result) => {
   const response = result.data.core.location.create
 
   router.push({ name: 'core.location.view', params: { id: response.id } })
+  if(!dialogRef) return;
   dialogRef.value.close()
 })
 </script>

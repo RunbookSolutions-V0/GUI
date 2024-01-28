@@ -80,7 +80,7 @@ const GraphQLDocument1 = gql`
   }
 `
 const { loading, error, onResult, refetch } = useCoreLocationSingleQuery({
-  id: useRoute().params.id
+  id: useRoute().params.id as string
 })
 onResult((result) => {
   if (!result.data) return
@@ -115,10 +115,6 @@ onDone((result) => {
   })
   refetch()
 })
-// onError((result) => {
-//   console.log('Error Updating Location!')
-//   console.log(result)
-// })
 
 // Default Widget Page Layouts
 const layouts = [

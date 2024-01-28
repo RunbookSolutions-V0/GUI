@@ -73,13 +73,15 @@ import gql from 'graphql-tag'
 import {
   useWidgetCoreAttachmentListQuery,
   type WidgetCoreAttachmentListQueryVariables,
-  type CoreAttachment
+  type CoreAttachment,
+type CoreAttachmentCreateInput,
+type VaporFileUpload
 } from '@/graphql'
 
 import { formatBytes } from '@/helpers'
 
 // Our Components
-import FileUpload from '@/components/Input/FileUpload.vue'
+import FileUpload, { type FileUploadReturn } from '@/components/Input/FileUpload.vue'
 
 // Props
 const props = defineProps({ ...defaultWidgetComponent.props })
@@ -87,8 +89,8 @@ const props = defineProps({ ...defaultWidgetComponent.props })
 // Reactive Variables
 const showAttachDialog = ref(false)
 const uploading = ref(false)
-const attachmentsToAttach = ref([])
-const attachments = ref([])
+const attachmentsToAttach = ref<FileUploadReturn[]>([])
+const attachments = ref<CoreAttachment[]>([])
 const displayAttachments = ref<CoreAttachment[]>([])
 const variables = ref<WidgetCoreAttachmentListQueryVariables>({
   includeIds: []
@@ -154,7 +156,7 @@ const GraphQLDocument = gql`
 const { onResult, loading } = useWidgetCoreAttachmentListQuery(variables)
 onResult((result) => {
   if (!result.data) return
-  const data = result.data.core.attachment.list.data
+  const data = result.data.core.attachment.list.data as CoreAttachment[]
   const paginatorInfo = result.data.core.attachment.list.paginatorInfo
   displayAttachments.value = data
 })
@@ -169,19 +171,17 @@ onResult((result) => {
 
 // Functions
 function attachAttachments() {
-  console.log(props.content.data)
-  const attachments = []
+  const attachments: CoreAttachmentCreateInput[] = []
   attachmentsToAttach.value.forEach((attachment) => {
+    if(!attachment.file) return;
     attachments.push({
       name: attachment.file.name,
       size: attachment.file.size,
-      file: attachment.vapor
+      file: attachment.vapor as VaporFileUpload
     })
   })
 
-  console.log(attachments)
-
-  props.content.update({
+  props.content?.update({
     input: {
       id: itemID.value,
       attachments: {

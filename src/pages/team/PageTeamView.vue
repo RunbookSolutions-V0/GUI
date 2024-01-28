@@ -70,14 +70,14 @@ import gql from 'graphql-tag'
 import {
   type Team,
   useTeamViewCurrentQuery,
-  type useTeamViewCurrentQueryVariables
+  type TeamViewCurrentQueryVariables
 } from '@/graphql'
 
 // Define our Store
 const authStore = useAuthStore()
 
 // Define reactive Variables
-const variables = ref<useTeamViewCurrentQueryVariables>({
+const variables = ref<TeamViewCurrentQueryVariables>({
   id: authStore.selectedTeam
 })
 const currentTeam = ref<Team>()
@@ -128,9 +128,8 @@ const GraphQLDocument = gql`
 `
 const { onResult, loading, error } = useTeamViewCurrentQuery(variables)
 onResult((result) => {
-  //console.log(result);
   if (!result.data) return
-  currentTeam.value = result.data.team.single
+  currentTeam.value = result.data.team.single as Team
 })
 
 watch(

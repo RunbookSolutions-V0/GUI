@@ -67,11 +67,12 @@ import { useSettingsStore } from '@/stores'
 const settings = useSettingsStore()
 
 import { useRoute } from 'vue-router'
+import type { NewPasswordWithCodeInput } from '@/graphql'
 
 const route = useRoute()
 
-const input = ref({
-  token: route.query.token ? route.query.token : '',
+const input = ref<NewPasswordWithCodeInput>({
+  token: route.query.token ? route.query.token as string : '',
   email: '',
   password: '',
   password_confirmation: ''

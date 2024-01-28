@@ -9,15 +9,12 @@
       text
     >
       <PVAvatar
-        :label="
-          authStore.user?.photo
-            ? null
-            : authStore.user?.name
+        :label="authStore.user?.photo ? undefined : authStore.user?.name
                 .split(' ')
                 .map((word) => word.charAt(0).toUpperCase())
                 .join('')
         "
-        :image="authStore.user?.photo"
+        :image="authStore.user?.photo || undefined"
       />
       <span class="flex flex-col mx-auto my-auto">
         <span class="truncate w-20 font-semibold tracking-wide leading-none">{{

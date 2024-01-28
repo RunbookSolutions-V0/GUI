@@ -39,7 +39,7 @@
   <VPButton label="Create Contact" @click="createContact" />
 </template>
 <script setup lang="ts">
-import { ref, inject, watch } from 'vue'
+import { ref, inject, watch, type Ref } from 'vue'
 import router from '@/router'
 
 // GraphQL
@@ -56,18 +56,21 @@ import VPDropdown from 'primevue/dropdown'
 import InputTextLabel from '@/components/Input/InputTextLabel.vue'
 import TextAreaLabel from '@/components/Input/TextAreaLabel.vue'
 import CoreContactSelect from '@/components/core/contact/CoreContactSelect.vue'
-import FileUpload from '@/components/Input/FileUpload.vue'
-import type FileUploadReturn from '@/components/Input/FileUpload.vue'
+import FileUpload, { type FileUploadReturn } from '@/components/Input/FileUpload.vue'
 
 // Injections
-const dialogRef = inject('dialogRef')
+const dialogRef = inject<Ref<DynamicDialogInstance>>('dialogRef')
 
 // Props
 
 // Define our Reactive Props
-const photo = ref<FileUploadReturn>({})
+const photo = ref<FileUploadReturn>({
+file: undefined,
+vapor: null,
+progress: 0
+})
 const form = ref<CoreContactCreateInput>({
-  name: null,
+  name: '',
   type: CoreContactTypes.PERSON,
   description: null
 })
@@ -94,7 +97,6 @@ const GraphQLDocument = gql`
 `
 const { mutate: createMutation, onDone } = useCoreContactCreateMutation()
 onDone((result) => {
-  console.log(result)
   if (!result.data) return
   router.push({
     name: 'core.contact.view',
@@ -102,6 +104,7 @@ onDone((result) => {
       id: result.data.core.contact.create.id
     }
   })
+  if(!dialogRef) return;
   dialogRef.value.close()
 })
 
@@ -114,6 +117,6 @@ function createContact() {
     type: selectedType.value.value,
     file: photo.value.vapor
   } as CoreContactCreateInput
-  form.value.type = createMutation({ input: input })
+  createMutation({ input: input })
 }
 </script>

@@ -1,3 +1,4 @@
+import type { AllTypes as T } from 's7k-widgets-core'
 import LocationList from './WidgetCoreLocationList.vue'
 import BasicWidget from './WidgetCoreLocationBasic.vue'
 import MapWidget from './WidgetCoreLocationMap.vue'
@@ -39,6 +40,6 @@ const widgets = [
     width: 2,
     pages: ['core-location-view']
   }
-]
+] as T.ManagedWidget[]
 
 export default widgets

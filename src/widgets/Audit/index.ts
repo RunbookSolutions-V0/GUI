@@ -1,3 +1,5 @@
+import type { AllTypes as T } from 's7k-widgets-core'
+
 import WidgetAuditList from './WidgetAuditList.vue'
 
 const widgets = [
@@ -10,6 +12,6 @@ const widgets = [
     width: 3,
     pages: ['core-.*-view', 'dashboard']
   }
-]
+] as T.ManagedWidget[]
 
 export default widgets

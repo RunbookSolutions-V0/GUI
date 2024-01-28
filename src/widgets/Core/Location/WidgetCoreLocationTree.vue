@@ -150,12 +150,12 @@ function addItemToChart(key: string | number, children = [] as OrganizationChart
     chart.value.children?.concat(children)
   }
 
-  const findAndAddChildren = (node) => {
+  const findAndAddChildren = (node: OrganizationChartNode ) => {
     if (!node) return
     if (node.key === key) {
       // Found the node, append children and remove the 'none' child
       children.forEach((child) => {
-        node.children.push(child)
+        node.children?.push(child)
       })
       // node.children = my_child;
       node.children = (node.children as OrganizationChartNode[]).filter(

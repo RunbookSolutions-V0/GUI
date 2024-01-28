@@ -76,7 +76,7 @@ const GraphQLDocument1 = gql`
     }
   }
 `
-const { loading, error, onResult, refetch } = useCoreDeviceSingleQuery({ id: useRoute().params.id })
+const { loading, error, onResult, refetch } = useCoreDeviceSingleQuery({ id: useRoute().params.id as string })
 onResult((result) => {
   if (!result.data) return
   const device = result.data.core.device.single as CoreDevice

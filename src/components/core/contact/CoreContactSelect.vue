@@ -92,9 +92,8 @@ const GraphQLDocument2 = gql`
 
 // We were provided with a default value; we need to look it up.
 if (props.modelValue != null) {
-  console.log(props.modelValue)
   const { onResult: ValueLoaded } = useCoreContactSelectFilteredSingleQuery({
-    id: props.modelValue
+    id: props.modelValue as string
   })
   ValueLoaded((result) => {
     if (!result.data || !result.data.core.contact.single) return
@@ -115,7 +114,7 @@ function search(event: AutoCompleteCompleteEvent) {
   variables.value.name = '%' + event.query + '%'
 }
 
-function updateSelectedContact(newSelection) {
+function updateSelectedContact(newSelection: CoreContact) {
   value.value = newSelection
   if (typeof newSelection === 'string') return
 

@@ -4,11 +4,13 @@
   <PVButton @click="saveChanges" label="Update Profile" />
 </template>
 <script setup lang="ts">
+import type { Ref } from 'vue'
 import { ref, inject } from 'vue'
 
 // PrimeVue
 import PVButton from 'primevue/button'
 import { useToast } from 'primevue/usetoast'
+import type { DynamicDialogInstance } from 'primevue/dynamicdialogoptions'
 
 // Stores
 import { useAuthStore } from '@/stores'
@@ -22,19 +24,25 @@ import {
 } from '@/graphql'
 
 // Our Components
-import FileUpload from '@/components/Input/FileUpload.vue'
+import FileUpload, { type FileUploadReturn } from '@/components/Input/FileUpload.vue'
+
 
 // Stores
 const authStore = useAuthStore()
 
 // Our Injections
-const dialog = inject('dialogRef')
+const dialogRef = inject<Ref<DynamicDialogInstance>>('dialogRef')
 const toast = useToast()
 
 // Reactive Variables
-const photo = ref({})
+const photo = ref<FileUploadReturn>({
+  file: undefined,
+  vapor: null,
+  progress: 0
+})
 const form = ref<UserUpdateInput>({
-  name: authStore.user.name
+  name: authStore.user?.name,
+  id: ''
 })
 
 // GraphQL
@@ -50,11 +58,10 @@ const GraphQLDocument = gql`
 `
 const { mutate, onDone } = useEditProfileMutation()
 onDone((result) => {
-  console.log('Updated!')
   if (!result.data || !result.data.user.update) return
 
   form.value.name = null
-  photo.value = {}
+  photo.value = {} as FileUploadReturn
 
   authStore.refreshUser()
   toast.add({
@@ -64,19 +71,21 @@ onDone((result) => {
     life: 3000
   })
 
-  if (!dialog.value) return
-  dialog.value.close()
+  if (!dialogRef) return
+  dialogRef.value.close()
 })
 
 // Functions
 function saveChanges() {
-  while (photo.value.progress < 100) {
-    console.log(photo.value.progress)
+  while (photo.value.progress < 100) { 
+    // No Op
+    // Wait for Photo to be uploaded
   }
+  if (!authStore.user) return;
   mutate({
     input: {
       id: authStore.user.id,
-      name: form.value.naem,
+      name: form.value.name,
       file: photo.value.vapor
     }
   })

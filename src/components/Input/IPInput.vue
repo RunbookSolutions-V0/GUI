@@ -170,7 +170,7 @@ function onInput(event: InputEvent, index: number) {
   if (segment < 0) segment = 0
   segments.value[index] = segment
 
-  if (value.length === 3 && index < 3) {
+  if (value.length === 3 && index < 3 && segmentInput.value != undefined) {
     segmentInput.value[index + 1].focus()
   }
 }

@@ -122,7 +122,7 @@ import {
 
 // Prime Vue
 import PVButton from 'primevue/button'
-import PVDataTable from 'primevue/datatable'
+import PVDataTable, { type DataTableRowEditSaveEvent } from 'primevue/datatable'
 import PVColumn from 'primevue/column'
 import PVInputText from 'primevue/inputtext'
 import PVTextArea from 'primevue/textarea'
@@ -138,10 +138,7 @@ import CoreNetworkSelect from '@/components/core/network/CoreNetworkSelect.vue'
 const dialog = useDialog()
 
 // Define our Reactive Variables
-const filter = ref<{
-  name: String | null
-  network: String | null
-}>({
+const filter = ref({
   name: null,
   network: null
 })
@@ -261,7 +258,7 @@ function showCreate() {
   })
 }
 
-const onRowEditSave = (event) => {
+const onRowEditSave = (event: DataTableRowEditSaveEvent) => {
   let { newData, index } = event
 
   mutate({

@@ -1,3 +1,4 @@
+import type { AllTypes as T } from 's7k-widgets-core'
 import WidgetCoreNetworkList from './WidgetCoreNetworkList.vue'
 
 const widgets = [
@@ -10,6 +11,6 @@ const widgets = [
     width: 1,
     pages: ['core-(?!network).*-view']
   }
-]
+] as T.ManagedWidget[]
 
 export default widgets

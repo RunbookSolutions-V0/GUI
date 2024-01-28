@@ -11,7 +11,7 @@
   </PVTabView>
 </template>
 <script setup lang="ts">
-import { ref, inject } from 'vue'
+import { ref, inject, type Ref } from 'vue'
 
 // PrimeVue
 import PVTabView from 'primevue/tabview'
@@ -22,7 +22,6 @@ import { useToast } from 'primevue/usetoast'
 // GraphQL
 import {
   useInvitationCreateMutation,
-  type useInvitationCreateMutationVariables,
   type User
 } from '@/graphql'
 import gql from 'graphql-tag'
@@ -30,13 +29,14 @@ import gql from 'graphql-tag'
 // Our Components
 import InputTextLabel from '@/components/Input/InputTextLabel.vue'
 import UserSelect from '@/components/user/UserSelect.vue'
+import type { DynamicDialogInstance } from 'primevue/dynamicdialogoptions'
 
 // Define reactive variables
 const email = ref('')
 const user = ref<User>()
 
 // Our Injections
-const dialog = inject('dialogRef')
+const dialogRef = inject<Ref<DynamicDialogInstance>>('dialogRef')
 const toast = useToast()
 
 // GraphQL
@@ -62,8 +62,8 @@ onDone((result) => {
     life: 3000
   })
 
-  if (!dialog.value) return
-  dialog.value.close()
+  if (!dialogRef) return
+  dialogRef.value.close()
 })
 
 // Functions

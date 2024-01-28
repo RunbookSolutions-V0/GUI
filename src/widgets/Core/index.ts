@@ -1,3 +1,5 @@
+import type { AllTypes as T } from 's7k-widgets-core'
+
 import ContactWidgets from './Contact'
 import NoteWidgets from './Note'
 import AttachmentWidgets from './Attachment'
@@ -14,6 +16,6 @@ const widgets = [
   ...LocationWidgets,
   ...NetworkWidgets,
   ...NetworksWidgets
-]
+] as T.ManagedWidget[]
 
 export default widgets

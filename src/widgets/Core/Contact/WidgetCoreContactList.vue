@@ -78,8 +78,8 @@ const props = defineProps({ ...defaultWidgetComponent.props })
 
 // Reactive Variables
 const showAttachDialog = ref(false)
-const contactsToAttach = ref([])
-const contacts = ref([])
+const contactsToAttach = ref<CoreContact[]>([])
+const contacts = ref<CoreContact[]>([])
 const displayContacts = ref<CoreContact[]>([])
 const variables = ref<WidgetCoreContactListQueryVariables>({
   includeIds: []
@@ -135,7 +135,7 @@ const GraphQLDocument = gql`
 const { onResult, loading } = useWidgetCoreContactListQuery(variables)
 onResult((result) => {
   if (!result.data) return
-  const data = result.data.core.contact.list.data
+  const data = result.data.core.contact.list.data as CoreContact[]
   const paginatorInfo = result.data.core.contact.list.paginatorInfo
   displayContacts.value = data
 })

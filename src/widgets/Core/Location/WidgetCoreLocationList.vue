@@ -77,8 +77,8 @@ const props = defineProps({ ...defaultWidgetComponent.props })
 
 // Reactive Variables
 const showAttachDialog = ref(false)
-const locationsToAttach = ref([])
-const locations = ref([])
+const locationsToAttach = ref<CoreLocation[]>([])
+const locations = ref<CoreLocation[]>([])
 const displayLocations = ref<CoreLocation[]>([])
 const variables = ref<WidgetCoreLocationListQueryVariables>({
   includeIds: []
@@ -130,7 +130,7 @@ const GraphQLDocument = gql`
 const { onResult, loading } = useWidgetCoreLocationListQuery(variables)
 onResult((result) => {
   if (!result.data) return
-  const data = result.data.core.location.list.data
+  const data = result.data.core.location.list.data as CoreLocation[]
   const paginatorInfo = result.data.core.location.list.paginatorInfo
   displayLocations.value = data
 })

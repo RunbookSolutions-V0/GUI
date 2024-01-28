@@ -123,7 +123,7 @@ export const useAuthStore = defineStore({
         router.push({ name: 'dashboard' })
       })
     },
-    forgot_password(email: String): void {
+    forgot_password(email: string): void {
       provideApolloClient(apolloClient)
       const { mutate: forgotPassword, onDone } = useForgotPasswordMutation()
       forgotPassword({ input: { email: email } })
@@ -177,7 +177,7 @@ export const useAuthStore = defineStore({
       onResult((result) => {
         if (!result.data || !result.data.user.me) return
         this.user = result.data.user.me as CurrentUser
-        this.teams = result.data.user.me.teams
+        this.teams = result.data.user.me.teams as Team[]
       })
     },
     refreshToken() {

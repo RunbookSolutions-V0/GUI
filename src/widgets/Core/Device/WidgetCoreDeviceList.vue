@@ -80,8 +80,8 @@ const props = defineProps({ ...defaultWidgetComponent.props })
 // Reactive Variables
 const displayAttachLink = ref(false)
 const showAttachDialog = ref(false)
-const devicesToAttach = ref([])
-const devices = ref([])
+const devicesToAttach = ref<CoreDevice[]>([])
+const devices = ref<CoreDevice[]>([])
 const displayDevices = ref<CoreDevice[]>([])
 const variables = ref<WidgetCoreDeviceListQueryVariables>({
   includeIds: []
@@ -133,7 +133,7 @@ const GraphQLDocument = gql`
 const { onResult, loading } = useWidgetCoreDeviceListQuery(variables)
 onResult((result) => {
   if (!result.data) return
-  const data = result.data.core.device.list.data
+  const data = result.data.core.device.list.data as CoreDevice[]
   const paginatorInfo = result.data.core.device.list.paginatorInfo
   displayDevices.value = data
 })

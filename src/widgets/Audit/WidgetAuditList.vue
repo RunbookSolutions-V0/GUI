@@ -96,7 +96,7 @@ import { useWidgetAuditListQuery, type WidgetAuditListQueryVariables, type Audit
 const props = defineProps({ ...defaultWidgetComponent.props })
 
 // Reactive Variables
-const audits = ref([])
+const audits = ref<Audit[]>([])
 const displayAudits = ref<Audit[]>([])
 const variables = ref<WidgetAuditListQueryVariables>({
   includeIds: null
@@ -164,7 +164,7 @@ const GraphQLDocument = gql`
 const { onResult, loading } = useWidgetAuditListQuery(variables)
 onResult((result) => {
   if (!result.data) return
-  const data = result.data.audit.list.data
+  const data = result.data.audit.list.data as Audit[]
   const paginatorInfo = result.data.audit.list.paginatorInfo
   displayAudits.value = data
 })

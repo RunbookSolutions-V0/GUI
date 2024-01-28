@@ -3,7 +3,7 @@
     <span class="relative flex-grow">
       <label
         v-if="$attrs.label"
-        :for="$attrs.inputId"
+        :for="($attrs.inputId as string | undefined)"
         class="text-sm text-primary-500 dark:text-primary-400/60 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
       >
         {{ $attrs.label }}
@@ -59,7 +59,6 @@ const { onResult, loading } = useCoreDeviceSelectFilteredListQuery(variables)
 onResult((result) => {
   if (!result.data) return
   items.value = result.data.core.device.list.data as CoreDevice[]
-  console.log('OK')
 })
 
 function search(event: AutoCompleteCompleteEvent) {

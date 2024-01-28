@@ -12,7 +12,7 @@
   <VPButton label="Create Network" @click="createNetwork" />
 </template>
 <script setup lang="ts">
-import { ref, inject } from 'vue'
+import { ref, inject, type Ref } from 'vue'
 import router from '@/router'
 import gql from 'graphql-tag'
 
@@ -25,12 +25,13 @@ import CoreNetworkSelect from '@/components/core/network/CoreNetworkSelect.vue'
 import IPInput from '@/components/Input/IPInput.vue'
 
 import { type CoreNetworkCreateInput, useCoreNetworkCreateMutation } from '@/graphql'
+import type { DynamicDialogInstance } from 'primevue/dynamicdialogoptions'
 
-const dialogRef = inject('dialogRef')
+const dialogRef = inject<Ref<DynamicDialogInstance>>('dialogRef')
 
 // Form Data to Submit to Create Network
 const formData = ref<CoreNetworkCreateInput>({
-  name: null,
+  name: '',
   network: '192.168.1.1/32',
   parent_id: null,
   description: null
@@ -59,6 +60,7 @@ onDone((result) => {
   const response = result.data.core.network.create
 
   router.push({ name: 'core.network.view', params: { id: response.id } })
+  if(!dialogRef) return;
   dialogRef.value.close()
 })
 </script>

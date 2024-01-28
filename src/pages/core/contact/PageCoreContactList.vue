@@ -166,7 +166,7 @@ import {
 
 // PrimeVue
 import PVButton from 'primevue/button'
-import PVDataTable from 'primevue/datatable'
+import PVDataTable, { type DataTableRowEditSaveEvent } from 'primevue/datatable'
 import PVColumn from 'primevue/column'
 import PVInputText from 'primevue/inputtext'
 import PVDropdown from 'primevue/dropdown'
@@ -334,17 +334,16 @@ function showCreate() {
   })
 }
 
-const onRowEditSave = (event) => {
+const onRowEditSave = (event: DataTableRowEditSaveEvent) => {
   let { newData, index } = event
 
   mutate({
     input: {
       id: newData.id,
       name: newData.name,
-      parent_id: newData.parent_id,
+      company_id: newData.parent_id,
       type: newData.type,
       description: newData.description,
-      address: newData.address
     }
   })
 

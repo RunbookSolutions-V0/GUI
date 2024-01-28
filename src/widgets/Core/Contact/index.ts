@@ -1,3 +1,4 @@
+import type { AllTypes as T } from 's7k-widgets-core'
 import WidgetCoreContactList from './WidgetCoreContactList.vue'
 
 const widgets = [
@@ -10,6 +11,6 @@ const widgets = [
     width: 1,
     pages: ['core-(?!contact).*-view']
   }
-]
+] as T.ManagedWidget[]
 
 export default widgets

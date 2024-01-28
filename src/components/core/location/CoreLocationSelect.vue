@@ -88,7 +88,7 @@ const GraphQLDocument2 = gql`
 // We were provided with a default value; we need to look it up.
 if (props.modelValue != null) {
   const { onResult: ValueLoaded } = useCoreLocationSelectFilteredSingleQuery({
-    id: props.modelValue
+    id: props.modelValue as string
   })
   ValueLoaded((result) => {
     if (!result.data || !result.data.core.location.single) return
@@ -108,7 +108,7 @@ function search(event: AutoCompleteCompleteEvent) {
   variables.value.name = '%' + event.query + '%'
 }
 
-function updateSelectedLocation(newSelection) {
+function updateSelectedLocation(newSelection: CoreLocation) {
   value.value = newSelection
   if (typeof newSelection === 'string') return
 

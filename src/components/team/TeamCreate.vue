@@ -6,7 +6,7 @@
   <PVButton label="Create Team" @click="createTeam" />
 </template>
 <script setup lang="ts">
-import { ref, inject } from 'vue'
+import { ref, inject, type Ref } from 'vue'
 
 // PrimeVue
 import PVButton from 'primevue/button'
@@ -22,21 +22,26 @@ import { useTeamCreateMutation, type TeamCreateInput } from '@/graphql'
 // Our Components
 import InputTextLabel from '@/components/Input/InputTextLabel.vue'
 import TextAreaLabel from '@/components/Input/TextAreaLabel.vue'
-import FileUpload from '@/components/Input/FileUpload.vue'
+import FileUpload, { type FileUploadReturn } from '@/components/Input/FileUpload.vue'
+import type { DynamicDialogInstance } from 'primevue/dynamicdialogoptions'
 
 // Stores
 const authStore = useAuthStore()
 
-const photo = ref({})
+const photo = ref<FileUploadReturn>({
+file: undefined,
+vapor: null,
+progress: 0
+})
 
 const form = ref<TeamCreateInput>({
-  name: null,
+  name: '',
   description: null,
   file: null
 })
 
 // Our Injections
-const dialog = inject('dialogRef')
+const dialogRef = inject<Ref<DynamicDialogInstance>>('dialogRef')
 const toast = useToast()
 
 // GraphQL
@@ -52,10 +57,9 @@ const GraphQLDocument = gql`
 `
 const { mutate, onDone } = useTeamCreateMutation()
 onDone((result) => {
-  console.log(result)
   if (!result.data || !result.data.team.create) return
 
-  form.value.name = null
+  form.value.name = ''
   form.value.description = null
   form.value.file = null
 
@@ -67,8 +71,8 @@ onDone((result) => {
     life: 3000
   })
 
-  if (!dialog.value) return
-  dialog.value.close()
+  if (!dialogRef) return
+  dialogRef.value.close()
 })
 
 // Functions

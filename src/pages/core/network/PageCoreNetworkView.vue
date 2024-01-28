@@ -86,7 +86,7 @@ const GraphQLDocument1 = gql`
   }
 `
 const { loading, error, onResult, refetch } = useCoreNetworkSingleQuery({
-  id: useRoute().params.id
+  id: useRoute().params.id as string
 })
 onResult((result) => {
   if (!result.data) return

@@ -137,7 +137,7 @@ import {
 
 // PrimeVue
 import PVButton from 'primevue/button'
-import PVDataTable from 'primevue/datatable'
+import PVDataTable, { type DataTableRowEditSaveEvent } from 'primevue/datatable'
 import PVColumn from 'primevue/column'
 import PVInputText from 'primevue/inputtext'
 import PVTextArea from 'primevue/textarea'
@@ -277,7 +277,7 @@ watch(
 
     // Type
     if (!v.type) variables.value.type = null
-    else variables.value.type = v.type.value
+    else variables.value.type = v.type as CoreDeviceTypes
   },
   { deep: true }
 )
@@ -292,7 +292,7 @@ function showCreate() {
   })
 }
 
-const onRowEditSave = (event) => {
+const onRowEditSave = (event: DataTableRowEditSaveEvent) => {
   let { newData, index } = event
 
   mutate({

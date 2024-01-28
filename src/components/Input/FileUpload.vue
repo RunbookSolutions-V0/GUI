@@ -51,32 +51,34 @@
     </label>
   </div>
   <ul class="">
-    <li v-for="file in value" :key="file.file.name">
+    <li v-for="file in value" :key="file.file?.name">
       <PVProgressBar :value="file.progress ? file.progress : 0"></PVProgressBar>
-      {{ file.file.name }}
+      {{ file.file?.name }}
       {{ file.progress }}%
     </li>
   </ul>
 </template>
 <script setup lang="ts">
-import { ref, watch, type Ref } from 'vue'
+import { ref, watch } from 'vue'
+import type { PropType } from 'vue'
 
 // PrimeVue
 import PVProgressBar from 'primevue/progressbar'
 
 import { Vapor, type VaporOptions } from '@/helpers'
 import type { VaporFileUpload } from '@/graphql'
+import type FileUpload from 'primevue/fileupload'
 
 // Custom Type
 export type FileUploadReturn = {
-  file: File
+  file: File | undefined
   vapor: VaporFileUpload | null
   progress: number
 }
 
 const props = defineProps({
   modelValue: {
-    type: Array<FileUploadReturn> || (Object as () => FileUploadReturn),
+    type: Array as PropType<Array<FileUploadReturn>> | PropType<FileUploadReturn>,
     required: true
   },
   multiple: {
@@ -88,7 +90,7 @@ const props = defineProps({
 
 const isDragging = ref(false)
 
-const value = ref<FileUploadReturn[]>(props.modelValue ? props.modelValue : [])
+const value = ref<FileUploadReturn[]>(Array.isArray(props.modelValue) ? props.modelValue : [props.modelValue])
 
 // Emits
 const $emit = defineEmits(['update:modelValue'])
@@ -105,14 +107,14 @@ watch(
 // Vapor
 const vapor = new Vapor()
 
-function dragover(e) {
+function dragover(e: any) {
   e.preventDefault()
   isDragging.value = true
 }
 function dragleave() {
   isDragging.value = false
 }
-function drop(e) {
+function drop(e: any) {
   e.preventDefault()
 
   const files: File[] = Array.from(e.dataTransfer.files)
@@ -121,7 +123,7 @@ function drop(e) {
   isDragging.value = false
 }
 
-function fileSelect(e) {
+function fileSelect(e: any) {
   const files: File[] = Array.from(e.target.files)
   processFiles(files)
 }

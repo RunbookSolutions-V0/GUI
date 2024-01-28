@@ -28,7 +28,7 @@
   <VPButton label="Create Device" @click="createDevice" />
 </template>
 <script setup lang="ts">
-import { ref, inject } from 'vue'
+import { ref, inject, type Ref } from 'vue'
 import router from '@/router'
 
 // GraphQL
@@ -46,7 +46,7 @@ import InputTextLabel from '@/components/Input/InputTextLabel.vue'
 import TextAreaLabel from '@/components/Input/TextAreaLabel.vue'
 
 // Injections
-const dialogRef = inject('dialogRef')
+const dialogRef = inject<Ref<DynamicDialogInstance>>('dialogRef')
 
 // Define some reactive variables
 const form = ref<CoreDeviceCreateInput>({
@@ -95,6 +95,7 @@ onDone((result) => {
     description: null
   }
 
+  if(!dialogRef) return;
   dialogRef.value.close()
 })
 

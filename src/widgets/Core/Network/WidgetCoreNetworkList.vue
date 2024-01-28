@@ -79,8 +79,8 @@ const props = defineProps({ ...defaultWidgetComponent.props })
 // Reactive Variables
 const displayAttachLink = ref(false)
 const showAttachDialog = ref(false)
-const networksToAttach = ref([])
-const networks = ref([])
+const networksToAttach = ref<CoreNetwork[]>([])
+const networks = ref<CoreNetwork[]>([])
 const displayNetworks = ref<CoreNetwork[]>([])
 const variables = ref<WidgetCoreNetworkListQueryVariables>({
   includeIds: []
@@ -143,7 +143,7 @@ const GraphQLDocument = gql`
 const { onResult, loading } = useWidgetCoreNetworkListQuery(variables)
 onResult((result) => {
   if (!result.data) return
-  const data = result.data.core.network.list.data
+  const data = result.data.core.network.list.data as CoreNetwork[]
   const paginatorInfo = result.data.core.network.list.paginatorInfo
   displayNetworks.value = data
 })
