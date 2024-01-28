@@ -33,6 +33,9 @@ export const LOGIN_QUERY = gql`
             id
             name
             photo
+            pivot {
+              role
+            }
           }
           invitations {
             id
@@ -81,6 +84,9 @@ export const REGISTER_QUERY = gql`
               id
               name
               photo
+              pivot {
+                roles
+              }
             }
             invitations {
               id
@@ -133,6 +139,9 @@ export const CURRENT_USER_QUERY = gql`
           id
           name
           photo
+          pivot {
+            role
+          }
         }
         invitations {
           id

@@ -23,6 +23,9 @@
         <span class="truncate w-20 font-semibold tracking-wide leading-none">{{
           authStore.user?.name
         }}</span>
+        <span class="truncate w-20 text-gray-500 text-xs leading-none mt-1">
+          {{ userRole?.charAt(0).toUpperCase() + userRole?.slice(1) }}
+        </span>
       </span>
     </Button>
     <Menu ref="menu" id="overlay_menu" :model="items" :popup="true">
@@ -65,11 +68,22 @@ import CreateTeam from '@/components/team/TeamCreate.vue'
 import EditProfile from '@/components/user/UserEdit.vue'
 
 const invitationCount = ref(authStore.user?.invitations?.length || 0)
+
+const teamIndex = authStore.teams.findIndex((team) => {
+  return team.id == authStore.selectedTeam
+});
+const userRole = ref<string>( teamIndex > -1 ? authStore.teams[teamIndex].pivot?.role as string : 'Unknown');
 watch(
   authStore,
   (na, oa) => {
     if (!na.user || !na.user.invitations) return
     invitationCount.value = na.user.invitations.length
+
+    const teamIndex = na.teams.findIndex((team) => {
+      return team.id == na.selectedTeam
+    });
+    if (teamIndex > -1)
+      userRole.value = na.teams[teamIndex].pivot?.role || 'Unknown'
   },
   { deep: true }
 )

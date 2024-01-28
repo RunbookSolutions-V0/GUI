@@ -2611,7 +2611,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', auth: { __typename?: 'AuthMutations', login: { __typename?: 'AuthPayload', access_token?: string | null, refresh_token?: string | null, expires_in?: number | null, token_type?: string | null, user?: { __typename?: 'CurrentUser', id: string, email: string, name: string, photo?: string | null, created_at: Date, updated_at: Date, personal_team: { __typename?: 'Team', id: string, name: string, photo?: string | null }, teams?: Array<{ __typename?: 'Team', id: string, name: string, photo?: string | null }> | null, invitations?: Array<{ __typename?: 'Invitation', id: string }> | null } | null } } };
+export type LoginMutation = { __typename?: 'Mutation', auth: { __typename?: 'AuthMutations', login: { __typename?: 'AuthPayload', access_token?: string | null, refresh_token?: string | null, expires_in?: number | null, token_type?: string | null, user?: { __typename?: 'CurrentUser', id: string, email: string, name: string, photo?: string | null, created_at: Date, updated_at: Date, personal_team: { __typename?: 'Team', id: string, name: string, photo?: string | null }, teams?: Array<{ __typename?: 'Team', id: string, name: string, photo?: string | null, pivot?: { __typename?: 'TeamPivot', role?: string | null } | null }> | null, invitations?: Array<{ __typename?: 'Invitation', id: string }> | null } | null } } };
 
 export type RefreshTokenMutationVariables = Exact<{
   input?: InputMaybe<RefreshTokenInput>;
@@ -2642,7 +2642,7 @@ export type LogoutMutation = { __typename?: 'Mutation', auth: { __typename?: 'Au
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentUserQuery = { __typename?: 'Query', user: { __typename?: 'UserQueries', me: { __typename?: 'CurrentUser', id: string, email: string, name: string, photo?: string | null, created_at: Date, updated_at: Date, personal_team: { __typename?: 'Team', id: string, name: string, photo?: string | null }, teams?: Array<{ __typename?: 'Team', id: string, name: string, photo?: string | null }> | null, invitations?: Array<{ __typename?: 'Invitation', id: string }> | null } } };
+export type CurrentUserQuery = { __typename?: 'Query', user: { __typename?: 'UserQueries', me: { __typename?: 'CurrentUser', id: string, email: string, name: string, photo?: string | null, created_at: Date, updated_at: Date, personal_team: { __typename?: 'Team', id: string, name: string, photo?: string | null }, teams?: Array<{ __typename?: 'Team', id: string, name: string, photo?: string | null, pivot?: { __typename?: 'TeamPivot', role?: string | null } | null }> | null, invitations?: Array<{ __typename?: 'Invitation', id: string }> | null } } };
 
 export type WidgetAuditListQueryVariables = Exact<{
   includeIds?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
@@ -4218,6 +4218,9 @@ export const LoginDocument = gql`
           id
           name
           photo
+          pivot {
+            role
+          }
         }
         invitations {
           id
@@ -4419,6 +4422,9 @@ export const CurrentUserDocument = gql`
         id
         name
         photo
+        pivot {
+          role
+        }
       }
       invitations {
         id
