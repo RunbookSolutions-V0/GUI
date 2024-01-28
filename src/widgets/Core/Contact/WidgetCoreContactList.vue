@@ -74,8 +74,20 @@ import {
 import ContactSelect from '@/components/core/contact/CoreContactSelect.vue'
 
 // Props
-const props = defineProps({ ...defaultWidgetComponent.props })
-
+type ExpectedContent = {
+  data: {
+    id: String,
+    contacts: CoreContact[]
+  }
+  update: any
+}
+const props = defineProps({
+  ...defaultWidgetComponent.props,
+  content: {
+    type: Object as () => ExpectedContent,
+    required: true
+  }
+})
 // Reactive Variables
 const showAttachDialog = ref(false)
 const contactsToAttach = ref<CoreContact[]>([])

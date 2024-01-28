@@ -62,10 +62,19 @@ import {
 import type { CoreLocation } from '@/graphql'
 
 // Props
-const props = defineProps({ ...defaultWidgetComponent.props })
-
+type ExpectedContent = {
+  data: CoreLocation,
+  update: any
+}
+const props = defineProps({
+  ...defaultWidgetComponent.props,
+  content: {
+    type: Object as () => ExpectedContent,
+    required: true
+  }
+})
 // Reactive Variables
-const location = ref<CoreLocation>(props.content.data as CoreLocation)
+const location = ref<CoreLocation>(props.content?.data as CoreLocation)
 
 const chart = ref<OrganizationChartNode>()
 const variables = ref<WidgetCoreLocationTreeQueryVariables>({

@@ -93,7 +93,20 @@ import gql from 'graphql-tag'
 import { useWidgetAuditListQuery, type WidgetAuditListQueryVariables, type Audit } from '@/graphql'
 
 // Props
-const props = defineProps({ ...defaultWidgetComponent.props })
+type ExpectedContent = {
+  data: {
+    id: String,
+    audits: Audit[]
+  }
+  update: any
+}
+const props = defineProps({
+  ...defaultWidgetComponent.props,
+  content: {
+    type: Object as () => ExpectedContent,
+    required: true
+  }
+})
 
 // Reactive Variables
 const audits = ref<Audit[]>([])
@@ -101,7 +114,7 @@ const displayAudits = ref<Audit[]>([])
 const variables = ref<WidgetAuditListQueryVariables>({
   includeIds: null
 })
-const itemID = ref('')
+const itemID = ref<String>('')
 
 // Watchers
 watch(props, (v) => {

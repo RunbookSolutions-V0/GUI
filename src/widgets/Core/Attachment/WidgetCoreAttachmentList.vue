@@ -84,8 +84,20 @@ import { formatBytes } from '@/helpers'
 import FileUpload, { type FileUploadReturn } from '@/components/Input/FileUpload.vue'
 
 // Props
-const props = defineProps({ ...defaultWidgetComponent.props })
-
+type ExpectedContent = {
+  data: {
+    id: String,
+    attachments: CoreAttachment[]
+  }
+  update: any
+}
+const props = defineProps({
+  ...defaultWidgetComponent.props,
+  content: {
+    type: Object as () => ExpectedContent,
+    required: true
+  }
+})
 // Reactive Variables
 const showAttachDialog = ref(false)
 const uploading = ref(false)
@@ -95,7 +107,7 @@ const displayAttachments = ref<CoreAttachment[]>([])
 const variables = ref<WidgetCoreAttachmentListQueryVariables>({
   includeIds: []
 })
-const itemID = ref('')
+const itemID = ref<String>('')
 
 // Watchers
 watch(props, (v) => {

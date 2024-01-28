@@ -74,8 +74,21 @@ import {
 import NetworkSelect from '@/components/core/network/CoreNetworkSelect.vue'
 
 // Props
-const props = defineProps({ ...defaultWidgetComponent.props })
-
+type ExpectedContent = {
+  data: {
+    id: String,
+    networks: CoreNetwork[],
+    __typename: String
+  }
+  update: any
+}
+const props = defineProps({
+  ...defaultWidgetComponent.props,
+  content: {
+    type: Object as () => ExpectedContent,
+    required: true
+  }
+})
 // Reactive Variables
 const displayAttachLink = ref(false)
 const showAttachDialog = ref(false)

@@ -71,9 +71,19 @@ import {
 import TextAreaLabel from '@/components/Input/TextAreaLabel.vue'
 
 // Props
-//const props = defineProps({ ...defaultWidgetComponent.props })
+type ExpectedContent = {
+  data: {
+    id: String,
+    notes: CoreNote[]
+  }
+  update: any
+}
 const props = defineProps({
-  ...defaultWidgetComponent.props
+  ...defaultWidgetComponent.props,
+  content: {
+    type: Object as () => ExpectedContent,
+    required: true
+  }
 })
 
 // Reactive Variables
@@ -154,7 +164,6 @@ onResult((result) => {
 
 // Functions
 function createNote() {
-  if (!props.content) return
   const id = props.content.data.id
   // TODO: Filter the notes already listed.
 

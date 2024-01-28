@@ -75,8 +75,21 @@ import {
 import DeviceSelect from '@/components/core/device/CoreDeviceSelect.vue'
 
 // Props
-const props = defineProps({ ...defaultWidgetComponent.props })
-
+type ExpectedContent = {
+  data: {
+    id: String,
+    devices: CoreDevice[],
+    __typename: String
+  }
+  update: any
+}
+const props = defineProps({
+  ...defaultWidgetComponent.props,
+  content: {
+    type: Object as () => ExpectedContent,
+    required: true
+  }
+})
 // Reactive Variables
 const displayAttachLink = ref(false)
 const showAttachDialog = ref(false)

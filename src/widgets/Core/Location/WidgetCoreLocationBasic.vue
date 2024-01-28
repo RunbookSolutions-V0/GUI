@@ -71,8 +71,20 @@ import { WidgetInterface, defaultWidgetComponent } from 's7k-widgets-core'
 // GraphQL
 import type { CoreLocation } from '@/graphql'
 
-const props = defineProps({ ...defaultWidgetComponent.props })
+//Props
+type ExpectedContent = {
+  data: CoreLocation
+  update: any
+}
+const props = defineProps({
+  ...defaultWidgetComponent.props,
+  content: {
+    type: Object as () => ExpectedContent,
+    required: true
+  }
+})
 
+// Reactive variables
 const location = ref<CoreLocation>(props.content.data as CoreLocation)
 
 watch(
