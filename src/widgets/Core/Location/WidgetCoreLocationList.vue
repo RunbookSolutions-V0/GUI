@@ -73,7 +73,7 @@ import {
 import LocationSelect from '@/components/core/location/CoreLocationSelect.vue'
 
 // Props
-type ExpectedContent = {
+type ExpectedContent = Record<string, any> & {
   data: {
     id: String,
     locations: CoreLocation[]

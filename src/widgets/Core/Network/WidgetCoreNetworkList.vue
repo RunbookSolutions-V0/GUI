@@ -1,5 +1,5 @@
 <template>
-  <WidgetInterface v-bind="$props">
+  <WidgetInterface v-bind="props">
     <PVCard
       class="h-full w-full"
       :pt-options="{ mergeProps: false, mergeSections: true }"
@@ -74,7 +74,7 @@ import {
 import NetworkSelect from '@/components/core/network/CoreNetworkSelect.vue'
 
 // Props
-type ExpectedContent = {
+type ExpectedContent = Record<string, any> & {
   data: {
     id: String,
     networks: CoreNetwork[],

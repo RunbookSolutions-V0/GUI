@@ -62,7 +62,7 @@ import {
 import type { CoreLocation } from '@/graphql'
 
 // Props
-type ExpectedContent = {
+type ExpectedContent = Record<string, any> & {
   data: CoreLocation,
   update: any
 }

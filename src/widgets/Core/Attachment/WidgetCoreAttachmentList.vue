@@ -84,7 +84,7 @@ import { formatBytes } from '@/helpers'
 import FileUpload, { type FileUploadReturn } from '@/components/Input/FileUpload.vue'
 
 // Props
-type ExpectedContent = {
+type ExpectedContent = Record<string, any> & {
   data: {
     id: String,
     attachments: CoreAttachment[]

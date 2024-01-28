@@ -93,7 +93,7 @@ import gql from 'graphql-tag'
 import { useWidgetAuditListQuery, type WidgetAuditListQueryVariables, type Audit } from '@/graphql'
 
 // Props
-type ExpectedContent = {
+type ExpectedContent = Record<string, any> & {
   data: {
     id: String,
     audits: Audit[]

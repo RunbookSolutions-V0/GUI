@@ -75,7 +75,7 @@ import {
 import DeviceSelect from '@/components/core/device/CoreDeviceSelect.vue'
 
 // Props
-type ExpectedContent = {
+type ExpectedContent = Record<string, any> & {
   data: {
     id: String,
     devices: CoreDevice[],
