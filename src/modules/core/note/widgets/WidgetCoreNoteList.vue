@@ -150,7 +150,7 @@ const { onResult, loading } = useWidgetCoreNoteListQuery(variables)
 onResult((result) => {
   if (!result.data) return
   const data = result.data.core.note.list.data as CoreNote[]
-  const paginatorInfo = result.data.core.note.list.paginatorInfo
+  //const paginatorInfo = result.data.core.note.list.paginatorInfo
   displayNotes.value = data
 })
 

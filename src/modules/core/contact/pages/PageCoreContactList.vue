@@ -292,7 +292,7 @@ rowDeleted((result) => {
 })
 
 // Load our List
-const { loading, error, onResult } = useCoreContactListQuery(variables)
+const { loading, onResult } = useCoreContactListQuery(variables)
 onResult((result) => {
   if (!result.data) return
 

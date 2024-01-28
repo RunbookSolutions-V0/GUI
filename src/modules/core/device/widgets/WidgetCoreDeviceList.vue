@@ -51,7 +51,7 @@
   </WidgetInterface>
 </template>
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 // PrimeVue
 import PVButton from 'primevue/button'
@@ -147,13 +147,12 @@ const { onResult, loading } = useWidgetCoreDeviceListQuery(variables)
 onResult((result) => {
   if (!result.data) return
   const data = result.data.core.device.list.data as CoreDevice[]
-  const paginatorInfo = result.data.core.device.list.paginatorInfo
+  //const paginatorInfo = result.data.core.device.list.paginatorInfo
   displayDevices.value = data
 })
 
 // Functions
 function attachDevices() {
-  const id = props.content.data.id
   // TODO: Filter the devices already listed.
   const deviceIDs = devicesToAttach.value.map((item) => {
     return item.id

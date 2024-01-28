@@ -75,7 +75,7 @@ const teamIndex = authStore.teams.findIndex((team) => {
 const userRole = ref<string>( teamIndex > -1 ? authStore.teams[teamIndex].pivot?.role as string : 'Unknown');
 watch(
   authStore,
-  (na, oa) => {
+  (na) => {
     if (!na.user || !na.user.invitations) return
     invitationCount.value = na.user.invitations.length
 

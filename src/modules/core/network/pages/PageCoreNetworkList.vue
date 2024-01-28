@@ -224,7 +224,7 @@ rowDeleted((result) => {
 })
 
 // Load our List
-const { loading, error, onResult } = useCoreNetworkListQuery(variables)
+const { loading, onResult } = useCoreNetworkListQuery(variables)
 onResult((result) => {
   if (!result.data) return
 

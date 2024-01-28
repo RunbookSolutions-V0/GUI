@@ -56,7 +56,7 @@
   </WidgetInterface>
 </template>
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 // PrimeVue
 import PVButton from 'primevue/button'
@@ -169,7 +169,7 @@ const { onResult, loading } = useWidgetCoreAttachmentListQuery(variables)
 onResult((result) => {
   if (!result.data) return
   const data = result.data.core.attachment.list.data as CoreAttachment[]
-  const paginatorInfo = result.data.core.attachment.list.paginatorInfo
+  //const paginatorInfo = result.data.core.attachment.list.paginatorInfo
   displayAttachments.value = data
 })
 

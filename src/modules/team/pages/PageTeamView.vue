@@ -137,7 +137,7 @@ mutation deleteTeam($id: ID!) {
 `;
 
 // Load the Team Information
-const { onResult, loading, error } = useTeamViewCurrentQuery(variables)
+const { onResult } = useTeamViewCurrentQuery(variables)
 onResult((result) => {
   if (!result.data) return
   currentTeam.value = result.data.team.single as Team

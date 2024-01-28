@@ -50,7 +50,7 @@
   </WidgetInterface>
 </template>
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 // PrimeVue
 import PVButton from 'primevue/button'
@@ -157,7 +157,7 @@ const { onResult, loading } = useWidgetCoreNetworkListQuery(variables)
 onResult((result) => {
   if (!result.data) return
   const data = result.data.core.network.list.data as CoreNetwork[]
-  const paginatorInfo = result.data.core.network.list.paginatorInfo
+  //const paginatorInfo = result.data.core.network.list.paginatorInfo
   displayNetworks.value = data
 })
 
@@ -171,7 +171,6 @@ onResult((result) => {
 
 // Functions
 function attachNetworks() {
-  const id = props.content.data.id
   // TODO: Filter the networks already listed.
   const networkIDs = networksToAttach.value.map((item) => {
     return item.id

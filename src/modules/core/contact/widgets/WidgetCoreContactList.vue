@@ -50,7 +50,7 @@
   </WidgetInterface>
 </template>
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 // PrimeVue
 import PVButton from 'primevue/button'
@@ -148,7 +148,7 @@ const { onResult, loading } = useWidgetCoreContactListQuery(variables)
 onResult((result) => {
   if (!result.data) return
   const data = result.data.core.contact.list.data as CoreContact[]
-  const paginatorInfo = result.data.core.contact.list.paginatorInfo
+  //const paginatorInfo = result.data.core.contact.list.paginatorInfo
   displayContacts.value = data
 })
 
@@ -162,7 +162,6 @@ onResult((result) => {
 
 // Functions
 function attachContacts() {
-  const id = props.content.data.id
   // TODO: Filter the contacts already listed.
   const contactIDs = contactsToAttach.value.map((item) => {
     return item.id

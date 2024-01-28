@@ -254,7 +254,7 @@ rowDeleted((result) => {
 })
 
 // Load our List
-const { loading, error, onResult } = useCoreDeviceListQuery(variables)
+const { loading, onResult } = useCoreDeviceListQuery(variables)
 onResult((result) => {
   if (!result.data) return
 

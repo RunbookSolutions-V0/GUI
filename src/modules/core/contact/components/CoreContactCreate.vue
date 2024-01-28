@@ -39,7 +39,7 @@
   <VPButton label="Create Contact" @click="createContact" />
 </template>
 <script setup lang="ts">
-import { ref, inject, watch, type Ref } from 'vue'
+import { ref, inject, type Ref } from 'vue'
 import router from '@/router'
 
 // GraphQL

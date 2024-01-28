@@ -49,7 +49,7 @@
   </WidgetInterface>
 </template>
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 // PrimeVue
 import PVButton from 'primevue/button'
@@ -143,7 +143,7 @@ const { onResult, loading } = useWidgetCoreLocationListQuery(variables)
 onResult((result) => {
   if (!result.data) return
   const data = result.data.core.location.list.data as CoreLocation[]
-  const paginatorInfo = result.data.core.location.list.paginatorInfo
+  //const paginatorInfo = result.data.core.location.list.paginatorInfo
   displayLocations.value = data
 })
 
@@ -157,7 +157,6 @@ onResult((result) => {
 
 // Functions
 function attachLocations() {
-  const id = props.content.data.id
   // TODO: Filter the locations already listed.
   const locationIDs = locationsToAttach.value.map((item) => {
     return item.id

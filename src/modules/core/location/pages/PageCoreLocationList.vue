@@ -252,7 +252,7 @@ onDone((result) => {
 })
 
 // Load our List
-const { loading, error, onResult } = useCoreLocationListQuery(variables)
+const { loading, onResult } = useCoreLocationListQuery(variables)
 onResult((result) => {
   if (!result.data) return
   const response = result.data.core.location.list
