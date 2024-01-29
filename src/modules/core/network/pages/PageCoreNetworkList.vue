@@ -85,10 +85,9 @@
       </PVColumn>
       <PVColumn
         :rowEditor="true"
-        style="width: 10%; min-width: 8rem"
         bodyStyle="text-align:center"
       ></PVColumn>
-      <PVColumn :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center">
+      <PVColumn :rowEditor="true" bodyStyle="text-align:center">
         <template #body="{ data }">
           <PVButton
             @click="deleteRow({ id: data.id })"

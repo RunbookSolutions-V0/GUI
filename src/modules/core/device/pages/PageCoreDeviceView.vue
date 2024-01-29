@@ -76,7 +76,7 @@ const GraphQLDocument1 = gql`
     }
   }
 `
-const { loading, error, onResult, refetch } = useCoreDeviceSingleQuery({
+const { onResult, refetch } = useCoreDeviceSingleQuery({
   id: useRoute().params.id as string
 })
 onResult((result) => {
@@ -98,7 +98,7 @@ const GraphQLDocument2 = gql`
     }
   }
 `
-const { mutate, onDone, onError } = useCoreDeviceUpdateMutation()
+const { mutate, onDone } = useCoreDeviceUpdateMutation()
 pageContent.value.update = mutate
 onDone((result) => {
   if (!result.data) return
@@ -123,15 +123,35 @@ const layouts = [
       id: uuidv4(),
       items: [
         {
-          name: 'Empty Widget',
-          widgetID: 'd287d3bc-94e9-4b6d-91ce-ef4bfced75ff',
+          name: 'Device Info',
+          widgetID: '4256ff40-b0c9-496d-b0a3-28d911fb8ada',
           x: 0,
           y: 0,
           w: 1,
-          h: 1,
+          h: 2,
           i: uuidv4(),
           moved: false
-        }
+        },
+        {
+          name: 'Locations',
+          widgetID: 'adb7c547-597b-4f4f-9de8-8abbf426e6d3',
+          x: 1,
+          y: 0,
+          w: 1,
+          h: 2,
+          i: uuidv4(),
+          moved: false
+        },
+        {
+          name: 'Networks',
+          widgetID: '34fd48f5-e05b-4f31-ab2b-94956053b8a5',
+          x: 2,
+          y: 0,
+          w: 1,
+          h: 2,
+          i: uuidv4(),
+          moved: false
+        },
       ]
     },
     hasTabs: true,

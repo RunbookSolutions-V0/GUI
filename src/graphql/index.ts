@@ -2416,7 +2416,7 @@ export type CoreContactSingleQueryVariables = Exact<{
 }>;
 
 
-export type CoreContactSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', contact: { __typename?: 'CoreContactQueries', single?: { __typename?: 'CoreContact', id: string, name: string, photo?: string | null, type: CoreContactTypes, phone?: string | null, email?: string | null, description?: string | null, company_id?: string | null, company?: { __typename?: 'CoreContact', id: string, name: string } | null, contacts?: Array<{ __typename?: 'CoreContact', id: string }> | null, notes: Array<{ __typename?: 'CoreNote', id: string } | null>, attachments: Array<{ __typename?: 'CoreAttachment', id: string } | null>, locations: Array<{ __typename?: 'CoreLocation', id: string } | null>, networks: Array<{ __typename?: 'CoreNetwork', id: string } | null>, devices: Array<{ __typename?: 'CoreDevice', id: string } | null>, audits: Array<{ __typename?: 'Audit', id: string } | null> } | null } } };
+export type CoreContactSingleQuery = { __typename?: 'Query', core: { __typename?: 'CoreQueries', contact: { __typename?: 'CoreContactQueries', single?: { __typename?: 'CoreContact', id: string, name: string, photo?: string | null, type: CoreContactTypes, phone?: string | null, email?: string | null, description?: string | null, company_id?: string | null, created_at: Date, updated_at: Date, company?: { __typename?: 'CoreContact', id: string, name: string } | null, contacts?: Array<{ __typename?: 'CoreContact', id: string }> | null, notes: Array<{ __typename?: 'CoreNote', id: string } | null>, attachments: Array<{ __typename?: 'CoreAttachment', id: string } | null>, locations: Array<{ __typename?: 'CoreLocation', id: string } | null>, networks: Array<{ __typename?: 'CoreNetwork', id: string } | null>, devices: Array<{ __typename?: 'CoreDevice', id: string } | null>, audits: Array<{ __typename?: 'Audit', id: string } | null> } | null } } };
 
 export type CoreContactUpdateMutationVariables = Exact<{
   input: CoreContactUpdateInput;
@@ -3108,6 +3108,8 @@ export const CoreContactSingleDocument = gql`
         audits {
           id
         }
+        created_at
+        updated_at
       }
     }
   }

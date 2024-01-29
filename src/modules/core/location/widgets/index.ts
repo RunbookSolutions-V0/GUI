@@ -1,8 +1,7 @@
 import type { AllTypes as T } from 's7k-widgets-core'
-import LocationList from './WidgetCoreLocationList.vue'
-import BasicWidget from './WidgetCoreLocationBasic.vue'
-import MapWidget from './WidgetCoreLocationMap.vue'
-import TreeWidget from './WidgetCoreLocationTree.vue'
+import LocationList from './LocationList.vue'
+import BasicWidget from './LocationInfo.vue'
+import TreeWidget from './TreeChart.vue'
 
 const widgets = [
   {
@@ -20,15 +19,6 @@ const widgets = [
     defaultProps: {},
     height: 2,
     width: 1,
-    pages: ['core-location-view']
-  },
-  {
-    name: 'Location Map',
-    id: 'b1ae17db-c300-4be8-8664-b4bc8eb6b10c',
-    as: MapWidget,
-    defaultProps: {},
-    height: 2,
-    width: 2,
     pages: ['core-location-view']
   },
   {

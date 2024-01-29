@@ -4,11 +4,11 @@
       v-model:editingRows="editingRows"
       editMode="row"
       dataKey="id"
+      scrollable
       @row-edit-save="onRowEditSave"
       :value="contacts"
       :loading="loading"
       filterDisplay="row"
-      tableStyle="min-width: 50rem"
     >
       <template #empty> No Contacts found. </template>
       <template #loading> Loading contact data. Please wait. </template>
@@ -129,10 +129,9 @@
       </PVColumn>
       <PVColumn
         :rowEditor="true"
-        style="width: 10%; min-width: 8rem"
         bodyStyle="text-align:center"
       ></PVColumn>
-      <PVColumn :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center">
+      <PVColumn :rowEditor="true" bodyStyle="text-align:center">
         <template #body="{ data }">
           <PVButton
             @click="deleteRow({ id: data.id })"

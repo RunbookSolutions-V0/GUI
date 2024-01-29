@@ -74,12 +74,15 @@ const GraphQLDocument1 = gql`
           audits {
             id
           }
+
+          created_at
+          updated_at
         }
       }
     }
   }
 `
-const { loading, error, onResult, refetch } = useCoreContactSingleQuery({
+const { onResult, refetch } = useCoreContactSingleQuery({
   id: useRoute().params.id as string
 })
 onResult((result) => {
@@ -125,13 +128,43 @@ const layouts = [
     grid: {
       id: uuidv4(),
       items: [
-        {
-          name: 'Empty Widget',
-          widgetID: 'd287d3bc-94e9-4b6d-91ce-ef4bfced75ff',
+      {
+          name: 'Contact Info',
+          widgetID: '376e124a-bab3-4128-a925-8d982bd52a8e',
           x: 0,
           y: 0,
           w: 1,
-          h: 1,
+          h: 2,
+          i: uuidv4(),
+          moved: false
+        },
+        {
+          name: 'Locations',
+          widgetID: 'adb7c547-597b-4f4f-9de8-8abbf426e6d3',
+          x: 1,
+          y: 0,
+          w: 1,
+          h: 2,
+          i: uuidv4(),
+          moved: false
+        },
+        {
+          name: 'Networks',
+          widgetID: '34fd48f5-e05b-4f31-ab2b-94956053b8a5',
+          x: 2,
+          y: 0,
+          w: 1,
+          h: 2,
+          i: uuidv4(),
+          moved: false
+        },
+        {
+          name: 'Devices',
+          widgetID: '2949948f-f488-42d3-ba43-757f484bf98a',
+          x: 0,
+          y: 2,
+          w: 1,
+          h: 2,
           i: uuidv4(),
           moved: false
         }
@@ -147,7 +180,7 @@ const layouts = [
             {
               name: 'Notes',
               widgetID: 'c59f7881-05cd-4482-8888-33d553a4723f',
-              x: 1,
+              x: 0,
               y: 0,
               w: 1,
               h: 2,
@@ -157,7 +190,7 @@ const layouts = [
             {
               name: 'Attachments',
               widgetID: '63832e01-f549-4cb7-8d60-0902afc2c146',
-              x: 2,
+              x: 1,
               y: 0,
               w: 1,
               h: 2,

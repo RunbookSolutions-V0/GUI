@@ -6,6 +6,16 @@
     <RouterView />
   </template>
 
+  <div class="fixed left-5 bottom-5 z-10 ">
+    <PVButton
+      aria-label="Application Settings"
+      icon="pi pi-cog"
+      rounded
+      raised
+      @click="showSettings"
+    />
+  </div>
+
   <Toast />
   <PVDynamicDialog />
 </template>
@@ -17,29 +27,34 @@ import { RouterView } from 'vue-router'
 
 // PrimeVue
 import PVDynamicDialog from 'primevue/dynamicdialog'
+import { useDialog } from 'primevue/usedialog';
+import PVButton from 'primevue/button'
 import Toast, { type ToastMessageOptions } from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
 const toast = useToast()
 
 // Stores
-import { useAuthStore, useAlertStore } from '@/stores'
+import { useAuthStore, useAlertStore, useSettingsStore } from '@/stores'
 const authStore = useAuthStore()
 const alertStore = useAlertStore()
+const settingsStore = useSettingsStore()
 
 // Our Components
 import AuthLayout from './layout/AuthLayout.vue'
+import SettingsDialog from '@/components/settings/SettingsDialog.vue'
 
-import { useSettingsStore } from '@/stores'
-const settings = useSettingsStore()
+const dialog = useDialog()
 
+// On Mount
 onMounted(() => {
-  document.body.classList.toggle('dark', settings.darkMode)
+  document.body.classList.toggle('dark', settingsStore.darkMode)
 })
 
+// Watch for changes
 watch(
-  () => settings.darkMode,
+  () => settingsStore.darkMode,
   () => {
-    document.body.classList.toggle('dark', settings.darkMode)
+    document.body.classList.toggle('dark', settingsStore.darkMode)
   }
 )
 
@@ -57,6 +72,11 @@ watch(
   },
   { deep: true }
 )
+
+// Functions
+function showSettings() {
+  dialog.open(SettingsDialog, { props: { header: 'Application Settings', modal: true } });
+}
 </script>
 
 <style scoped></style>

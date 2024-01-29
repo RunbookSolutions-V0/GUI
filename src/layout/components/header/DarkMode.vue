@@ -1,22 +1,17 @@
 <template>
-  <Button
+  <PVButton
     @click="settings.toggleDarkMode()"
-    rounded
     text
-    label="Toggle Dark Mode"
+    severity="none"
+    aria-label="Toggle Dark Mode"
+    :icon="settings.darkMode ? 'pi pi-moon' : 'pi pi-sun'"
     class="text-surface-700 dark:text-white/80 ring-0 dark:ring-0 focus:ring-0 dark:focus:ring-0"
   >
-    <template v-if="settings.darkMode">
-      <i class="pi pi-moon"></i>
-    </template>
-    <template v-if="!settings.darkMode">
-      <i class="pi pi-sun"></i>
-    </template>
-  </Button>
+  </PVButton>
 </template>
 
 <script setup lang="ts">
-import Button from 'primevue/button'
+import PVButton from 'primevue/button'
 
 import { useSettingsStore } from '@/stores'
 const settings = useSettingsStore()

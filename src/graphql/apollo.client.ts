@@ -6,6 +6,8 @@ import { useAuthStore, useAlertStore } from '@/stores'
 // import { useConfigStore } from "@/stores/config";
 import type { GraphQLError, GraphQLErrorExtensions } from 'graphql'
 
+import { useSettingsStore } from '@/stores';
+
 interface Headers {
   Authorization?: string
   'Content-Type'?: string
@@ -32,8 +34,7 @@ const httpLink = new HttpLink({
   fetch: (uri: RequestInfo | URL, options?: RequestInit | undefined) => {
     if (!options) options = {}
     options.headers = <HeadersInit>getHeaders()
-    // uri = useConfigStore().graphqlServer + uri;
-    uri = 'http://192.168.1.197' + uri
+    uri = useSettingsStore().getBackendServer + uri
     return fetch(uri, options)
   }
 })
@@ -160,11 +161,12 @@ export const apolloClient = new ApolloClient({
     watchQuery: {
       errorPolicy: 'all',
       fetchPolicy: 'no-cache',
-      pollInterval: 600 * 1000 //5 Min
+      //pollInterval: useSettingsStore().pollInterval * 100 * 1000
     },
     query: {
       errorPolicy: 'all',
-      fetchPolicy: 'no-cache'
+      fetchPolicy: 'no-cache',
+      //pollInterval: useSettingsStore().pollInterval * 100 * 1000
     },
     mutate: {
       errorPolicy: 'all',

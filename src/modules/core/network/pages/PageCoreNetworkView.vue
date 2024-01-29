@@ -85,7 +85,7 @@ const GraphQLDocument1 = gql`
     }
   }
 `
-const { loading, error, onResult, refetch } = useCoreNetworkSingleQuery({
+const { onResult, refetch } = useCoreNetworkSingleQuery({
   id: useRoute().params.id as string
 })
 onResult((result) => {
@@ -131,10 +131,20 @@ const layouts = [
     grid: {
       id: uuidv4(),
       items: [
+      {
+          name: 'Info',
+          widgetID: '54567a0a-5787-4264-ade7-b14ba16c4e6e',
+          x: 0,
+          y: 0,
+          w: 1,
+          h: 2,
+          i: uuidv4(),
+          moved: false
+        },
         {
           name: 'Locations',
           widgetID: 'adb7c547-597b-4f4f-9de8-8abbf426e6d3',
-          x: 0,
+          x: 1,
           y: 0,
           w: 1,
           h: 2,
@@ -144,7 +154,7 @@ const layouts = [
         {
           name: 'Devices',
           widgetID: '2949948f-f488-42d3-ba43-757f484bf98a',
-          x: 1,
+          x: 2,
           y: 0,
           w: 1,
           h: 2,
